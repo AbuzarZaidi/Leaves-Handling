@@ -8,5 +8,5 @@ const usersLeavesSchema = new Schema({
     toDate:{type:String,required:true}, 
 });
 
-const usersLeaves = mongoose.model('usersleave', usersLeavesSchema );
-module.exports=usersLeaves;
+const Leaves = mongoose.model('leaves', usersLeavesSchema );
+module.exports=Leaves;
