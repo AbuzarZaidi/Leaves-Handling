@@ -1,6 +1,8 @@
 const User = require("../models/users");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
+
+//create leave request
 const leaveRequest = async (req, res, next) => {
   const userId = req.params.uid;
   const reason = req.body.reason;
@@ -15,8 +17,7 @@ const leaveRequest = async (req, res, next) => {
     return next(
       new HttpError("Invalid inputs passed, please check your data.", 422)
     );
-  } 
-  else {
+  } else {
     let date1 = new Date(toDate);
     let date2 = new Date(fromDate);
     let daysInMsec = date1.getTime() - date2.getTime();
@@ -52,6 +53,21 @@ const leaveRequest = async (req, res, next) => {
     res.status(201).json("Leave Request Created!");
   }
 };
+
+//get user previous leaves request
+const previousLeavesRequest =async(req,res,next)=>{
+  const userId = req.params.uid;
+  let result;
+  try {
+    result = await User.findById({_id:userId}, "leaveRequests");
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
+    return next(error);
+  }
+  res.status(200).json(result)
+}
+
+//sign up user
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
   console.log(name, email, password);
@@ -85,3 +101,4 @@ const signup = async (req, res) => {
 
 exports.leaveRequest = leaveRequest;
 exports.signup = signup;
+exports.previousLeavesRequest = previousLeavesRequest;
