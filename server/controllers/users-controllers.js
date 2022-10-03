@@ -1,38 +1,54 @@
 const User = require("../models/users");
+const HttpError = require("../models/http-error");
 const validator = require("validator");
 const leaveRequest = async (req, res, next) => {
   const userId = req.params.uid;
   const reason = req.body.reason;
   const fromDate = req.body.fromDate;
   const toDate = req.body.toDate;
+  console.log(!validator.isEmpty(toDate));
   if (
-    !validator.isEmpty(reason) ||
-    !validator.isEmpty(fromDate) ||
-    !validator.isEmpty(toDate)
+    validator.isEmpty(reason) ||
+    validator.isEmpty(fromDate) ||
+    validator.isEmpty(toDate)
   ) {
-    try {
-      //need to work here
-      var date1 = new Date(toDate);
-      var date2 = new Date(fromDate);
-      const days = date1.getTime() - date2.getTime();
-      console.log(Math.ceil(days / (1000 * 3600 * 24)));
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
+  } else {
+    let date1 = new Date(toDate);
+    let date2 = new Date(fromDate);
+    let daysInMsec = date1.getTime() - date2.getTime();
+    const days = Math.ceil(daysInMsec / (1000 * 3600 * 24));
 
-      const request = {
-        status: "pending",
-        reason: reason,
-        fromDate: fromDate,
-        toDate: toDate,
-        totalDays: days,
-      };
-      const filter = { _id: userId };
-      const result = await User.findOneAndUpdate(
-        { filter },
-        { $push: { leaveRequests: request } }
-      );
-      res.status(201).json(result);
-    } catch (error) {
-      res.status(409).json({ error: error.message });
+    const request = {
+      status: "pending",
+      reason: reason,
+      fromDate: fromDate,
+      toDate: toDate,
+      totalDays: days,
+    };
+
+    let user = "";
+    try {
+      user = await User.findById(userId);
+    } catch (err) {
+      const error = new HttpError("Could not find user for provided id.", 404);
+      return next(error);
     }
+
+    try {
+      user.leaveRequests.push(request);
+      user.save();
+    } catch (err) {
+      const error = new HttpError(
+        "Creating leave failed, please try again.",
+        500
+      );
+      return next(error);
+    }
+
+    res.status(201).json("Leave Request Created!");
   }
 };
 const signup = async (req, res) => {
