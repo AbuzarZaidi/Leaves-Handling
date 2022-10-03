@@ -15,7 +15,8 @@ const leaveRequest = async (req, res, next) => {
     return next(
       new HttpError("Invalid inputs passed, please check your data.", 422)
     );
-  } else {
+  } 
+  else {
     let date1 = new Date(toDate);
     let date2 = new Date(fromDate);
     let daysInMsec = date1.getTime() - date2.getTime();
