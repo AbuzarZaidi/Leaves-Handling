@@ -109,16 +109,16 @@ const createUser = async (req, res, next) => {
 
 //edit user
 const editUser = async (req, res, next) => {
-  const _id = req.params.id;
+  const userId = req.params.uid;
   const { name, email, password, type } = req.body;
-  console.log(name, email, password);
+
   if (!name || !email || !password || !type) {
     const error = new HttpError("Please fill the complete form!", 422);
     return next(error);
   } else if (!validator.isEmail(email) || password.length < 6) {
     const error = new HttpError("Invalid username or password", 422);
     return next(error);
-  } else {
+  } 
     let hashedPassword;
     try {
       hashedPassword = await bcrypt.hash(password, 12);
@@ -130,20 +130,20 @@ const editUser = async (req, res, next) => {
       return next(error);
     }
     const user = {
-      name,
-      email,
+      name:name,
+      email:email,
       password: hashedPassword,
-      type,
+      type:type,
     };
     try {
-      const result = await User.findOneAndUpdate(_id, user);
+      const result = await User.findOneAndUpdate({_id:userId}, user);
+      
+      console.log(result)
+      return res.status(201).json({ message: "User updated Successfully" });
     } catch (err) {
       const error = new HttpError("Something went wrong.", 500);
       return next(error);
     }
-
-    return res.status(201).json({ message: "User updated Successfully" });
-  }
 };
 
 exports.updateLeavesRequest = updateLeavesRequest;
