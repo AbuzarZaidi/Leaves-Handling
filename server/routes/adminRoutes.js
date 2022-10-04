@@ -7,7 +7,7 @@ router.patch('/updateStatus/:uid',adminController.updateLeavesRequest);
 router.get('/getApprovalRequest',adminController.getApprovalRequest);
 router.get('/usersList',adminController.usersList);
 router.post('/createUser',adminController.createUser);
- router.post('/editUser/:uid',adminController.editUser);
+ router.patch('/editUser/:uid',adminController.editUser);
 router.delete('/deleteUser/:uid',adminController.deleteUser);
  
 module.exports = router;
