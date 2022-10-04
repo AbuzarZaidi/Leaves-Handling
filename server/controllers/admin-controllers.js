@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const bcrypt = require('bcryptjs');
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const updateLeavesRequest = async (req, res, next) => {
@@ -40,7 +41,7 @@ const getApprovalRequest = async (req, res, next) => {
 };
 
 //list of users
-const usersList=async(req,res,next)=>{
+const usersList = async (req, res, next) => {
   let result;
   try {
     result = await User.find();
@@ -48,77 +49,89 @@ const usersList=async(req,res,next)=>{
     const error = new HttpError("Something went wrong.", 500);
     return next(error);
   }
-  res.status(200).json(result)
-}
+  res.status(200).json(result);
+};
 //delete user from userlist
-const deleteUser=async(req,res,next)=>{
-  const userId=req.params.uid;
+const deleteUser = async (req, res, next) => {
+  const userId = req.params.uid;
   try {
-    await User.findByIdAndRemove({_id:userId});
+    await User.findByIdAndRemove({ _id: userId });
   } catch (err) {
     const error = new HttpError("Something went wrong.", 500);
     return next(error);
   }
-  res.status(200).json('User Delete Successfully')
-}
+  res.status(200).json("User Delete Successfully");
+};
 
 //create user
-const createUser = async (req, res) => {
-  const { name, email, password,type } = req.body;
+const createUser = async (req, res,next) => {
+  const { name, email, password, type } = req.body;
   console.log(name, email, password);
-  if (!name || !email || !password ||!type) {
-    res.status(422).json({ error: "Please fill the complete form!" });
+  if (!name || !email || !password || !type) {
+    const error = new HttpError("Please fill the complete form!" , 422);
+    return next(error);
   }
-
+  let userExist;
   try {
-    const userExist = await User.findOne({ email: email });
-    console.log(userExist);
-    console.log(typeof userExist);
-
+    userExist = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("Please Try Again" , 422);
+    return next(error);
+  
+  }
     if (userExist) {
-      res.status(422).json({ error: "Email Already Exist!" });
+      const error = new HttpError("Email Already Exist!", 422);
+      return next(error);
     } else if (!validator.isEmail(email) || password.length < 6) {
-      res.status(422).json({ error: "Invalid username or password" });
+      const error = new HttpError("Invalid username or password", 422);
+      return next(error);
     } else {
+      let hashedPassword;
+      try {
+        hashedPassword = await bcrypt.hash(password, 12);
+      } catch (err) {
+        const error = new HttpError(
+          'Could not create user, please try again.',
+          500
+        );
+        return next(error);
+      }
       const user = new User({
         name,
         email,
-        password,
-        type
+        password:hashedPassword,
+        type,
       });
       console.log(user);
       await user.save();
       return res.status(201).json({ message: "User Created Successfully" });
     }
-  } catch (error) {
-    res.status(422).json({ message: "Please Try Again" });
-  }
+ 
 };
 
 //edit user
-const editUser=async(req,res,next)=>{
+const editUser = async (req, res, next) => {
   const _id = req.params.id;
-  const { name, email, password,type } = req.body;
+  const { name, email, password, type } = req.body;
   console.log(name, email, password);
-  if (!name || !email || !password ||!type) {
+  if (!name || !email || !password || !type) {
     res.status(422).json({ error: "Please fill the complete form!" });
   }
   const user = {
     name,
     email,
     password,
-    type
-  }
+    type,
+  };
   try {
-    const result=await User.findOneAndUpdate(_id,user);
+    const result = await User.findOneAndUpdate(_id, user);
   } catch (err) {
     const error = new HttpError("Something went wrong.", 500);
     return next(error);
   }
 
   return res.status(201).json({ message: "User updated Successfully" });
-}
-
+};
 
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.getApprovalRequest = getApprovalRequest;
