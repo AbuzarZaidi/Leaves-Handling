@@ -21,8 +21,7 @@ const leaveRequest = async (req, res, next) => {
     let date1 = new Date(toDate);
     let date2 = new Date(fromDate);
     let daysInMsec = date1.getTime() - date2.getTime();
-    const days = Math.ceil(daysInMsec / (1000 * 3600 * 24));
-
+    const days = Math.ceil(daysInMsec / (1000 * 3600 * 24)) + 1;
     const request = {
       status: "pending",
       reason: reason,
@@ -55,17 +54,17 @@ const leaveRequest = async (req, res, next) => {
 };
 
 //get user previous leaves request
-const previousLeavesRequest =async(req,res,next)=>{
+const previousLeavesRequest = async (req, res, next) => {
   const userId = req.params.uid;
   let result;
   try {
-    result = await User.findById({_id:userId}, "leaveRequests");
+    result = await User.findById({ _id: userId }, "leaveRequests");
   } catch (err) {
     const error = new HttpError("Something went wrong.", 500);
     return next(error);
   }
-  res.status(200).json(result)
-}
+  res.status(200).json(result);
+};
 
 //sign up user
 const signup = async (req, res) => {

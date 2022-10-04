@@ -38,5 +38,29 @@ const getApprovalRequest = async (req, res, next) => {
   res.status(200).json(updatedResult);
 };
 
+//list of users
+const usersList=async(req,res,next)=>{
+  let result;
+  try {
+    result = await User.find({}, "name");
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
+    return next(error);
+  }
+  res.status(200).json(result)
+}
+//delete user from userlist
+const deleteUser=async(req,res,next)=>{
+  const userId=req.params.uid;
+  try {
+    await User.findByIdAndRemove({_id:userId});
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
+    return next(error);
+  }
+  res.status(200).json('User Delete Successfully')
+}
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.getApprovalRequest = getApprovalRequest;
+exports.usersList = usersList;
+exports.deleteUser = deleteUser;
