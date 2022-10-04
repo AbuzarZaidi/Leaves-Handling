@@ -1,5 +1,5 @@
 const User = require("../models/users");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const updateLeavesRequest = async (req, res, next) => {
@@ -64,49 +64,47 @@ const deleteUser = async (req, res, next) => {
 };
 
 //create user
-const createUser = async (req, res,next) => {
+const createUser = async (req, res, next) => {
   const { name, email, password, type } = req.body;
   console.log(name, email, password);
   if (!name || !email || !password || !type) {
-    const error = new HttpError("Please fill the complete form!" , 422);
+    const error = new HttpError("Please fill the complete form!", 422);
     return next(error);
   }
   let userExist;
   try {
     userExist = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError("Please Try Again" , 422);
+    const error = new HttpError("Please Try Again", 422);
     return next(error);
-  
   }
-    if (userExist) {
-      const error = new HttpError("Email Already Exist!", 422);
+  if (userExist) {
+    const error = new HttpError("Email Already Exist!", 422);
+    return next(error);
+  } else if (!validator.isEmail(email) || password.length < 6) {
+    const error = new HttpError("Invalid username or password", 422);
+    return next(error);
+  } else {
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(password, 12);
+    } catch (err) {
+      const error = new HttpError(
+        "Could not create user, please try again.",
+        500
+      );
       return next(error);
-    } else if (!validator.isEmail(email) || password.length < 6) {
-      const error = new HttpError("Invalid username or password", 422);
-      return next(error);
-    } else {
-      let hashedPassword;
-      try {
-        hashedPassword = await bcrypt.hash(password, 12);
-      } catch (err) {
-        const error = new HttpError(
-          'Could not create user, please try again.',
-          500
-        );
-        return next(error);
-      }
-      const user = new User({
-        name,
-        email,
-        password:hashedPassword,
-        type,
-      });
-      console.log(user);
-      await user.save();
-      return res.status(201).json({ message: "User Created Successfully" });
     }
- 
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      type,
+    });
+    console.log(user);
+    await user.save();
+    return res.status(201).json({ message: "User Created Successfully" });
+  }
 };
 
 //edit user
@@ -115,22 +113,37 @@ const editUser = async (req, res, next) => {
   const { name, email, password, type } = req.body;
   console.log(name, email, password);
   if (!name || !email || !password || !type) {
-    res.status(422).json({ error: "Please fill the complete form!" });
-  }
-  const user = {
-    name,
-    email,
-    password,
-    type,
-  };
-  try {
-    const result = await User.findOneAndUpdate(_id, user);
-  } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
+    const error = new HttpError("Please fill the complete form!", 422);
     return next(error);
-  }
+  } else if (!validator.isEmail(email) || password.length < 6) {
+    const error = new HttpError("Invalid username or password", 422);
+    return next(error);
+  } else {
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(password, 12);
+    } catch (err) {
+      const error = new HttpError(
+        "Could not create user, please try again.",
+        500
+      );
+      return next(error);
+    }
+    const user = {
+      name,
+      email,
+      password: hashedPassword,
+      type,
+    };
+    try {
+      const result = await User.findOneAndUpdate(_id, user);
+    } catch (err) {
+      const error = new HttpError("Something went wrong.", 500);
+      return next(error);
+    }
 
-  return res.status(201).json({ message: "User updated Successfully" });
+    return res.status(201).json({ message: "User updated Successfully" });
+  }
 };
 
 exports.updateLeavesRequest = updateLeavesRequest;
