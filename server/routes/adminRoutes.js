@@ -2,10 +2,12 @@ const adminController = require('../controllers/admin-controllers');
 const express=require('express');
 const router=express.Router();
 
-router.post('/updateStatus/:uid',adminController.updateLeavesRequest);
+
+router.patch('/updateStatus/:uid',adminController.updateLeavesRequest);
 router.get('/getApprovalRequest',adminController.getApprovalRequest);
 router.get('/usersList',adminController.usersList);
-router.get('/user',adminController.usersList);
+router.post('/createUser',adminController.createUser);
+ router.patch('/editUser/:uid',adminController.editUser);
 router.delete('/deleteUser/:uid',adminController.deleteUser);
  
 module.exports = router;
