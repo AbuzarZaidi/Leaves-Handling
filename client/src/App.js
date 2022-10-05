@@ -4,8 +4,10 @@ import SideBar from './components/SideBar'
 import Navbar from './components/Navbar'
 import ApplyForLeave from './pages/ApplyForLeave';
 
-function App() {
 
+
+function App() {
+ 
   return (
     
       <Grid container >

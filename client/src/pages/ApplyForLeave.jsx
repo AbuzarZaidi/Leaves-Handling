@@ -6,12 +6,12 @@ import {
   Button,
 } from "../utlis/materialUIComponents";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import DatePicker from "../components/DatePicker";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
+import DateRange from "../components/applyRequest/DateRange";
 const Text = styled(Typography)(({ theme }) => ({
     [theme.breakpoints.down("md")]: {
         fontSize: "20px",
@@ -40,14 +40,14 @@ const ApplyForLeave = () => {
             fontWeight: 600,
             fontSize: "32px",
             ml: 3,
-            mb: 3,
+            mb: 4,
           }}
         >
           Apply For Leave Request
         </Text>
       </Box>
 
-      <DatePicker />
+      <DateRange />
 
       {/* Select Manager */}
 
