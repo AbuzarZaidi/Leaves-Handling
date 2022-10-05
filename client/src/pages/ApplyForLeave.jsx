@@ -20,58 +20,15 @@ const ApplyForLeave = () => {
             fontWeight: 600,
             fontSize: "32px",
             ml: 3,
+            mb:3
           }}
         >
           Apply For Leave Request
         </Typography>
       </Box>
+    
       <DatePicker/>
-       {/* start date */}
-      <Box sx={{ display: "flex", ml: 5, mt: 1 }}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{
-            fontFamily: "Montserrat",
-            fontWeight: 600,
-            fontSize: "16px",
-            ml: 3,
-          }}
-        >
-          Select your start date
-        </Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          sx={{ width: "90%" }}
-          type="date"
-        />
-      </Box>
-      {/* end date */}
-      <Box sx={{ display: "flex", ml: 5, mt: 0.5}}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{
-            fontFamily: "Montserrat",
-            fontWeight: 600,
-            fontSize: "16px",
-            ml: 3,
-          }}
-        >
-          Select your end date
-        </Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          sx={{ width: "90%" }}
-          type="date"
-        />
-      </Box>
+  
       {/* Select Manager */}
       <Box sx={{ display: "flex", ml: 5, mt: 0.5 }}>
         <Typography
