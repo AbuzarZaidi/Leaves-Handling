@@ -69,12 +69,11 @@ const previousLeavesRequest = async (req, res, next) => {
 //login
 const login = async (req, res, next) => {
   const { email, password } = req.body;
- 
+
   let existingUser;
 
   try {
     existingUser = await User.findOne({ email: email });
-   
   } catch (err) {
     const error = new HttpError(
       "Logging in failed, please try again later.",
@@ -92,7 +91,6 @@ const login = async (req, res, next) => {
   let isValidPassword = false;
   try {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
-
   } catch (err) {
     const error = new HttpError(
       "Could not log you in, please check your credentials and try again.",
@@ -117,33 +115,33 @@ const login = async (req, res, next) => {
 //change password
 const passwordChange = async (req, res, next) => {
   const userId = req.params.uid;
-  const {password,confirmPassword}=req.body;
-  if(!password||!confirmPassword||password!==confirmPassword){
-    const error = new HttpError(
-      "Invalid credentials",
-      403
-    );
+  const { password, confirmPassword } = req.body;
+  if (!password || !confirmPassword || password !== confirmPassword) {
+    const error = new HttpError("Invalid credentials", 403);
     return next(error);
   }
   let user;
   let hashedPassword;
-    try {
-      hashedPassword = await bcrypt.hash(password, 12);
-    } catch (err) {
-      const error = new HttpError(
-        "Could not create user, please try again.",
-        500
-      );
-      return next(error);
-    }
-    try {
-      const result = await User.findOneAndUpdate({_id:userId}, {password:hashedPassword});
-    } catch (err) {
-      const error = new HttpError("Something went wrong.", 500);
-      return next(error);
-    }
-    
-  res.status(200).json("password changed successfully")
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not create user, please try again.",
+      500
+    );
+    return next(error);
+  }
+  try {
+    const result = await User.findOneAndUpdate(
+      { _id: userId },
+      { password: hashedPassword }
+    );
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
+    return next(error);
+  }
+
+  res.status(200).json("password changed successfully");
 };
 
 exports.leaveRequest = leaveRequest;

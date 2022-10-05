@@ -1,34 +1,24 @@
-import React,{useState} from 'react'
-import axios from 'axios'
-// 6339e961f46fed48377d3cb2
-const url='http://localhost:5000/user/leaveRequest/6339e961f46fed48377d3cb2'
+import React from 'react'
+import {Grid} from './utlis/materialUIComponents'
+import SideBar from './components/SideBar'
+import Navbar from './components/Navbar'
+import ApplyForLeave from './pages/ApplyForLeave';
+
 function App() {
-  const [date1,setDate1]=useState("")
-  const [date2,setDate2]=useState("")
-  const [reason,setReason]=useState("")
-  const sendData=()=>{
-const newLeave={
-  reason:reason,
-  fromDate:date1,
-  toDate:date2
-}
-try {
-  const createLeave=axios.post(url,newLeave)
-  console.log(createLeave)
-} catch (error) {
-  console.log(error);
-  
-}
-   
-   
-  }
+
   return (
-    <div>
-      <input type="date" name="date1"  onChange={(e)=>setDate1(e.target.value)}/>
-      <input type="date" name="date2"  onChange={(e)=>setDate2(e.target.value)}/>
-      <input type="text" name="reason"  onChange={(e)=>setReason(e.target.value)}/>
-      <button onClick={sendData}>send</button>
-    </div>
+    
+      <Grid container >
+        <Grid item xs={0} md={2} lg={2} sx={{display:{xs:"none",md:"flex",lg:"flex"},backgroundColor:"#0A1833" ,height:"100vh",}}>
+          <SideBar/>
+        </Grid>
+        <Grid item xs={12} md={10} lg={10}>
+          <Navbar/>
+          <ApplyForLeave/>
+        </Grid>
+        </Grid>
+      
+    
   );
 }
 

@@ -12,7 +12,7 @@ const usersSchema = new Schema({
       reason: { type: String },
       fromDate: { type: String },
       toDate: { type: String },
-      totalDays:{ type: String },
+      totalDays: { type: String },
     },
   ],
 });

@@ -118,37 +118,41 @@ const editUser = async (req, res, next) => {
   } else if (!validator.isEmail(email) || password.length < 6) {
     const error = new HttpError("Invalid username or password", 422);
     return next(error);
-  } 
-    let hashedPassword;
-    try {
-      hashedPassword = await bcrypt.hash(password, 12);
-    } catch (err) {
-      const error = new HttpError(
-        "Could not create user, please try again.",
-        500
-      );
-      return next(error);
-    }
-    const user = {
-      name:name,
-      email:email,
-      password: hashedPassword,
-      type:type,
-    };
-    try {
-      const result = await User.findOneAndUpdate({_id:userId}, user);
-      
-      console.log(result)
-      return res.status(201).json({ message: "User updated Successfully" });
-    } catch (err) {
-      const error = new HttpError("Something went wrong.", 500);
-      return next(error);
-    }
-};
+  }
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not create user, please try again.",
+      500
+    );
+    return next(error);
+  }
+  const user = {
+    name: name,
+    email: email,
+    password: hashedPassword,
+    type: type,
+  };
+  try {
+    const result = await User.findOneAndUpdate({ _id: userId }, user);
 
+    console.log(result);
+    return res.status(201).json({ message: "User updated Successfully" });
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
+    return next(error);
+  }
+};
+//onbehalf leave request
+const onBehalfLeaveRequest=async(req,res,next)=>{
+//can use simple create leave route
+}
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.getApprovalRequest = getApprovalRequest;
 exports.usersList = usersList;
 exports.createUser = createUser;
 exports.deleteUser = deleteUser;
 exports.editUser = editUser;
+exports.onBehalfLeaveRequest = onBehalfLeaveRequest;
