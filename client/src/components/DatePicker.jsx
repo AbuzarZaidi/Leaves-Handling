@@ -1,8 +1,10 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
+import {
+    Box,
+    Typography,
+    TextField,
+    Stack
+  } from "../utlis/materialUIComponents";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { MobileDateRangePicker } from "@mui/x-date-pickers-pro/MobileDateRangePicker";
@@ -35,10 +37,10 @@ const DatePicker = () => {
                   display: { xs: "flex", md: "none", lg: "none" },
                   flexDirection: "column",
                   m: "auto",
-                  width: "90%"
+                  width: "90%",
                 }}
               >
-                <TextField {...startProps}  />
+                <TextField {...startProps} />
                 <Box sx={{ m: "auto" }}>
                   {" "}
                   <Typography variant="h6" component="div" gutterBottom>

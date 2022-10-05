@@ -11,6 +11,17 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { styled } from "@mui/material/styles";
+const Text = styled(Typography)(({ theme }) => ({
+    [theme.breakpoints.down("md")]: {
+        fontSize: "20px",
+    },
+  }));
+  const IconText = styled(Typography)(({ theme }) => ({
+    [theme.breakpoints.down("md")]: {
+        // fontSize: "20px",
+    },
+  }));
 const ApplyForLeave = () => {
   const [age, setAge] = React.useState("");
 
@@ -20,8 +31,8 @@ const ApplyForLeave = () => {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <DescriptionOutlinedIcon sx={{ fontSize: "42px", fontWeight: 400 }} />
-        <Typography
+       <IconText sx={{fontSize: "42px",}}> <DescriptionOutlinedIcon sx={{  fontWeight: 400 }} /></IconText>
+        <Text 
           variant="h4"
           gutterBottom
           sx={{
@@ -33,7 +44,7 @@ const ApplyForLeave = () => {
           }}
         >
           Apply For Leave Request
-        </Typography>
+        </Text>
       </Box>
 
       <DatePicker />
@@ -41,9 +52,10 @@ const ApplyForLeave = () => {
       {/* Select Manager */}
 
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-       
         <FormControl sx={{ width: "90%" }}>
-          <InputLabel id="demo-simple-select-label">Select your manager</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Select your manager
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -66,7 +78,6 @@ const ApplyForLeave = () => {
           multiline
           sx={{ width: "90%" }}
           rows={2}
-          
         />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>

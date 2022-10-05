@@ -13,5 +13,6 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from '@mui/material/TextField';
 import Badge from "@mui/material/Badge";
+import Stack from "@mui/material/Stack";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-export {Grid,Box,AppBar,Toolbar,IconButton,Typography,Menu,MenuIcon,Container,Avatar,Button,Tooltip,MenuItem,Badge,NotificationsIcon,TextField};
+export {Grid,Box,AppBar,Toolbar,IconButton,Typography,Menu,MenuIcon,Container,Avatar,Button,Tooltip,MenuItem,Badge,NotificationsIcon,TextField,Stack};
