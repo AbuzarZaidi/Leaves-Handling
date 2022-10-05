@@ -17,9 +17,9 @@ const Text = styled(Typography)(({ theme }) => ({
         fontSize: "20px",
     },
   }));
-  const IconText = styled(Typography)(({ theme }) => ({
+  const IconText = styled(DescriptionOutlinedIcon)(({ theme }) => ({
     [theme.breakpoints.down("md")]: {
-        // fontSize: "20px",
+        fontSize: "25px",
     },
   }));
 const ApplyForLeave = () => {
@@ -31,7 +31,7 @@ const ApplyForLeave = () => {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-       <IconText sx={{fontSize: "42px",}}> <DescriptionOutlinedIcon sx={{  fontWeight: 400 }} /></IconText>
+        <IconText sx={{  fontWeight: 400, fontSize: "40px", }} />
         <Text 
           variant="h4"
           gutterBottom
