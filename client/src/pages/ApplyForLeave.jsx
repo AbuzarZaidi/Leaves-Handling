@@ -7,7 +7,16 @@ import {
 } from "../utlis/materialUIComponents";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DatePicker from "../components/DatePicker";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 const ApplyForLeave = () => {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
@@ -20,61 +29,44 @@ const ApplyForLeave = () => {
             fontWeight: 600,
             fontSize: "32px",
             ml: 3,
-            mb:3
+            mb: 3,
           }}
         >
           Apply For Leave Request
         </Typography>
       </Box>
-    
-      <DatePicker/>
-  
+
+      <DatePicker />
+
       {/* Select Manager */}
-      <Box sx={{ display: "flex", ml: 5, mt: 0.5 }}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{
-            fontFamily: "Montserrat",
-            fontWeight: 600,
-            fontSize: "16px",
-            ml: 3,
-          }}
-        >
-          Select your manager
-        </Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          sx={{ width: "90%",p:0 }}
-          type="date"
-        />
+
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+       
+        <FormControl sx={{ width: "90%" }}>
+          <InputLabel id="demo-simple-select-label">Select your manager</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            label="Select your manager"
+            onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       {/* tell your reason */}
-      <Box sx={{ display: "flex", ml: 5, mt: 0.5 }}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{
-            fontFamily: "Montserrat",
-            fontWeight: 600,
-            fontSize: "16px",
-            ml: 3,
-          }}
-        >
-          Tell your reason
-        </Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", }}>
+
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
         <TextField
           id="outlined-multiline-static"
-          //   label="Multiline"
+          label=" Tell your reason"
           multiline
           sx={{ width: "90%" }}
           rows={2}
-          //   defaultValue="Default Value"
+          
         />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>

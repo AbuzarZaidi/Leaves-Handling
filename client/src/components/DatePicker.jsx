@@ -16,26 +16,42 @@ const DatePicker = () => {
 
   return (
     <Stack spacing={3}>
-      <Box sx={{ display: { xs: "flex", md: "none", lg: "none" } }}>
-        <LocalizationProvider
-          dateAdapter={AdapterDayjs}
-          localeText={{ start: "Mobile start", end: "Mobile end" }}
-        >
-          <MobileDateRangePicker
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-            renderInput={(startProps, endProps) => (
-              <React.Fragment>
-                <TextField {...startProps} />
-                <Box sx={{ mx: 2 }}> to </Box>
+      <LocalizationProvider
+        dateAdapter={AdapterDayjs}
+        localeText={{
+          start: "Select your start date",
+          end: "Select your end date",
+        }}
+      >
+        <MobileDateRangePicker
+          value={value}
+          onChange={(newValue) => {
+            setValue(newValue);
+          }}
+          renderInput={(startProps, endProps) => (
+            <React.Fragment>
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "none", lg: "none" },
+                  flexDirection: "column",
+                  m: "auto",
+                  width: "90%"
+                }}
+              >
+                <TextField {...startProps}  />
+                <Box sx={{ m: "auto" }}>
+                  {" "}
+                  <Typography variant="h6" component="div" gutterBottom>
+                    To
+                  </Typography>
+                </Box>
                 <TextField {...endProps} />
-              </React.Fragment>
-            )}
-          />
-        </LocalizationProvider>
-      </Box>
+              </Box>
+            </React.Fragment>
+          )}
+        />
+      </LocalizationProvider>
+
       <LocalizationProvider
         dateAdapter={AdapterDayjs}
         localeText={{
@@ -50,15 +66,21 @@ const DatePicker = () => {
           }}
           renderInput={(startProps, endProps) => (
             <React.Fragment>
-              <Box sx={{width:"100%",display:"flex",justifyContent:"center"}}>
-              <TextField {...startProps} sx={{ width: "42.5%", }} />
-              <Box sx={{ mx: 2,mt:1 }}>
-                {" "}
-                <Typography variant="h6" component="div" gutterBottom>
-                  To
-                </Typography>
-              </Box>
-              <TextField {...endProps} sx={{ width: "42.5%" }} />
+              <Box
+                sx={{
+                  width: "100%",
+                  display: { xs: "none", md: "flex", lg: "flex" },
+                  justifyContent: "center",
+                }}
+              >
+                <TextField {...startProps} sx={{ width: "42.5%" }} />
+                <Box sx={{ mx: 2, mt: 1 }}>
+                  {" "}
+                  <Typography variant="h6" component="div" gutterBottom>
+                    To
+                  </Typography>
+                </Box>
+                <TextField {...endProps} sx={{ width: "42.5%" }} />
               </Box>
             </React.Fragment>
           )}
