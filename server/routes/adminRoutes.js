@@ -9,5 +9,7 @@ router.post("/onBehalfLeaveRequest/:uid", adminController.onBehalfLeaveRequest);
 router.patch("/editUser/:uid", adminController.editUser);
 router.patch("/updateStatus/:uid", adminController.updateLeavesRequest);
 router.delete("/deleteUser/:uid", adminController.deleteUser);
+router.delete("/deleteUser/:uid", adminController.deleteUser);
+router.post("/employeesLeaves", adminController.employeesLeaves);
 
 module.exports = router;

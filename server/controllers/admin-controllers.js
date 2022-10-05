@@ -145,10 +145,18 @@ const editUser = async (req, res, next) => {
     return next(error);
   }
 };
+//employeesLeaves
+const employeesLeaves=async(req,res,next)=>{
+  console.log(req.body)
+const data=req.body;
+
+res.json(data)
+}
 //onbehalf leave request
 const onBehalfLeaveRequest=async(req,res,next)=>{
 //can use simple create leave route
 }
+
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.getApprovalRequest = getApprovalRequest;
 exports.usersList = usersList;
@@ -156,3 +164,4 @@ exports.createUser = createUser;
 exports.deleteUser = deleteUser;
 exports.editUser = editUser;
 exports.onBehalfLeaveRequest = onBehalfLeaveRequest;
+exports.employeesLeaves = employeesLeaves;

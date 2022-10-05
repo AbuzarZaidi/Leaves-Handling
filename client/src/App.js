@@ -3,7 +3,7 @@ import {Grid} from './utlis/materialUIComponents'
 import SideBar from './components/SideBar'
 import Navbar from './components/Navbar'
 import ApplyForLeave from './pages/ApplyForLeave';
-
+import EmployeesLeaves from './pages/EmployeesLeaves';
 
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
         </Grid>
         <Grid item xs={12} md={10} lg={10}>
           <Navbar/>
-          <ApplyForLeave/>
+          {/* <ApplyForLeave/> */}
+          <EmployeesLeaves/>
         </Grid>
         </Grid>
       
