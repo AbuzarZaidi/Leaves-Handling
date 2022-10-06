@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 const Sidebar = () => {
   return (
     <>
@@ -72,6 +73,28 @@ const Sidebar = () => {
             Tech
           </Typography>
         </Box>
+        <Box sx={{}}>
+       
+     <Box sx={{mt:"70%",color:"#00E5D9", fontFamily: "Montserrat",fontSize: "14px" ,display: "flex",
+justifyContent: "center",
+alignItems: "center"}}>
+  <img src="icons/applyForLeaveMenuIcon.png" style={{marginRight:"5px"}}/>Apply for Leave
+   
+     </Box>
+     <Box sx={{mt:"20%",color:"#00E5D9", fontFamily: "Montserrat",fontSize: "14px",display: "flex",
+
+alignItems: "center"}}>
+      <img src="icons/myLeavesMenuIcon.png" style={{marginRight:"5px",marginLeft:"8px"}} />My Leave
+     </Box>
+     </Box>
+
+     <Box sx={{mt:"130%"}}>
+     <Box sx={{mt:"20%",color:"#ffffff", fontFamily: "Montserrat",fontSize: "14px",display: "flex",
+
+alignItems: "center"}}>
+      <img src="icons/logout.png" style={{marginRight:"5px",marginLeft:"8px"}} />Logout
+     </Box>
+     </Box>
       </Box>
     </>
   );
