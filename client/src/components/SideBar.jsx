@@ -45,8 +45,8 @@ const Sidebar = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", mt: 0.5 }}>
+        <Box sx={{ display: "flex"}}>
+          <Box sx={{ display: "flex", flexDirection: "column",mt:"-2px"}}>
             <img src="/icons/logoLine.png" width="85px"></img>
             <Typography
               sx={{
@@ -54,6 +54,7 @@ const Sidebar = () => {
                 fontWeight: 400,
                 fontSize: "8px",
                 color: "#ffffff",
+                mt:"-5px"
               }}
             >
               You name it, We make it
@@ -65,6 +66,7 @@ const Sidebar = () => {
               fontWeight: 700,
               fontSize: "25px",
               color: "#ffffff",
+            mt:"-10px"
             }}
           >
             Tech
