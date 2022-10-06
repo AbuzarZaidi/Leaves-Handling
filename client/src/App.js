@@ -2,9 +2,9 @@ import React from 'react'
 import {Grid} from './utlis/materialUIComponents'
 import SideBar from './components/SideBar'
 import Navbar from './components/Navbar'
-import ApplyForLeave from './pages/ApplyForLeave';
-import EmployeesLeaves from './pages/EmployeesLeaves';
-
+// import ApplyForLeave from './pages/ApplyForLeave';
+// import EmployeesLeaves from './pages/EmployeesLeaves';
+import MyLeaves from './pages/MyLeaves';
 
 function App() {
  
@@ -16,8 +16,9 @@ function App() {
         </Grid>
         <Grid item xs={12} md={10} lg={10}>
           <Navbar/>
+          <MyLeaves/>
           {/* <ApplyForLeave/> */}
-          <EmployeesLeaves/>
+          {/* <EmployeesLeaves/> */}
         </Grid>
         </Grid>
       

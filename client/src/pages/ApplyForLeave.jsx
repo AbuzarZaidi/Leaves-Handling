@@ -51,7 +51,7 @@ const ApplyForLeave = () => {
 
       {/* Select Manager */}
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2,fontFamily: "Montserrat", }}>
         <FormControl sx={{ width: "90%" }}>
           <InputLabel id="demo-simple-select-label">
             Select your manager
