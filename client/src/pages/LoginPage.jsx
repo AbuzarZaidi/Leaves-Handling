@@ -129,7 +129,8 @@ const LoginPage = () => {
           <Grid item xs={3} sx={{ mt: 2 }}>
             <TextField
               id="outlined-basic"
-              label="Email"
+              label="Password"
+           
               variant="outlined"
               sx={{
                 backgroundColor: "#ffffff",
@@ -147,36 +148,14 @@ const LoginPage = () => {
                 fontWeight: "medium",
                 fontSize: "16px",
                 mt: 3,
+                textTransform:"capitalize"
               }}
             >
-              Apply
+              Log in
             </Button>
           </Grid>
         </Grid>
-        {/* <Box sx={{display:"flex",justifyContent:"center"}}>
- 
-  </Box>
-  <Box sx={{display:"flex",justifyContent:"center",alignItem:"center",mt:3}}>
-  <TextField id="outlined-basic" label="Email" variant="outlined" sx={{backgroundColor:"#ffffff",width:"450px",borderRadius: 1}}/>
-  </Box>
-  <Box sx={{display:"flex",justifyContent:"center",alignItem:"center",mt:3}}>
- 
-  </Box>
-  <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#00B2A9",
-            width: "240px",
-            fontWeight: "medium",
-            fontSize: "16px",
-            mt:3
-          }}
-        >
-          Apply
-        </Button>
-      </Box>
-       */}
+       
       </Box>
     </>
   );
