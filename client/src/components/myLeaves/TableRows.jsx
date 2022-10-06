@@ -9,7 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Typography } from "@mui/material";
-
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 const columns = [
   { id: "count", label: "#", minWidth: 80 },
   { id: "name", label: "Name", minWidth: 170 },
@@ -46,15 +48,16 @@ const rows = [
   createData(
     "1",
     "syed Abuzar zaidi",
-    "detail",
+    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium a corporis, pariatur exercitationem saepe rem asperiores repellat corrupti aut officia!",
     "05/10/2022",
     "05/10/2022",
     "pending"
   ),
+  
   createData(
     "2",
     "syed Abuzar zaidi",
-    "detail",
+    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium a corporis, pariatur exercitationem saepe rem asperiores repellat corrupti aut officia!",
     "05/10/2022",
     "05/10/2022",
     "pending"
@@ -62,7 +65,7 @@ const rows = [
   createData(
     "3",
     "syed Abuzar zaidi",
-    "detail",
+    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium a corporis, pariatur exercitationem saepe rem asperiores repellat corrupti aut officia!",
     "05/10/2022",
     "05/10/2022",
     "approved"
@@ -172,6 +175,17 @@ const rows = [
     "pending"
   ),
 ];
+const CustomWidthTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 300,
+    backgroundColor: "#0A1833",
+    padding: "20px",
+  },
+});
+
+
 
 const TableRows = () => {
   const [page, setPage] = React.useState(0);
@@ -190,31 +204,26 @@ const TableRows = () => {
     <Paper sx={{ width: "80%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
-        {/* <Box  sx={{
+          {/* <Box  sx={{
                     border: 1,
                     borderColor: "text.primary",
                     borderRadius: 1,
                   }}> */}
-                 
+
           <TableHead>
-        
-            <TableRow sx={{backgroundColor:"green"}}>
-             
+            <TableRow sx={{ backgroundColor: "green" }}>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth, fontWeight: 600 }}
-                 
                 >
                   {column.label}
                 </TableCell>
               ))}
-             
             </TableRow>
-           
           </TableHead>
-        
+
           {/* </Box> */}
           <TableBody>
             {rows
@@ -226,9 +235,44 @@ const TableRows = () => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.id === "status"
-                            ? <Typography sx={{color:value==='approved'?"green":"red",fontSize:"18px"}}>{value}</Typography>
-                            : `${value==="detail"?"Detail":value}`}
+                            {column.id==="reason"?<div>
+                                  <CustomWidthTooltip title={value}>
+                                    <Button sx={{ m: 1,color:"black" }}>
+                                     Detail
+                                    </Button>
+                                  </CustomWidthTooltip></div>:column.id === "status"? <Typography
+                              sx={{
+                                color: value === "approved" ? "green" : "red",
+                                fontSize: "18px",
+                              }}
+                            >
+                              {value}
+                            </Typography>:value}
+                                {/* :({column.id === "status" ? :value})} */}
+                          {/* {column.id === "status" ? (
+                            <Typography
+                              sx={{
+                                color: value === "approved" ? "green" : "red",
+                                fontSize: "18px",
+                              }}
+                            >
+                              {value}
+                            </Typography>
+                          ) : (
+                            `${
+                                column.id  === "reason" ? (
+                                <div>
+                                  <CustomWidthTooltip title={longText}>
+                                    <Button sx={{ m: 1 }}>
+                                      Custom Width [500px]
+                                    </Button>
+                                  </CustomWidthTooltip>
+                                </div>
+                              ) : (
+                                value
+                              )
+                            }`
+                          )} */}
                         </TableCell>
                       );
                     })}
@@ -238,7 +282,6 @@ const TableRows = () => {
           </TableBody>
         </Table>
       </TableContainer>
-   
     </Paper>
   );
 };
