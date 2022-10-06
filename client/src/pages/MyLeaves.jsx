@@ -1,6 +1,5 @@
 import React from "react";
-import TableRows from '../components/myLeaves/TableRows'
-import TableHeadings from '../components/myLeaves/TableHeadings'
+import MyPreviousLeaves from "../components/myLeaves/MyPreviousLeaves";
 import {
   Box,
   Typography,
@@ -49,11 +48,12 @@ const MyLeaves = () => {
           My Leaves
         </Text>
       </Box>
-      <TableHeadings/>
-      <Box sx={{width:"95%",ml:3,display:"flex",justifyContent:"center"}}>
-        
-     <TableRows/>
-     </Box>
+
+      <Box
+        sx={{ width: "95%", ml: 3, display: "flex", justifyContent: "center" }}
+      >
+        <MyPreviousLeaves />
+      </Box>
     </>
   );
 };
