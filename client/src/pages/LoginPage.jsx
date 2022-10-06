@@ -58,7 +58,7 @@ const LoginPage = () => {
             >
               St
             </Typography>
-            <img src="/icons/star.png" style={{ marginTop: "10px" }} />
+            <img src="/icons/star.png" />
             <Typography
               sx={{
                 fontFamily: "Serpentine",
@@ -73,7 +73,7 @@ const LoginPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={3} sx={{ display: "flex",mb:2 }}>
-          <Box sx={{ display: "flex", flexDirection: "column",mt:"-10px" }}>
+          <Box sx={{ display: "flex", flexDirection: "column",mt:"-8px" }}>
             <img src="/icons/logoLine.png" width="120px" ></img>
             <Typography
               sx={{
@@ -81,7 +81,7 @@ const LoginPage = () => {
                 fontWeight: 400,
                 fontSize: "11px",
                 color: "#ffffff",
-                mt:"-10px" 
+                mt:"-8px" 
               }}
             >
               You name it, We make it
