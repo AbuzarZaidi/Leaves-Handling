@@ -30,7 +30,7 @@ const LoginPage = () => {
           style={{ minHeight: "100vh" }}
         >
           <Grid item xs={3}>
-            <img src="/icons/logo.png" alt="" width="120px" />
+            <img src="/icons/logoforlogin.png" alt="" width="120px" />
           </Grid>
 
           <Grid item xs={3} sx={{ display: "flex" }}>
@@ -77,7 +77,7 @@ const LoginPage = () => {
             <img src="/icons/logoLine.png" width="120px" ></img>
             <Typography
               sx={{
-                fontFamily: "Serpentine-Light",
+                fontFamily: "sen-serif",
                 fontWeight: 400,
                 fontSize: "11px",
                 color: "#ffffff",
