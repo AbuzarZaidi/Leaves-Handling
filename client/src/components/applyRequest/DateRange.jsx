@@ -65,7 +65,7 @@ const DateRange = () => {
               setStartDate(newValue);
             }}
             renderInput={(params) => (
-              <TextField {...params} sx={{ width: "42%" }} />
+              <TextField {...params} sx={{ width: "42.5%" }} />
             )}
           />
            <Typography variant="h6" component="div" gutterBottom sx={{mx:2,mt:1}}>
@@ -79,7 +79,7 @@ const DateRange = () => {
               setEndDate(newValue);
             }}
             renderInput={(params) => (
-              <TextField {...params} sx={{ width: "42%" }} />
+              <TextField {...params} sx={{ width: "42.5%" }} />
             )}
           />
         </Box>

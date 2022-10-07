@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -6,8 +7,43 @@ import {
   Button,
   Grid,
 } from "../utlis/materialUIComponents";
+import { useDispatch } from "react-redux";
+import { setLoginHandler, setIdHandler } from "../store/auth";
+const { login } = require("../functions/auth");
 
 const LoginPage = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const loginHandler=async()=>{
+    if (email && password) {
+      const user = {
+        email,
+        password,
+      };
+      
+      const result = await login(user);
+      if (result.response) {
+        console.log("error")
+      }
+      else{
+        dispatch(setLoginHandler());
+        dispatch(setIdHandler(result.userId));
+        navigate("/applyforleaves")
+      
+      }
+      console.log(result)
+      // if (result.response) {
+        
+        // if (result.response.status === 422 || result.response.status === 400) {
+        //   setShowError(true);
+        //   setErrorMessage(result.response.data.error);
+        //   setTimeout(() => {
+        //     setShowError(false);
+        //   }, 2000);
+        // }
+  }}
   return (
     <>
       <Box
@@ -72,32 +108,32 @@ const LoginPage = () => {
               r
             </Typography>
           </Grid>
-          <Grid item xs={3} sx={{ display: "flex",mb:2 }}>
-          <Box sx={{ display: "flex", flexDirection: "column",mt:"-8px" }}>
-            <img src="/icons/logoLine.png" width="120px" ></img>
+          <Grid item xs={3} sx={{ display: "flex", mb: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", mt: "-8px" }}>
+              <img src="/icons/logoLine.png" width="120px"></img>
+              <Typography
+                sx={{
+                  fontFamily: "sen-serif",
+                  fontWeight: 400,
+                  fontSize: "11px",
+                  color: "#ffffff",
+                  mt: "-8px",
+                }}
+              >
+                You name it, We make it
+              </Typography>
+            </Box>
             <Typography
               sx={{
-                fontFamily: "sen-serif",
-                fontWeight: 400,
-                fontSize: "11px",
+                fontFamily: "Serpentine",
+                fontWeight: 700,
+                fontSize: "35px",
                 color: "#ffffff",
-                mt:"-8px" 
+                mt: "-20px",
               }}
             >
-              You name it, We make it
+              Tech
             </Typography>
-          </Box>
-          <Typography
-            sx={{
-              fontFamily: "Serpentine",
-              fontWeight: 700,
-              fontSize: "35px",
-              color: "#ffffff",
-              mt:"-20px" 
-            }}
-          >
-            Tech
-          </Typography>
           </Grid>
           <Grid item xs={3}>
             <Typography
@@ -108,16 +144,36 @@ const LoginPage = () => {
                 fontWeight: 600,
                 fontSize: "29px",
                 color: "#ffffff",
-                
               }}
             >
               LOG In
             </Typography>
           </Grid>
+          <form>
           <Grid item xs={3} sx={{ mt: 2 }}>
             <TextField
-              id="outlined-basic"
-              label="Email"
+             onChange={(e)=>setEmail(e.target.value)}
+             value={email}
+              id="email"
+              // label="Email"
+              placeholder="Email"
+              variant="outlined"
+              sx={{
+                backgroundColor: "#ffffff",
+                width: "450px",
+                borderRadius: 1,
+               
+              }}
+            />
+          </Grid>
+          <Grid item xs={3} sx={{ mt: 2 }}>
+            <TextField
+             onChange={(e)=>setPassword(e.target.value)}
+             value={password}
+              id="Password"
+              // label="Password"
+              placeholder="Password"
+              type="password"
               variant="outlined"
               sx={{
                 backgroundColor: "#ffffff",
@@ -125,20 +181,9 @@ const LoginPage = () => {
                 borderRadius: 1,
               }}
             />
+          
           </Grid>
-          <Grid item xs={3} sx={{ mt: 2 }}>
-            <TextField
-              id="outlined-basic"
-              label="Password"
-           
-              variant="outlined"
-              sx={{
-                backgroundColor: "#ffffff",
-                width: "450px",
-                borderRadius: 1,
-              }}
-            />
-          </Grid>
+          </form>
           <Grid item xs={3} sx={{ mt: 3 }}>
             <Button
               variant="contained"
@@ -148,14 +193,14 @@ const LoginPage = () => {
                 fontWeight: "medium",
                 fontSize: "16px",
                 mt: 3,
-                textTransform:"capitalize"
+                textTransform: "capitalize",
               }}
+              onClick={loginHandler}
             >
               Log in
             </Button>
           </Grid>
         </Grid>
-       
       </Box>
     </>
   );
