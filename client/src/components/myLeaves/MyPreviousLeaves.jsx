@@ -1,14 +1,14 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
+
 import TableRow from "@mui/material/TableRow";
-import { Typography } from "@mui/material";
+
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -39,143 +39,9 @@ const columns = [
       format: (value) => value.toFixed(2),
     },
   ];
+
   
-  function createData(count, name, reason, fromDate, toDate, status) {
-    //   const density = population / size;
-    return { count, name, reason, fromDate, toDate, status };
-  }
-  
-  const rows = [
-    createData(
-      "1",
-      "syed Abuzar zaidi",
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium a corporis, pariatur exercitationem saepe rem asperiores repellat corrupti aut officia!",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    
-    createData(
-      "2",
-      "syed Abuzar zaidi",
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium a corporis, pariatur exercitationem saepe rem asperiores repellat corrupti aut officia!",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "3",
-      "syed Abuzar zaidi",
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium a corporis, pariatur exercitationem saepe rem asperiores repellat corrupti aut officia!",
-      "05/10/2022",
-      "05/10/2022",
-      "approved"
-    ),
-    createData(
-      "4",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "approved"
-    ),
-    createData(
-      "5",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "approved"
-    ),
-    createData(
-      "6",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "rejected"
-    ),
-    createData(
-      "7",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "rejected"
-    ),
-    createData(
-      "8",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "rejected"
-    ),
-    createData(
-      "9",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "10",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "11",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "12",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "13",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "14",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "15",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-    createData(
-      "16",
-      "syed Abuzar zaidi",
-      "detail",
-      "05/10/2022",
-      "05/10/2022",
-      "pending"
-    ),
-  ];
+ 
   const CustomWidthTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))({
@@ -187,25 +53,25 @@ const columns = [
   });
   
   
-const MyPreviousLeaves = () => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+const MyPreviousLeaves = ({myPreviousLeaves,userName}) => {
+    // const [page, setPage] = React.useState(0);
+    // const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
+    // const handleChangePage = (event, newPage) => {
+    //   setPage(newPage);
+    // };
   
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
+    // const handleChangeRowsPerPage = (event) => {
+    //   setRowsPerPage(+event.target.value);
+    //   setPage(0);
+    // };
   
   return (
 <Paper sx={{ width: "80%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow sx={{ backgroundColor: "green" }}>
+            <TableRow >
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
@@ -218,34 +84,22 @@ const MyPreviousLeaves = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                            {column.id==="reason"?<div>
-                                  <CustomWidthTooltip title={value}>
-                                    <Button sx={{ m: 1,color:"black" }}>
+       
+      {myPreviousLeaves.map((val,ind)=>{
+    return(    <TableRow>
+<TableCell id="count" label= "#" sx={{minWidth:80}} >{ind}</TableCell>
+<TableCell id="name" label= "Name" sx={{minWidth:170}}>{userName}</TableCell>
+<TableCell id="reason"   label= "From" sx={{minWidth:80,textAlign:"left"}}><div>
+                                  <CustomWidthTooltip title={val.reason}>
+                                    <Button sx={{color:"black" }}>
                                      Detail <ExpandMoreIcon/>
                                     </Button>
-                                  </CustomWidthTooltip></div>:column.id === "status"? <Typography
-                              sx={{
-                                color: value === "approved" ? "green" : "red",
-                                fontSize: "16px",
-                              }}
-                            >
-                              {value}
-                            </Typography>:value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+                                  </CustomWidthTooltip></div></TableCell>
+<TableCell id="fromDate" label= "#" sx={{minWidth:80,textAlign:"left"}}>{val.fromDate}</TableCell>
+<TableCell id="toDate" label= "To" sx={{minWidth:80,textAlign:"left"}}>{val.toDate}</TableCell>
+<TableCell id="status" label= "Status" sx={{textTransform:"capitalize",fontSize: "16px",fontWeight:600,minWidth:100,textAlign:"left",color: val.status === "approved" ? "green" :val.status==="pending"? "orange":"red"}}>{val.status}</TableCell>
+            </TableRow>)
+      })}
           </TableBody>
         </Table>
       </TableContainer>

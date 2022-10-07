@@ -1,8 +1,8 @@
-import React,{useState} from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import { useSelector,useDispatch} from "react-redux";
 import { Typography } from "@mui/material";
-import { useNavigate,Link,useLocation } from "react-router-dom";
+import { useNavigate,Link} from "react-router-dom";
 import Button from '@mui/material/Button';
 import { setlogoutHandler,setLocationHandler } from "../store/auth";
 import Modal from '@mui/material/Modal';
@@ -11,8 +11,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 360,
-  width: 260,
+  width: 350,
+  height: 250,
   bgcolor: 'background.paper',
   // border: '2px solid #000',
   boxShadow: 24,
@@ -46,17 +46,21 @@ const Sidebar = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Box sx={{display:"flex",justifyContent:"center",mt:2}}>
+          <Box sx={{display:"flex",justifyContent:"center",mt:"45px"}}>
         <img
-              src="icons/modal_logout.png" width="40px"/>
+              src="icons/modal_logout.png" width="60px" alt="icon"/>
            </Box>
            <Box sx={{display:"flex",justifyContent:"center",mt:1.5}}>
-           <Typography sx={{fontWeight:"bold",fontSize:"14px",fontFamily:"Montserrat"}}>Are you sure</Typography>
+           <Typography sx={{fontWeight:600,fontSize:"18px",fontFamily:"Montserrat"}}>Are you sure</Typography>
            </Box>
            <Box>
-           <Box sx={{display:"flex",justifyContent:"center",mt:2,mb:3}}>
-           <Button onClick={handleClose} variant="outlined" size="medium" sx={{textTransform: "capitalize",mr:1,borderColor:"#1F2533"}}>Cancel</Button>
-           <Button onClick={logoutHandler} variant="contained" size="medium" sx={{textTransform: "capitalize",backgroundColor:"#1F2533"}}>Log out</Button>
+           <Box sx={{display:"flex",justifyContent:"center",mt:3,mb:3}}>
+           <Button onClick={handleClose} variant="outlined" sx={{textTransform: "capitalize",mr:1,borderColor:"#1F2533",px:3,borderRadius: '10px'}}>Cancel</Button>
+           <Button onClick={logoutHandler} variant="contained"  sx={{textTransform: "capitalize",backgroundColor:"#1F2533",px:3,borderRadius: '10px',"&:hover": {
+              backgroundColor: "#1F2533",
+              color:"#ffffff",
+             
+            },}}>Log out</Button>
            </Box>
            </Box>
         </Box>
@@ -90,7 +94,7 @@ const Sidebar = () => {
           >
             St
           </Typography>
-          <img src="/icons/star.png" style={{ marginTop: "10px" }} />
+          <img src="/icons/star.png" style={{ marginTop: "10px" }} alt="icon" />
           <Typography
             sx={{
               fontFamily: "Serpentine",
@@ -106,7 +110,7 @@ const Sidebar = () => {
 
         <Box sx={{ display: "flex" }}>
           <Box sx={{ display: "flex", flexDirection: "column", mt: "-2px" }}>
-            <img src="/icons/logoLine.png" width="85px"></img>
+            <img src="/icons/logoLine.png" width="85px" alt="icon"></img>
             <Typography
               sx={{
                 fontFamily: "Serpentine-Light",
@@ -138,7 +142,7 @@ const Sidebar = () => {
             sx={{
               mt: "70%",
                // color: "#00E5D9",
-               color: loc === "/applyforleaves" ? "#ffffff" : "#00E5D9",
+               color: loc === "/applyforleaves" ? "#00E5D9" : "#ffffff",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
@@ -147,8 +151,9 @@ const Sidebar = () => {
             }}
           >
             <img
-              src="icons/applyForLeaveMenuIcon.png"
+              src={loc === "/applyforleaves" ?"icons/applyForLeaveMenuIcon.png":"icons/applyForLeaveMenuActive.png"}
               style={{ marginRight: "5px" ,color: "#ffffff", }}
+              alt="icon"
             />
             Apply for Leave
           </Box>
@@ -158,19 +163,20 @@ const Sidebar = () => {
           onClick={()=>checkLocationHandler("/myleaves")}
             sx={{
               mt: "20%",
-              color: "#00E5D9",
-              color: loc === "/myleaves" ? "#ffffff" : "#00E5D9",
+             
+              color: loc === "/myleaves" ?  "#00E5D9": "#ffffff",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
-              // textDecoration:"none",
+              
               alignItems: "center",
             }}
           >
            
             <img
-              src="icons/myLeavesMenuIcon.png"
+              src={loc === "/myleaves"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
               style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
+              alt="icon"
             />
             My Leave
            
@@ -194,6 +200,7 @@ cursor:"pointer",
             <img
               src="icons/logout.png"
               style={{ marginRight: "5px", marginLeft: "8px" }}
+              alt="logouticon"
             />
             Logout
           </Box>

@@ -63,7 +63,7 @@ const previousLeavesRequest = async (req, res, next) => {
     const error = new HttpError("Something went wrong.", 500);
     return next(error);
   }
-  res.status(200).json(result);
+  res.status(200).json(result.leaveRequests);
 };
 
 //login

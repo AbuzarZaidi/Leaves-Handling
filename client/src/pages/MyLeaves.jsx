@@ -1,10 +1,10 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import MyPreviousLeaves from "../components/myLeaves/MyPreviousLeaves";
+import {getPreviousLeaves} from '../functions/employees'
+import { useSelector} from "react-redux";
 import {
   Box,
   Typography,
-  TextField,
-  Button,
 } from "../utlis/materialUIComponents";
 import { styled } from "@mui/material/styles";
 const Text = styled(Typography)(({ theme }) => ({
@@ -19,6 +19,23 @@ const Icon = styled(Typography)(({ theme }) => ({
   },
 }));
 const MyLeaves = () => {
+  const id= useSelector((state) => state.authData.id);
+  const userName= useSelector((state) => state.authData.userName);
+  const [myLeaves,setMyLeaves]=useState([]);
+  useEffect(() => {
+    const data=async()=>{
+      try {
+        const result = await getPreviousLeaves(id);
+        setMyLeaves(result)
+      console.log(result)
+      } catch (error) {
+       console.log(error) 
+      }
+      
+    }
+    data()
+  }, [id])
+  
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
@@ -52,7 +69,7 @@ const MyLeaves = () => {
       <Box
         sx={{ width: "95%", ml: 3, display: "flex", justifyContent: "center" }}
       >
-        <MyPreviousLeaves />
+        <MyPreviousLeaves myPreviousLeaves={myLeaves} userName={userName}/>
       </Box>
     </>
   );

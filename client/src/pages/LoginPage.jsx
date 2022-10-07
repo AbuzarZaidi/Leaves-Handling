@@ -97,7 +97,7 @@ const LoginPage = () => {
             >
               St
             </Typography>
-            <img src="/icons/star.png" />
+            <img src="/icons/star.png" alt="icon"/>
             <Typography
               sx={{
                 fontFamily: "Serpentine",
@@ -113,7 +113,7 @@ const LoginPage = () => {
           </Grid>
           <Grid item xs={3} sx={{ display: "flex", mb: 2 }}>
             <Box sx={{ display: "flex", flexDirection: "column", mt: "-8px" }}>
-              <img src="/icons/logoLine.png" width="120px"></img>
+              <img src="/icons/logoLine.png" width="120px" alt="icon"></img>
               <Typography
                 sx={{
                   fontFamily: "sen-serif",
@@ -189,14 +189,22 @@ const LoginPage = () => {
           </form>
           <Grid item xs={3} sx={{ mt: 3 }}>
             <Button
-              variant="contained"
+              variant="outlined"
               sx={{
-                backgroundColor: "#00B2A9",
+                // backgroundColor: "#00B2A9",
+                color:"#ffffff",
                 width: "240px",
-                fontWeight: "medium",
+                fontWeight: 600,
                 fontSize: "16px",
                 mt: 3,
                 textTransform: "capitalize",
+                border: 3,
+                borderColor:"#00B2A9",
+                "&:hover": {
+                  backgroundColor: "#00AFFF",
+                  border: 3,
+                  borderColor: "#00AFFF",
+                },
               }}
               onClick={loginHandler}
             >

@@ -13,15 +13,15 @@ import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 import DateRange from "../components/applyRequest/DateRange";
 const Text = styled(Typography)(({ theme }) => ({
-    [theme.breakpoints.down("md")]: {
-        fontSize: "20px",
-    },
-  }));
-  const IconText = styled(DescriptionOutlinedIcon)(({ theme }) => ({
-    [theme.breakpoints.down("md")]: {
-        fontSize: "25px",
-    },
-  }));
+  [theme.breakpoints.down("md")]: {
+    fontSize: "20px",
+  },
+}));
+const IconText = styled(DescriptionOutlinedIcon)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    fontSize: "25px",
+  },
+}));
 const ApplyForLeave = () => {
   const [age, setAge] = React.useState("");
 
@@ -30,9 +30,9 @@ const ApplyForLeave = () => {
   };
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <IconText sx={{  fontWeight: 400, fontSize: "40px", }} />
-        <Text 
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+        <IconText sx={{ fontWeight: 400, fontSize: "40px" }} />
+        <Text
           variant="h4"
           gutterBottom
           sx={{
@@ -40,7 +40,7 @@ const ApplyForLeave = () => {
             fontWeight: 600,
             fontSize: "32px",
             ml: 3,
-            mb: 4,
+            mb: 3,
           }}
         >
           Apply For Leave Request
@@ -51,7 +51,14 @@ const ApplyForLeave = () => {
 
       {/* Select Manager */}
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2,fontFamily: "Montserrat", }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 2,
+          fontFamily: "Montserrat",
+        }}
+      >
         <FormControl sx={{ width: "90%" }}>
           <InputLabel id="demo-simple-select-label">
             Select your manager
@@ -77,17 +84,26 @@ const ApplyForLeave = () => {
           label=" Tell your reason"
           multiline
           sx={{ width: "90%" }}
-          rows={2}
+          rows={3}
         />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
         <Button
-          variant="contained"
+          variant="outlined"
           sx={{
-            backgroundColor: "#007F78",
+            color:"#1F2533",
+            fontFamily:"Montserrat",
             width: "240px",
-            fontWeight: "medium",
-            fontSize: "16px",
+            fontWeight: 600,
+            fontSize: "14px",
+            border: 3,
+                borderColor:"#007F78",
+            "&:hover": {
+              backgroundColor: "#1F2533",
+              color:"#ffffff",
+              border: 3,
+              borderColor: "#1F2533",
+            },
           }}
         >
           Apply
