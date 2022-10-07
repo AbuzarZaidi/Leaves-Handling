@@ -7,3 +7,11 @@ export const getPreviousLeaves = async (userId) => {
       console.log(error);
     }
   };
+  export const createNewLeaveRequest = async (leave,userId) => {
+    try {
+      const { data } = await api.applyForLeave(leave,userId);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };

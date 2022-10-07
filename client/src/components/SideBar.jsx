@@ -135,7 +135,7 @@ const Sidebar = () => {
             Tech
           </Typography>
         </Box>
-        <Box sx={{}}>
+        <Box >
         <Link to="/applyforleaves" style={{textDecoration:"none",}}>
           <Box
            onClick={()=>checkLocationHandler("/applyforleaves")}

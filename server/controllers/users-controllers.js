@@ -8,6 +8,11 @@ const leaveRequest = async (req, res, next) => {
   const reason = req.body.reason;
   const fromDate = req.body.fromDate;
   const toDate = req.body.toDate;
+  console.log("create leave")
+  console.log(userId)
+  console.log(reason)
+  console.log(fromDate)
+  console.log(toDate)
   console.log(!validator.isEmpty(toDate));
   if (
     validator.isEmpty(reason) ||
@@ -145,8 +150,18 @@ const passwordChange = async (req, res, next) => {
 
   res.status(200).json("password changed successfully");
 };
+const getManagersName=async(req,res,next)=>{
+try {
+  const data=await User.find({type:'manager'});
+ console.log(data)
+ res.json(data)
+} catch (error) {
+  
+}
+}
 
 exports.leaveRequest = leaveRequest;
 exports.previousLeavesRequest = previousLeavesRequest;
 exports.login = login;
 exports.passwordChange = passwordChange;
+exports.getManagersName = getManagersName;

@@ -27,7 +27,7 @@ const MyLeaves = () => {
       try {
         const result = await getPreviousLeaves(id);
         setMyLeaves(result)
-      console.log(result)
+    
       } catch (error) {
        console.log(error) 
       }

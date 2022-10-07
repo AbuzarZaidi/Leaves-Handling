@@ -100,6 +100,7 @@ const createUser = async (req, res, next) => {
       email,
       password: hashedPassword,
       type,
+      position:"manager"
     });
     console.log(user);
     await user.save();

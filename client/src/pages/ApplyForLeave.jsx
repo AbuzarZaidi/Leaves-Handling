@@ -1,4 +1,6 @@
-import React from "react";
+import React,{useState} from "react";
+import { createNewLeaveRequest} from '../functions/employees'
+import { useSelector} from "react-redux";
 import {
   Box,
   Typography,
@@ -23,11 +25,24 @@ const IconText = styled(DescriptionOutlinedIcon)(({ theme }) => ({
   },
 }));
 const ApplyForLeave = () => {
+  const id= useSelector((state) => state.authData.id);
+  const startDate= useSelector((state) => state.leave.startDate);
+  const endDate= useSelector((state) => state.leave.endDate);
+  const [reasonValue,setReasonValue]=useState("");
   const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  const applyForLeaveHandler=async()=>{
+    const request={
+      reason:reasonValue,
+      fromDate:startDate,
+      toDate:endDate
+    }
+const data=await createNewLeaveRequest(request,id)
+console.log(data)
+  }
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
@@ -85,10 +100,12 @@ const ApplyForLeave = () => {
           multiline
           sx={{ width: "90%" }}
           rows={3}
+          onChange={(e)=>setReasonValue(e.target.value)}
         />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
         <Button
+        onClick={applyForLeaveHandler}
           variant="outlined"
           sx={{
             color:"#1F2533",

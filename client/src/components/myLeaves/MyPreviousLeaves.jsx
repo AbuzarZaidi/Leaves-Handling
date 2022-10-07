@@ -87,7 +87,7 @@ const MyPreviousLeaves = ({myPreviousLeaves,userName}) => {
        
       {myPreviousLeaves.map((val,ind)=>{
     return(    <TableRow>
-<TableCell id="count" label= "#" sx={{minWidth:80}} >{ind}</TableCell>
+<TableCell id="count" label= "#" sx={{minWidth:80}} >{ind+1}</TableCell>
 <TableCell id="name" label= "Name" sx={{minWidth:170}}>{userName}</TableCell>
 <TableCell id="reason"   label= "From" sx={{minWidth:80,textAlign:"left"}}><div>
                                   <CustomWidthTooltip title={val.reason}>

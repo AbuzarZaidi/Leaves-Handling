@@ -4,15 +4,23 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useDispatch } from "react-redux";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
+import {  setStartDateHandler,setEndDateHandler} from "../../store/applyForLeave";
 const DateRange = () => {
   const [startDate, setStartDate] = React.useState(dayjs());
+  const dispatch = useDispatch();
   const [endDate, setEndDate] = React.useState(dayjs());
-
+const startDateHandler=(newValue)=>{
+  setStartDate(newValue)
+}
+const endDateHandler=(newValue)=>{
+  console.log(newValue)
+  console.log("m")
+}
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack spacing={3}>
@@ -27,6 +35,7 @@ const DateRange = () => {
             value={startDate}
             onChange={(newValue) => {
               setStartDate(newValue);
+              dispatch(setStartDate(newValue))
             }}
             renderInput={(params) => (
               <TextField {...params} sx={{ width: "90%" }} />
@@ -44,7 +53,8 @@ const DateRange = () => {
             label="Select your end date"
             value={endDate}
             onChange={(newValue) => {
-              setEndDate(newValue);
+              setEndDate(newValue)
+              dispatch(setEndDateHandler(newValue))
             }}
             renderInput={(params) => (
               <TextField {...params} sx={{ width: "90%" }} />
@@ -62,7 +72,8 @@ const DateRange = () => {
             value={startDate}
             // minDate={dayjs('2017-01-01')}
             onChange={(newValue) => {
-              setStartDate(newValue);
+              startDateHandler(newValue);
+              dispatch(setStartDateHandler(newValue))
             }}
             renderInput={(params) => (
               <TextField {...params} sx={{ width: "42.5%" }} />
@@ -77,21 +88,13 @@ const DateRange = () => {
             // minDate={dayjs('2017-01-01')}
             onChange={(newValue) => {
               setEndDate(newValue);
+              dispatch(setEndDateHandler(newValue))
             }}
             renderInput={(params) => (
               <TextField {...params} sx={{ width: "42.5%" }} />
             )}
           />
         </Box>
-        {/* <Box
-          sx={{
-            display: { xs: "none", md: "flex", lg: "flex" },
-            justifyContent: "center",
-          }}
-        >
-     
-          
-        </Box> */}
       </Stack>
     </LocalizationProvider>
   );

@@ -24,7 +24,7 @@ const LoginPage = () => {
       };
       
       const result = await login(user);
-      console.log(result)
+      
       if (result.response) {
         console.log("error")
       }

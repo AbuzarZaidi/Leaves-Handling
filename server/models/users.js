@@ -6,9 +6,11 @@ const usersSchema = new Schema({
   password: { type: String, required: true, minlength: 6 },
   type: { type: String, required: true },
   probation: { type: String },
+  position: { type: String },
   leaveRequests: [
     {
       status: { type: String },
+     
       reason: { type: String },
       fromDate: { type: String },
       toDate: { type: String },
