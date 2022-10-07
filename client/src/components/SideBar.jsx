@@ -1,10 +1,10 @@
-import React from "react";
+import React,{useState} from "react";
 import Box from "@mui/material/Box";
+import { useSelector,useDispatch} from "react-redux";
 import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate,Link,useLocation } from "react-router-dom";
 import Button from '@mui/material/Button';
-import { setlogoutHandler } from "../store/auth";
+import { setlogoutHandler,setLocationHandler } from "../store/auth";
 import Modal from '@mui/material/Modal';
 const style = {
   position: 'absolute',
@@ -19,6 +19,8 @@ const style = {
   // p: 1,
 };
 const Sidebar = () => {
+ 
+  const loc= useSelector((state) => state.authData.location);
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -27,6 +29,11 @@ const Sidebar = () => {
   const logoutHandler=()=>{
     dispatch(setlogoutHandler());
     navigate("/")
+  }
+  const checkLocationHandler=(val)=>{
+   
+    dispatch(setLocationHandler(val));
+  
   }
   return (
     <>
@@ -125,10 +132,13 @@ const Sidebar = () => {
           </Typography>
         </Box>
         <Box sx={{}}>
+        <Link to="/applyforleaves" style={{textDecoration:"none",}}>
           <Box
+           onClick={()=>checkLocationHandler("/applyforleaves")}
             sx={{
               mt: "70%",
-              color: "#00E5D9",
+               // color: "#00E5D9",
+               color: loc === "/applyforleaves" ? "#ffffff" : "#00E5D9",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
@@ -138,27 +148,34 @@ const Sidebar = () => {
           >
             <img
               src="icons/applyForLeaveMenuIcon.png"
-              style={{ marginRight: "5px" }}
+              style={{ marginRight: "5px" ,color: "#ffffff", }}
             />
             Apply for Leave
           </Box>
+          </Link>
+          <Link to="/myleaves" style={{textDecoration:"none",}}>
           <Box
+          onClick={()=>checkLocationHandler("/myleaves")}
             sx={{
               mt: "20%",
               color: "#00E5D9",
+              color: loc === "/myleaves" ? "#ffffff" : "#00E5D9",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
-
+              // textDecoration:"none",
               alignItems: "center",
             }}
           >
+           
             <img
               src="icons/myLeavesMenuIcon.png"
-              style={{ marginRight: "5px", marginLeft: "8px" }}
+              style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
             />
             My Leave
+           
           </Box>
+          </Link>
         </Box>
 
         <Box sx={{ mt: "130%" }}>

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSelector,useDispatch} from "react-redux";
 import {Box,AppBar,Toolbar,IconButton,Typography,Menu,MenuIcon,Container,Avatar,Tooltip,MenuItem,Badge,NotificationsIcon} from '../utlis/materialUIComponents'
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -6,7 +7,8 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const userName= useSelector((state) => state.authData.userName);
+  const position= useSelector((state) => state.authData.position);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -63,7 +65,7 @@ const Navbar = () => {
           </Box>
           <Box sx={{display:"flex",flexDirection:"column",ml:2 }}>
           <Typography variant="button" gutterBottom sx={{m:0,p:0,mb:0.5,fontWeight:  500, fontSize: 16}}>
-        Abuzar
+       {userName}
       </Typography>
       <Typography variant="caption"  sx={{m:0,p:0,mt:-1,fontSize: 12}}>
         Employee

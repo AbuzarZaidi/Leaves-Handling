@@ -8,7 +8,7 @@ import {
   Grid,
 } from "../utlis/materialUIComponents";
 import { useDispatch } from "react-redux";
-import { setLoginHandler, setIdHandler } from "../store/auth";
+import { setLoginHandler, setIdHandler,setNameHandler,setPositionHandler } from "../store/auth";
 const { login } = require("../functions/auth");
 
 const LoginPage = () => {
@@ -24,12 +24,15 @@ const LoginPage = () => {
       };
       
       const result = await login(user);
+      console.log(result)
       if (result.response) {
         console.log("error")
       }
       else{
         dispatch(setLoginHandler());
         dispatch(setIdHandler(result.userId));
+        dispatch(setNameHandler(result.name))
+        dispatch(setPositionHandler(result.position))
         navigate("/applyforleaves")
       
       }
