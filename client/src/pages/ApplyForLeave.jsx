@@ -1,6 +1,8 @@
-import React,{useState} from "react";
-import { createNewLeaveRequest} from '../functions/employees'
-import { useSelector} from "react-redux";
+import React,{useState,useEffect} from "react";
+import { createNewLeaveRequest,getManagers} from '../functions/employees'
+import { useSelector,useDispatch} from "react-redux";
+import {  setStartDateHandler,setEndDateHandler} from "../store/applyForLeave";
+import dayjs from "dayjs";
 import {
   Box,
   Typography,
@@ -25,20 +27,37 @@ const IconText = styled(DescriptionOutlinedIcon)(({ theme }) => ({
   },
 }));
 const ApplyForLeave = () => {
+  const dispatch = useDispatch();
   const id= useSelector((state) => state.authData.id);
   const startDate= useSelector((state) => state.leave.startDate);
   const endDate= useSelector((state) => state.leave.endDate);
   const [reasonValue,setReasonValue]=useState("");
-  const [age, setAge] = React.useState("");
+  const [managers,setManagers]=useState([]);
+  const [manager, setManager] = React.useState("");
+useEffect(() => {
+  const data=async()=>{
+    dispatch(setStartDateHandler(new Date().toISOString()))
+    dispatch(setEndDateHandler(new Date().toISOString()))
+    try {
+      const result = await getManagers();
+      setManagers(result)
+      console.log(result)
+    } catch (error) {
+     console.log(error) 
+    }
+  }
+  data();
+}, [])
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setManager(event.target.value);
   };
   const applyForLeaveHandler=async()=>{
     const request={
       reason:reasonValue,
       fromDate:startDate,
-      toDate:endDate
+      toDate:endDate,
+      manager:manager,
     }
 const data=await createNewLeaveRequest(request,id)
 console.log(data)
@@ -81,13 +100,13 @@ console.log(data)
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={manager}
             label="Select your manager"
             onChange={handleChange}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {managers.length>0?managers.map((val)=>{
+              return <MenuItem value={val._id}>{val.name}</MenuItem>
+            }):"no found"}
           </Select>
         </FormControl>
       </Box>

@@ -8,16 +8,19 @@ const leaveRequest = async (req, res, next) => {
   const reason = req.body.reason;
   const fromDate = req.body.fromDate;
   const toDate = req.body.toDate;
+  const manager=req.body.manager
   console.log("create leave")
   console.log(userId)
   console.log(reason)
   console.log(fromDate)
   console.log(toDate)
+  console.log(manager)
   console.log(!validator.isEmpty(toDate));
   if (
     validator.isEmpty(reason) ||
     validator.isEmpty(fromDate) ||
-    validator.isEmpty(toDate)
+    validator.isEmpty(toDate)||
+    validator.isEmpty(manager)
   ) {
     return next(
       new HttpError("Invalid inputs passed, please check your data.", 422)
@@ -33,6 +36,7 @@ const leaveRequest = async (req, res, next) => {
       fromDate: fromDate,
       toDate: toDate,
       totalDays: days,
+      manager:manager,
     };
 
     let user = "";
@@ -152,11 +156,12 @@ const passwordChange = async (req, res, next) => {
 };
 const getManagersName=async(req,res,next)=>{
 try {
-  const data=await User.find({type:'manager'});
- console.log(data)
+  const data=await User.find({type:'manager'},'name');
+
  res.json(data)
-} catch (error) {
-  
+} catch (err) {
+  const error = new HttpError("Something went wrong.", 500);
+    return next(error);
 }
 }
 

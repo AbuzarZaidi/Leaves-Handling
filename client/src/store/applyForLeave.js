@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 const initialCounterState = { startDate:"",endDate:""};
 const leaveSlice = createSlice({
     name: "applyForLeave",
