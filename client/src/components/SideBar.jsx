@@ -182,7 +182,7 @@ const Sidebar = () => {
            
           </Box>
           </Link>
-          <Link to="/createnewemployee" style={{textDecoration:"none",}}>
+          <Link to="/changepassword" style={{textDecoration:"none",}}>
           <Box
           onClick={()=>checkLocationHandler("/createnewemployee")}
             sx={{
@@ -202,7 +202,7 @@ const Sidebar = () => {
               style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
               alt="icon"
             />
-            Add
+            Change password
            
           </Box>
           </Link>
