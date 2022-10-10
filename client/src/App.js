@@ -20,7 +20,7 @@ function App() {
          {isLogin&& <Route path="/myleaves" element={<PageStructure><MyLeaves /></PageStructure>} />}
          {isLogin&& <Route path="/applyforleaves" element={<PageStructure><ApplyForLeave /></PageStructure>} />}
          {isLogin&&  <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />}
-         {isLogin&&  <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />}
+           <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />
            <Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />
          
           <Route path="/changepassword" element={<PageStructure><ChangePassword /></PageStructure>} />
