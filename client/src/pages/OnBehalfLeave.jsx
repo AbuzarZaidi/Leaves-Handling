@@ -63,7 +63,7 @@ const OnBehalfLeave = () => {
       }
     }
     data();
-  }, [])
+  }, [dispatch])
   
     const handleChange = (event) => {
       setManager(event.target.value);

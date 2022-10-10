@@ -206,7 +206,30 @@ const Sidebar = () => {
            
           </Box>
           </Link>
-
+          <Link to="/employeesleaves" style={{textDecoration:"none",}}>
+          <Box
+          onClick={()=>checkLocationHandler("/employeesleaves")}
+            sx={{
+              mt: "20%",
+             
+              color: loc === "/employeesleaves" ?  "#00E5D9": "#ffffff",
+              fontFamily: "Montserrat",
+              fontSize: "14px",
+              display: "flex",
+              
+              alignItems: "center",
+            }}
+          >
+           
+            <img
+              src={loc === "/employeesleaves"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
+              style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
+              alt="icon"
+            />
+           Employee Leaves
+           
+          </Box>
+          </Link>
           {/* <Link to="/createnewemployee" style={{textDecoration:"none",}}>
           <Box
           onClick={()=>checkLocationHandler("/createnewemployee")}

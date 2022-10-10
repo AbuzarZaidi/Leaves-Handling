@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import { Routes, Route} from "react-router-dom";
 import { useSelector} from "react-redux";
 import ApplyForLeave from "./pages/ApplyForLeave";
@@ -18,8 +18,9 @@ function App() {
           <Routes>
            <Route path="/" element={<LoginPage />} />
          {isLogin&& <Route path="/myleaves" element={<PageStructure><MyLeaves /></PageStructure>} />}
+         
          {isLogin&& <Route path="/applyforleaves" element={<PageStructure><ApplyForLeave /></PageStructure>} />}
-         {isLogin&&  <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />}
+          <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />
            <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />
            <Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />
          

@@ -2,8 +2,8 @@ import React from 'react'
 import {
     Box,
     Typography,
-    TextField,
-    Button,
+    // TextField,
+    // Button,
   } from "../../utlis/materialUIComponents";
 const SingleUser = () => {
   return (
@@ -25,8 +25,8 @@ const SingleUser = () => {
             <Typography sx={{ ml: 4,width:"270px" }}>Syed Abuzar Zaidi</Typography>
           </Box>
           <Box sx={{ display: "flex", mr: 4 }}>
-            <Typography sx={{ fontWeight: "bold", mr: 4 }}><img src="/icons/userlistdeletebutton.png"></img></Typography>
-            <Typography sx={{ fontWeight: "bold" }}><img src="/icons/userlisteditbutton.png"></img></Typography>
+            <Typography sx={{ fontWeight: "bold", mr: 4 }}><img alt="delete" src="/icons/userlistdeletebutton.png"></img></Typography>
+            <Typography sx={{ fontWeight: "bold" }}><img alt="edit" src="/icons/userlisteditbutton.png"></img></Typography>
           </Box>
         </Box>
       </Box>
