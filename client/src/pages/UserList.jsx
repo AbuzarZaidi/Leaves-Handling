@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import {allEmployees,deleteEmployee} from '../functions/admins'
 import {
   Box,
   Typography,
@@ -18,6 +19,34 @@ const Icon = styled(Typography)(({ theme }) => ({
   },
 }));
 const UserList = () => {
+const [employees,setEmployees]=useState([]);
+
+  useEffect(() => {
+    const fetchData=async()=>{
+      try {
+        const result=await allEmployees();
+        setEmployees(result)
+        console.log('result')
+        console.log(result)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData();
+    
+  }, [setEmployees])
+ 
+  const deleteUserHandler=async(id)=>{
+    const response=await deleteEmployee(id)
+    console.log('response' )
+    console.log(response )
+    if(response.status===200){
+      const updatedList = employees.filter((user) => user._id !== id);
+      setEmployees(updatedList);
+    }
+    
+  }
+
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
@@ -68,11 +97,9 @@ const UserList = () => {
           </Box>
         </Box>
       </Box>
-      <SingleUser/>
-      <SingleUser/>
-      <SingleUser/>
-      <SingleUser/>
-      <SingleUser/>
+      {employees.map((val,ind)=>{
+ return  <SingleUser key={ind} userName={val.name} id={val._id} userDeleteHandler={deleteUserHandler} />
+      })}
     </>
   );
 };

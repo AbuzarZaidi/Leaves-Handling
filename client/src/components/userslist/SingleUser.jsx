@@ -5,7 +5,7 @@ import {
     // TextField,
     // Button,
   } from "../../utlis/materialUIComponents";
-const SingleUser = () => {
+const SingleUser = ({userName,id,userDeleteHandler}) => {
   return (
     <>
      <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -22,11 +22,11 @@ const SingleUser = () => {
         >
           <Box sx={{ display: "flex", ml: 2 }}>
             <Typography >1</Typography>
-            <Typography sx={{ ml: 4,width:"270px" }}>Syed Abuzar Zaidi</Typography>
+            <Typography sx={{ ml: 4,width:"270px" }}>{userName}</Typography>
           </Box>
           <Box sx={{ display: "flex", mr: 4 }}>
-            <Typography sx={{ fontWeight: "bold", mr: 4 }}><img alt="delete" src="/icons/userlistdeletebutton.png"></img></Typography>
-            <Typography sx={{ fontWeight: "bold" }}><img alt="edit" src="/icons/userlisteditbutton.png"></img></Typography>
+            <Typography sx={{ fontWeight: "bold", mr: 4,cursor:"pointer" }} onClick={()=>userDeleteHandler(id)} ><img alt="delete" src="/icons/userlistdeletebutton.png"></img></Typography>
+            <Typography sx={{ fontWeight: "bold",cursor:"pointer" }}><img alt="edit" src="/icons/userlisteditbutton.png"></img></Typography>
           </Box>
         </Box>
       </Box>
