@@ -182,6 +182,30 @@ const Sidebar = () => {
            
           </Box>
           </Link>
+          <Link to="/onbehalfleave" style={{textDecoration:"none",}}>
+          <Box
+          onClick={()=>checkLocationHandler("/onbehalfleave")}
+            sx={{
+              mt: "20%",
+             
+              color: loc === "/onbehalfleave" ?  "#00E5D9": "#ffffff",
+              fontFamily: "Montserrat",
+              fontSize: "14px",
+              display: "flex",
+              
+              alignItems: "center",
+            }}
+          >
+           
+            <img
+              src={loc === "/onbehalfleave"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
+              style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
+              alt="icon"
+            />
+            OnBehalf Leave
+           
+          </Box>
+          </Link>
         </Box>
 
         <Box sx={{ mt: "130%" }}>
