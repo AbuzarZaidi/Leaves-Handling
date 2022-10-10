@@ -4,50 +4,34 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 //create leave request
 const leaveRequest = async (req, res, next) => {
-  const userId = req.params.uid;
-  const reason = req.body.reason;
-  const fromDate = req.body.fromDate;
-  const toDate = req.body.toDate;
-  const manager=req.body.manager
-  console.log("create leave")
-  console.log(userId)
-  console.log(reason)
-  console.log(fromDate)
-  console.log(toDate)
-  console.log(manager)
-  console.log(!validator.isEmpty(toDate));
-  if (
-    validator.isEmpty(reason) ||
-    validator.isEmpty(fromDate) ||
-    validator.isEmpty(toDate)||
-    validator.isEmpty(manager)
-  ) {
-    return next(
-      new HttpError("Invalid inputs passed, please check your data.", 422)
-    );
-  } else {
-    let date1 = new Date(toDate);
-    let date2 = new Date(fromDate);
-    let daysInMsec = date1.getTime() - date2.getTime();
-    const days = Math.ceil(daysInMsec / (1000 * 3600 * 24)) + 1;
-    const request = {
-      status: "pending",
-      reason: reason,
-      fromDate: fromDate,
-      toDate: toDate,
-      totalDays: days,
-      manager:manager,
-    };
 
-    let user = "";
-    try {
-      user = await User.findById(userId);
-    } catch (err) {
-      const error = new HttpError("Could not find user for provided id.", 404);
-      return next(error);
-    }
+  // {
 
+  //   success : true,
+  //   data: {},
+  //   message: ""
+
+  // }
+
+  let {userId,reason, fromDate, toDate, manager } = req.params
+
+  if(IsRequestValid({userId,reason, fromDate, toDate, manager }))
+    return next(new HttpError("Invalid inputs passed, please check your data.", 200));
+  else {
+    
     try {
+
+      let daysInMsec = new Date(toDate).getTime() - new Date(fromDate).getTime();
+      
+      const request = {
+        status: "pending",
+        reason: reason,
+        fromDate: fromDate,
+        toDate: toDate,
+        totalDays: Math.ceil(daysInMsec / (1000 * 3600 * 24)) + 1,
+        manager:manager,
+      };
+
       user.leaveRequests.push(request);
       user.save();
     } catch (err) {
@@ -163,6 +147,14 @@ try {
   const error = new HttpError("Something went wrong.", 500);
     return next(error);
 }
+}
+
+const IsRequestValid = (data) => {
+
+  return validator.isEmpty(data.reason) ||
+         validator.isEmpty(data.fromDate) ||
+         validator.isEmpty(data.toDate)||
+         validator.isEmpty(data.manager)
 }
 
 exports.leaveRequest = leaveRequest;
