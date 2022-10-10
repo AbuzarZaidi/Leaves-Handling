@@ -13,11 +13,11 @@ import {
     },
   }));
 
-  const Icon = styled(Typography)(({ theme }) => ({
-      [theme.breakpoints.down("md")]: {
-        fontSize: "20px",
-      },
-    }));
+//   const Icon = styled(Typography)(({ theme }) => ({
+//       [theme.breakpoints.down("md")]: {
+//         fontSize: "20px",
+//       },
+//     }));
     const IconText = styled(LockResetIcon)(({ theme }) => ({
         [theme.breakpoints.down("md")]: {
           fontSize: "25px",

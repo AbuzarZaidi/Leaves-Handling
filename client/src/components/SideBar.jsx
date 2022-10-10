@@ -182,13 +182,13 @@ const Sidebar = () => {
            
           </Box>
           </Link>
-          <Link to="/changepassword" style={{textDecoration:"none",}}>
+          <Link to="/userlist" style={{textDecoration:"none",}}>
           <Box
-          onClick={()=>checkLocationHandler("/createnewemployee")}
+          onClick={()=>checkLocationHandler("/userlist")}
             sx={{
               mt: "20%",
              
-              color: loc === "/createnewemployee" ?  "#00E5D9": "#ffffff",
+              color: loc === "/userlist" ?  "#00E5D9": "#ffffff",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
@@ -198,11 +198,11 @@ const Sidebar = () => {
           >
            
             <img
-              src={loc === "/createnewemployee"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
+              src={loc === "/userlist"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
               style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
               alt="icon"
             />
-            Change password
+           userlist
            
           </Box>
           </Link>
