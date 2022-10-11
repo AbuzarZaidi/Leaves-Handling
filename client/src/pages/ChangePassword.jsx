@@ -1,10 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {
     Box,
     Typography,
     TextField,
     Button,
   } from "../utlis/materialUIComponents";
+  import { useSelector} from "react-redux";
+  import {changePassword} from '../functions/employees'
   import LockResetIcon from '@mui/icons-material/LockReset';
   import { styled } from "@mui/material/styles";
   const Text = styled(Typography)(({ theme }) => ({
@@ -24,6 +26,16 @@ import {
         },
       }));
 const ChangePassword = () => {
+  const id= useSelector((state) => state.authData.id);
+const [password,setPassword]=useState("");
+const [confirmPassword,setConfirmPassword]=useState("");
+const [previousPassword,setPreviousPassword]=useState("");
+  const passwordChangeHandler=async()=>{
+if(password===confirmPassword){
+const response=await changePassword({previousPassword,password,confirmPassword},id);
+console.log(response)
+}
+  }
   return (
     <>
             <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
@@ -65,6 +77,8 @@ const ChangePassword = () => {
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
+            value={previousPassword}
+            onChange={(e)=>setPreviousPassword(e.target.value)}
           />
         </Box>
       </Box>
@@ -79,6 +93,8 @@ const ChangePassword = () => {
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
           />
         </Box>
       </Box>
@@ -93,13 +109,15 @@ const ChangePassword = () => {
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
+            value={confirmPassword}
+            onChange={(e)=>setConfirmPassword(e.target.value)}
           />
         </Box>
       </Box>
         {/* button */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Button
-          //   onClick={applyForLeaveHandler}
+            onClick={passwordChangeHandler}
           variant="outlined"
           sx={{
             color: "#1F2533",
@@ -117,7 +135,7 @@ const ChangePassword = () => {
             },
           }}
         >
-          Add
+          Change Password
         </Button>
       </Box>
     </>

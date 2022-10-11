@@ -24,3 +24,12 @@ export const getPreviousLeaves = async (userId) => {
       console.log(error);
     }
   };
+
+  export const changePassword = async (data,id) => {
+    try {
+      const { result } = await api.changePassword(data,id);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
