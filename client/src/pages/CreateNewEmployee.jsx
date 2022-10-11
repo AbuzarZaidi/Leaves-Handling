@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useState} from "react";
+import {createEmployee} from '../functions/admins'
 import { styled } from "@mui/material/styles";
 import {
   Box,
@@ -11,6 +12,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+
+import dayjs from 'dayjs';
+
+import Stack from '@mui/material/Stack';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 const Icon = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     fontSize: "20px",
@@ -22,6 +31,40 @@ const Text = styled(Typography)(({ theme }) => ({
   },
 }));
 const CreateNewEmployee = () => {
+  const [addUser,setAddUser]=useState({
+    name:"",
+    email:"",
+    password:"",
+    confirm:"",
+    type:""
+  })
+  const [value, setValue] =React.useState(dayjs());
+  const [probationTime, setProbationTime] =React.useState(dayjs());
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setAddUser(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+const createUserHandler=async()=>{
+
+  if(addUser.confirm===addUser.password){
+    const user={
+      name:addUser.name,
+      email:addUser.email,
+      password:addUser.password,
+      type:addUser.type,
+      probation:probationTime
+    }
+    const response=await createEmployee(user);
+    
+console.log(response)
+  }
+else{
+  console.log("Invalid entry")
+}
+}
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
@@ -50,6 +93,7 @@ const CreateNewEmployee = () => {
           Create New User
         </Text>
       </Box>
+      <form>
       {/* name */}
       <Box sx={{ mt: 3 }}>
         {/* <Typography gutterBottom sx={{fontFamily:"Montserrat",fontWeight:500,fontSize:"18px",display:"flex",justifyContent:"center"}}>
@@ -57,8 +101,12 @@ const CreateNewEmployee = () => {
       </Typography> */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
-            id="outlined-basic"
+            id="name"
             label="Name"
+            name="name"
+            
+            value={addUser.name}
+            onChange={handleChange}
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
@@ -72,8 +120,11 @@ const CreateNewEmployee = () => {
       </Typography> */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
-            id="outlined-basic"
+            id="email"
             label="Email"
+            name="email"
+            value={addUser.email}
+            onChange={handleChange}
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
@@ -87,11 +138,16 @@ const CreateNewEmployee = () => {
       </Typography> */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
-            id="outlined-basic"
+            id="password"
             label="Password"
+            name="password"
+            value={addUser.password}
+            type="password"
+            onChange={handleChange}
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
+            autoComplete="on"
           />
         </Box>
       </Box>
@@ -102,32 +158,66 @@ const CreateNewEmployee = () => {
       </Typography> */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
-            id="outlined-basic"
+            id="confirm"
             label="Confirm Password"
+            name="confirm"
+            type="password"
+            value={addUser.confirm}
+            onChange={handleChange}
             variant="outlined"
             size="small"
             sx={{ width: "30%" }}
+            autoComplete="on"
           />
         </Box>
       </Box>
       {/* probaton */}
-      <Box sx={{ mt: 3 }}>
+      <Box sx={{ mt: 3,display:"flex", justifyContent: "center",}}>
         {/* <Typography gutterBottom sx={{fontFamily:"Montserrat",fontWeight:500,fontSize:"18px",display:"flex",justifyContent:"center"}}>
         Probation
       </Typography> */}
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <TextField
-            id="outlined-basic"
-            label="Probation"
-            variant="outlined"
-            size="small"
-            sx={{ width: "30%" }}
-          />
-        </Box>
-      </Box>
+         <LocalizationProvider dateAdapter={AdapterDayjs} >
+      <Stack spacing={3}  sx={{width:"90%",display: { xs: "flex", md: "none", lg: "none" }}} >
+        
+        <MobileDatePicker
+                  label="Probation"
+                  format="MM/dd/yyyy"
+                  name="probation"
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                    setProbationTime(newValue)
+                  }}
+                  minDate={dayjs('2017-01-01')}
+          renderInput={(params) => <TextField   {...params} />}
+        />
+      </Stack>
+        {/* <Box > */}
+        <Stack spacing={3}  sx={{width:"30%",display: { xs: "none", md: "flex", lg: "flex" },}}>
+        <DesktopDatePicker
+          label="Probation"
+          format="MM/dd/yyyy"
+          name="probation"
+          value={value}
+          onChange={(newValue) => {
+            setValue(newValue);
+            setProbationTime(newValue)
+          }}
+          minDate={dayjs('2017-01-01')}
+          renderInput={(params) => <TextField   {...params}  size="small"/>}
+        />
+        {/* </Box> */}
+       
+      </Stack>
+    </LocalizationProvider>
+      </Box> 
       {/* choose position */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <FormControl>
+        <FormControl 
+           name="type"
+           value={addUser.type}
+           onChange={handleChange}
+        >
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
@@ -146,7 +236,8 @@ const CreateNewEmployee = () => {
               Choose Type:
             </FormLabel>
             <FormControlLabel
-              value="female"
+            name="type"
+              value="manager"
               control={
                 <Radio
                   sx={{
@@ -166,7 +257,8 @@ const CreateNewEmployee = () => {
               }
             />
             <FormControlLabel
-              value="male"
+            name="type"
+              value="hr"
               control={
                 <Radio
                   sx={{
@@ -187,7 +279,8 @@ const CreateNewEmployee = () => {
               }
             />
             <FormControlLabel
-              value="other"
+            name="type"
+              value="employee"
               control={
                 <Radio
                   sx={{
@@ -213,7 +306,7 @@ const CreateNewEmployee = () => {
       {/* button */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
         <Button
-          //   onClick={applyForLeaveHandler}
+          onClick={createUserHandler}
           variant="outlined"
           sx={{
             color: "#1F2533",
@@ -234,6 +327,7 @@ const CreateNewEmployee = () => {
           Add
         </Button>
       </Box>
+      </form>
     </>
   );
 };

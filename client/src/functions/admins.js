@@ -15,3 +15,11 @@ export const allEmployees = async () => {
       console.log(error);
     }
   };
+  export const createEmployee = async (user) => {
+    try {
+      const { data } = await api.createEmployee(user);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };

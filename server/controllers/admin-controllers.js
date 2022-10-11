@@ -65,9 +65,9 @@ const deleteUser = async (req, res, next) => {
 
 //create user
 const createUser = async (req, res, next) => {
-  const { name, email, password, type } = req.body;
+  const { name, email, password, type,probation } = req.body;
   console.log(name, email, password);
-  if (!name || !email || !password || !type) {
+  if (!name || !email || !password || !type||!probation ) {
     const error = new HttpError("Please fill the complete form!", 422);
     return next(error);
   }
@@ -100,7 +100,7 @@ const createUser = async (req, res, next) => {
       email,
       password: hashedPassword,
       type,
-      position:"manager"
+      probation
     });
     console.log(user);
     await user.save();
