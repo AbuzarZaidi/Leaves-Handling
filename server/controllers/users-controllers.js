@@ -12,9 +12,12 @@ const leaveRequest = async (req, res, next) => {
   //   message: ""
 
   // }
-
-  let {userId,reason, fromDate, toDate, manager } = req.params
-
+let userId=req.params.uid;
+  let {reason, fromDate, toDate, manager } = req.body
+console.log(userId)
+console.log(fromDate)
+console.log(toDate)
+console.log(manager)
   if(IsRequestValid({userId,reason, fromDate, toDate, manager }))
     return next(new HttpError("Invalid inputs passed, please check your data.", 200));
   else {
@@ -31,9 +34,9 @@ const leaveRequest = async (req, res, next) => {
         totalDays: Math.ceil(daysInMsec / (1000 * 3600 * 24)) + 1,
         manager:manager,
       };
-
-      user.leaveRequests.push(request);
-      user.save();
+    const  user = await User.findById(userId);
+    user.leaveRequests.push(request);
+    user.save();
     } catch (err) {
       const error = new HttpError(
         "Creating leave failed, please try again.",
@@ -138,6 +141,7 @@ const passwordChange = async (req, res, next) => {
 
   res.status(200).json("password changed successfully");
 };
+//get manager
 const getManagersName=async(req,res,next)=>{
 try {
   const data=await User.find({type:'manager'},'name');

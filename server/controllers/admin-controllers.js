@@ -157,6 +157,17 @@ res.json(data)
 const onBehalfLeaveRequest=async(req,res,next)=>{
 //can use simple create leave route
 }
+//get employees
+const getEmployeesName=async(req,res,next)=>{
+  try {
+    const data=await User.find({type:'employee'},'name');
+  
+   res.json(data)
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
+      return next(error);
+  }
+  }
 
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.getApprovalRequest = getApprovalRequest;
@@ -166,3 +177,4 @@ exports.deleteUser = deleteUser;
 exports.editUser = editUser;
 exports.onBehalfLeaveRequest = onBehalfLeaveRequest;
 exports.employeesLeaves = employeesLeaves;
+exports.getEmployeesName = getEmployeesName;

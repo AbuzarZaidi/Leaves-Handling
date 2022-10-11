@@ -11,5 +11,5 @@ router.patch("/updateStatus/:uid", adminController.updateLeavesRequest);
 router.delete("/deleteUser/:uid", adminController.deleteUser);
 router.delete("/deleteUser/:uid", adminController.deleteUser);
 router.post("/employeesLeaves", adminController.employeesLeaves);
-
+router.get("/getEmployeesName", adminController.getEmployeesName);
 module.exports = router;

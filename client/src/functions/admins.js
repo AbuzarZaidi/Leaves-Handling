@@ -23,3 +23,11 @@ export const allEmployees = async () => {
       console.log(error);
     }
   };
+  export const getEmployees= async () => {
+    try {
+      const { data } = await api.getEmployees();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };

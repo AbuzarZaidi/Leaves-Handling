@@ -35,7 +35,7 @@ const handleClose = () => setOpen(false);
        <Box sx={style}>
          <Box sx={{display:"flex",justifyContent:"center",mt:"45px"}}>
        <img
-             src="icons/modal_logout.png" width="60px" alt="icon"/>
+             src="icons/deleteformodal.png" width="60px" alt="icon"/>
           </Box>
           <Box sx={{display:"flex",justifyContent:"center",mt:1}}>
           <Typography sx={{fontWeight:600,fontSize:"18px",fontFamily:"Montserrat"}}>Delete...</Typography>
