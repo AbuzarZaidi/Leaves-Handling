@@ -113,34 +113,31 @@ const login = async (req, res, next) => {
 //change password
 const passwordChange = async (req, res, next) => {
   const userId = req.params.uid;
-  const { password, confirmPassword } = req.body;
+  const { previousPassword,password, confirmPassword } = req.body;
   if (!password || !confirmPassword || password !== confirmPassword) {
     const error = new HttpError("Invalid credentials", 403);
     return next(error);
   }
-  let user;
-  let hashedPassword;
   try {
-    hashedPassword = await bcrypt.hash(password, 12);
+    const existingUser=await User.findById({_id:userId});
+    isValidPassword = await bcrypt.compare(previousPassword, existingUser.password);
+    if(isValidPassword){
+      let   hashedPassword = await bcrypt.hash(password, 12);
+      await User.findOneAndUpdate(
+        { _id: userId },
+        { password: hashedPassword }
+      );
+      res.status(200).json("password changed successfully");
+    }
+  
   } catch (err) {
     const error = new HttpError(
-      "Could not create user, please try again.",
+      // "Could not create user, please try again.",
+      err,
       500
     );
     return next(error);
-  }
-  try {
-    const result = await User.findOneAndUpdate(
-      { _id: userId },
-      { password: hashedPassword }
-    );
-  } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
-    return next(error);
-  }
-
-  res.status(200).json("password changed successfully");
-};
+  }};
 //get manager
 const getManagersName=async(req,res,next)=>{
 try {

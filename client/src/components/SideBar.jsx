@@ -254,13 +254,13 @@ const Sidebar = () => {
            
           </Box>
           </Link>
-          <Link to="/onbehalfleave" style={{textDecoration:"none",}}>
+          <Link to="/changepassword" style={{textDecoration:"none",}}>
           <Box
-          onClick={()=>checkLocationHandler("/onbehalfleave")}
+          onClick={()=>checkLocationHandler("/changepassword")}
             sx={{
               mt: "20%",
              
-              color: loc === "/onbehalfleave" ?  "#00E5D9": "#ffffff",
+              color: loc === "/changepassword" ?  "#00E5D9": "#ffffff",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
@@ -270,11 +270,35 @@ const Sidebar = () => {
           >
            
             <img
-              src={loc === "/onbehalfleave"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
+              src={loc === "/changepassword"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
               style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
               alt="icon"
             />
           OnBehalf Leave
+           
+          </Box>
+          </Link>
+          <Link to="/changepassword" style={{textDecoration:"none",}}>
+          <Box
+          onClick={()=>checkLocationHandler("/onbehalfleave")}
+            sx={{
+              mt: "20%",
+             
+              color: loc === "/changepassword" ?  "#00E5D9": "#ffffff",
+              fontFamily: "Montserrat",
+              fontSize: "14px",
+              display: "flex",
+              
+              alignItems: "center",
+            }}
+          >
+           
+            <img
+              src={loc === "/changepassword"?"icons/myLeavesMenuIcon.png":"icons/myLeaveMenuActive.png"}
+              style={{ marginRight: "5px", marginLeft: "8px",color:"#00E5D9", }}
+              alt="icon"
+            />
+          Change password
            
           </Box>
           </Link>
