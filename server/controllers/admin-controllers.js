@@ -44,7 +44,8 @@ const getApprovalRequest = async (req, res, next) => {
 const usersList = async (req, res, next) => {
   let result;
   try {
-    result = await User.find({},'name');
+    result = await User.find({}).select('name email probation type');
+  
   } catch (err) {
     const error = new HttpError("Something went wrong.", 500);
     return next(error);
@@ -67,7 +68,7 @@ const deleteUser = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   const { name, email, password, type,probation } = req.body;
   console.log(name, email, password);
-  if (!name || !email || !password || !type||!probation ) {
+  if (!name || !email || !password || !type) {
     const error = new HttpError("Please fill the complete form!", 422);
     return next(error);
   }
@@ -111,29 +112,23 @@ const createUser = async (req, res, next) => {
 //edit user
 const editUser = async (req, res, next) => {
   const userId = req.params.uid;
-  const { name, email, password, type } = req.body;
-
-  if (!name || !email || !password || !type) {
+  const { name, email, probation, type } = req.body;
+console.log(name)
+console.log(email)
+console.log(probation)
+console.log(type)
+  if (!name || !email  || !type) {
     const error = new HttpError("Please fill the complete form!", 422);
     return next(error);
-  } else if (!validator.isEmail(email) || password.length < 6) {
-    const error = new HttpError("Invalid username or password", 422);
+  } else if (!validator.isEmail(email) ) {
+    const error = new HttpError("Invalid email!", 422);
     return next(error);
   }
-  let hashedPassword;
-  try {
-    hashedPassword = await bcrypt.hash(password, 12);
-  } catch (err) {
-    const error = new HttpError(
-      "Could not create user, please try again.",
-      500
-    );
-    return next(error);
-  }
+ 
   const user = {
     name: name,
     email: email,
-    password: hashedPassword,
+    probation: probation,
     type: type,
   };
   try {
@@ -161,7 +156,7 @@ const onBehalfLeaveRequest=async(req,res,next)=>{
 const getEmployeesName=async(req,res,next)=>{
   try {
     const data=await User.find({type:'employee'},'name');
-  
+  console.log(data)
    res.json(data)
   } catch (err) {
     const error = new HttpError("Something went wrong.", 500);

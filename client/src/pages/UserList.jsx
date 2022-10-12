@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {allEmployees,deleteEmployee} from '../functions/admins'
+import {allEmployees,deleteEmployee,editEmployee} from '../functions/admins'
 
 import {
   Box,
@@ -22,22 +22,20 @@ const Icon = styled(Typography)(({ theme }) => ({
 
 const UserList = () => {
 const [employees,setEmployees]=useState([]);
-
+const[edit,setEdit]=useState(false)
   useEffect(() => {
     const fetchData=async()=>{
       try {
         const result=await allEmployees();
+  
         setEmployees(result)
-        console.log('result')
-        console.log(result)
       } catch (error) {
         console.log(error)
       }
     }
     fetchData();
-    
-  }, [setEmployees])
- 
+    setEdit(false)
+  }, [setEmployees,setEdit,edit])
   const deleteUserHandler=async(id)=>{
     const response=await deleteEmployee(id)
     console.log('response' )
@@ -48,7 +46,18 @@ const [employees,setEmployees]=useState([]);
     }
     
   }
-
+  const editHandler=async(id,editData,probationTime)=>{
+    const user={
+      name:editData.name,
+  email:editData.email,
+  probation:probationTime,
+  type:editData.type,
+  
+    }
+    const response=await editEmployee(id,user)
+    console.log(response)
+    setEdit(true)
+  }
   return (
     <>
     
@@ -101,7 +110,7 @@ const [employees,setEmployees]=useState([]);
         </Box>
       </Box>
       {employees.map((val,ind)=>{
- return  <SingleUser key={ind} userName={val.name} id={val._id} userDeleteHandler={deleteUserHandler} />
+ return  <SingleUser key={ind} employeeData={val} id={val._id} userDeleteHandler={deleteUserHandler} userEditHandler={editHandler}/>
       })}
     </>
   );
