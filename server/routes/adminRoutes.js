@@ -10,6 +10,6 @@ router.patch("/editUser/:uid", adminController.editUser);
 router.patch("/updateStatus/:uid", adminController.updateLeavesRequest);
 router.delete("/deleteUser/:uid", adminController.deleteUser);
 router.delete("/deleteUser/:uid", adminController.deleteUser);
-router.post("/employeesLeaves", adminController.employeesLeaves);
+router.post("/employeesLeaves/:uid", adminController.employeesLeaves);
 router.get("/getEmployeesName", adminController.getEmployeesName);
 module.exports = router;

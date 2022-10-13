@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const mongoose=require('mongoose')
 const bcrypt = require("bcryptjs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
@@ -143,11 +144,56 @@ console.log(type)
 };
 //employeesLeaves
 const employeesLeaves=async(req,res,next)=>{
-  console.log(req.body)
-const data=req.body;
+  const id=req.params.uid
+  const {month,year}=req.body
+  console.log(year)
+  console.log(month)
+const data=await User.find({ _id:id,},'leaveRequests').then(obj=>{
+const dateData=  obj[0].leaveRequests.filter((val)=>{
+ 
+  if(year==new Date(val.fromDate).getFullYear()&&month==new Date(val.fromDate).getMonth()+1){
+    console.log(new Date(val.fromDate).getFullYear())
+    console.log(new Date(val.fromDate).getMonth()+1)
+    return val;
+  }
+})
+res.json(dateData)
+  // const date=new Date(val.fromDate)
+  // console.log(data.getDate())
+  // console.log(new Date(val.toDate).getDate())
 
-res.json(data)
+  // if(val.totalDays>=3){
+  //   return val.totalDays
+  // }
+   
+  // })
+  // console.log(data)
+  // 
+ })
+// const data=await User.find({ _id:id,'leaveRequests.status': 'pending'},'leaveRequests.status')
+// age: {$gte:10}}
+// res.json(data)
 }
+// const data=await User.findById({_id:id,'$where': 'this.created_on.toJSON().slice(0, 10) == "2022-10-19"'},'leaveRequests')
+// const a=data.leaveRequests[0].toDate
+// const b=data.leaveRequests[0].fromDate
+// let date1=new Date(a)
+// let date2=new Date(b)
+// let cur=new Date();
+
+// console.log(cur)
+// console.log(a)
+// console.log(b)
+// console.log(date1.getFullYear())
+// console.log(date2.getFullYear())
+// console.log(date1-date2)
+// data.map(val=>{
+//   return(
+//     i
+  //  )
+//
+
+
 //onbehalf leave request
 const onBehalfLeaveRequest=async(req,res,next)=>{
 //can use simple create leave route
