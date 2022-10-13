@@ -146,42 +146,27 @@ console.log(type)
 const employeesLeaves=async(req,res,next)=>{
   const id=req.params.uid
   const {month,year}=req.body
-  console.log(year)
-  console.log(month)
-  const response={}
-const data=await User.find({ _id:id,},'name reason leaveRequests').then(obj=>{
+  // console.log(year)
+  // console.log(month)
+ await User.find({ _id:id,},'name probation leaveRequests').then(obj=>{
 const dateData=  obj[0].leaveRequests.filter((val)=>{
  
   if(year==new Date(val.fromDate).getFullYear()&&month==new Date(val.fromDate).getMonth()+1){
-    console.log(new Date(val.fromDate).getFullYear())
-    console.log(new Date(val.fromDate).getMonth()+1)
+    // console.log(new Date(val.fromDate).getFullYear())
+    // console.log(new Date(val.fromDate).getMonth()+1)
     return val;
   }
 })
-console.log(obj[0]._id)
 const response={
   id:obj[0]._id,
+probation:obj[0].probation,
   name:obj[0].name,
   leaveRequests:dateData
 }
  res.json(response)
 })
 
-  // const date=new Date(val.fromDate)
-  // console.log(data.getDate())
-  // console.log(new Date(val.toDate).getDate())
-
-  // if(val.totalDays>=3){
-  //   return val.totalDays
-  // }
-   
-  // })
-  // console.log(data)
-  // 
- 
-// const data=await User.find({ _id:id,'leaveRequests.status': 'pending'},'leaveRequests.status')
-// age: {$gte:10}}
-// res.json(data)
+  
 }
 
 
