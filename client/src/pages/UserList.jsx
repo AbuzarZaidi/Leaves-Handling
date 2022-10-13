@@ -1,11 +1,15 @@
-import React,{useState,useEffect} from "react";
-import {allEmployees,deleteEmployee,editEmployee} from '../functions/admins'
+import React, { useState, useEffect } from "react";
+import {
+  allEmployees,
+  deleteEmployee,
+  editEmployee,
+} from "../functions/admins";
 
 import {
   Box,
   Typography,
   // TextField,
-  Button,
+  // Button,
 } from "../utlis/materialUIComponents";
 import SingleUser from "../components/userslist/SingleUser";
 import { styled } from "@mui/material/styles";
@@ -21,46 +25,43 @@ const Icon = styled(Typography)(({ theme }) => ({
 }));
 
 const UserList = () => {
-const [employees,setEmployees]=useState([]);
-const[edit,setEdit]=useState(false)
+  const [employees, setEmployees] = useState([]);
+  const [edit, setEdit] = useState(false);
   useEffect(() => {
-    const fetchData=async()=>{
+    const fetchData = async () => {
       try {
-        const result=await allEmployees();
-  
-        setEmployees(result)
+        const result = await allEmployees();
+
+        setEmployees(result);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
     fetchData();
-    setEdit(false)
-  }, [setEmployees,setEdit,edit])
-  const deleteUserHandler=async(id)=>{
-    const response=await deleteEmployee(id)
-    console.log('response' )
-    console.log(response )
-    if(response.status===200){
+    setEdit(false);
+  }, [setEmployees, setEdit, edit]);
+  const deleteUserHandler = async (id) => {
+    const response = await deleteEmployee(id);
+    console.log("response");
+    console.log(response);
+    if (response.status === 200) {
       const updatedList = employees.filter((user) => user._id !== id);
       setEmployees(updatedList);
     }
-    
-  }
-  const editHandler=async(id,editData,probationTime)=>{
-    const user={
-      name:editData.name,
-  email:editData.email,
-  probation:probationTime,
-  type:editData.type,
-  
-    }
-    const response=await editEmployee(id,user)
-    console.log(response)
-    setEdit(true)
-  }
+  };
+  const editHandler = async (id, editData, probationTime) => {
+    const user = {
+      name: editData.name,
+      email: editData.email,
+      probation: probationTime,
+      type: editData.type,
+    };
+    const response = await editEmployee(id, user);
+    console.log(response);
+    setEdit(true);
+  };
   return (
     <>
-    
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Icon
           variant="h4"
@@ -109,8 +110,16 @@ const[edit,setEdit]=useState(false)
           </Box>
         </Box>
       </Box>
-      {employees.map((val,ind)=>{
- return  <SingleUser key={ind} employeeData={val} id={val._id} userDeleteHandler={deleteUserHandler} userEditHandler={editHandler}/>
+      {employees.map((val, ind) => {
+        return (
+          <SingleUser
+            key={ind}
+            employeeData={val}
+            id={val._id}
+            userDeleteHandler={deleteUserHandler}
+            userEditHandler={editHandler}
+          />
+        );
       })}
     </>
   );

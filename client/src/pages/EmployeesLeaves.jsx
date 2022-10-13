@@ -1,16 +1,12 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 import { getEmployees,employeesLeaves} from "../functions/admins";
 import {
   Box,
   Typography,
-  // TextField,
-  // Button,
+  InputLabel,
+  Button,MenuItem,FormControl,Select
 } from "../utlis/materialUIComponents";
-import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+
 import { styled } from "@mui/material/styles";
 import EmployeePreviousLeaves from '../components/employeeLeaves/EmployeePreviousLeaves';
 const Text = styled(Typography)(({ theme }) => ({

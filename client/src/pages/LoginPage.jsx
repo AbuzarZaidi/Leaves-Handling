@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -8,45 +8,45 @@ import {
   Grid,
 } from "../utlis/materialUIComponents";
 import { useDispatch } from "react-redux";
-import { setLoginHandler, setIdHandler,setNameHandler,setPositionHandler } from "../store/auth";
+import {
+  setLoginHandler,
+  setIdHandler,
+  setNameHandler,
+  setPositionHandler,
+} from "../store/auth";
 const { login } = require("../functions/auth");
 
 const LoginPage = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  const loginHandler=async()=>{
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const loginHandler = async () => {
     if (email && password) {
       const user = {
         email,
         password,
       };
-      
+
       const result = await login(user);
-      
+
       if (result.response) {
-        console.log("error")
-      }
-      else{
+        setError(true);
+        setErrorMessage(result.response.data.message);
+      } else {
         dispatch(setLoginHandler());
         dispatch(setIdHandler(result.userId));
-        dispatch(setNameHandler(result.name))
-        dispatch(setPositionHandler(result.position))
-        navigate("/applyforleaves")
-      
+        dispatch(setNameHandler(result.name));
+        dispatch(setPositionHandler(result.position));
+        navigate("/applyforleaves");
       }
-      console.log(result)
-      // if (result.response) {
-        
-        // if (result.response.status === 422 || result.response.status === 400) {
-        //   setShowError(true);
-        //   setErrorMessage(result.response.data.error);
-        //   setTimeout(() => {
-        //     setShowError(false);
-        //   }, 2000);
-        // }
-  }}
+    } else {
+      setError(true);
+      setErrorMessage("Please fill the form");
+    }
+  };
   return (
     <>
       <Box
@@ -56,7 +56,7 @@ const LoginPage = () => {
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           width: "100%",
-          height: "100vh",
+          height: "100%",
           alignItem: "center",
         }}
       >
@@ -97,7 +97,7 @@ const LoginPage = () => {
             >
               St
             </Typography>
-            <img src="/icons/star.png" alt="icon"/>
+            <img src="/icons/star.png" alt="icon" />
             <Typography
               sx={{
                 fontFamily: "Serpentine",
@@ -153,53 +153,72 @@ const LoginPage = () => {
             </Typography>
           </Grid>
           <form>
-          <Grid item xs={3} sx={{ mt: 2 }}>
-            <TextField
-             onChange={(e)=>setEmail(e.target.value)}
-             value={email}
-              id="email"
-              // label="Email"
-              placeholder="Email"
-              variant="outlined"
-              sx={{
-                backgroundColor: "#ffffff",
-                width: "450px",
-                borderRadius: 1,
-               
-              }}
-            />
-          </Grid>
-          <Grid item xs={3} sx={{ mt: 2 }}>
-            <TextField
-             onChange={(e)=>setPassword(e.target.value)}
-             value={password}
-              id="Password"
-              // label="Password"
-              placeholder="Password"
-              type="password"
-              variant="outlined"
-              sx={{
-                backgroundColor: "#ffffff",
-                width: "450px",
-                borderRadius: 1,
-              }}
-            />
-          
-          </Grid>
+            {error && (
+              <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                <Typography
+                  sx={{
+                    fontFamily: "Montserrat",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    color: "#DC0000",
+                  }}
+                >
+                  {errorMessage}
+                </Typography>
+              </Box>
+            )}
+            <Grid item xs={3} sx={{ mt: 2 }}>
+              <TextField
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                id="email"
+                // label="Email"
+                placeholder="Email"
+                variant="outlined"
+                sx={{
+                  backgroundColor: "#ffffff",
+                  width: "450px",
+                  borderRadius: 1,
+                  border: 1,
+                }}
+                onFocus={() => setError(false)}
+                required
+                autoComplete="true"
+              />
+            </Grid>
+            <Grid item xs={3} sx={{ mt: 2 }}>
+              <TextField
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                id="outlined-required"
+                // label="Password"
+                required
+                placeholder="Password"
+                type="password"
+                variant="outlined"
+                sx={{
+                  backgroundColor: "#ffffff",
+                  width: "450px",
+                  borderRadius: 1,
+                }}
+                onFocus={() => setError(false)}
+                autoComplete="true"
+              />
+            </Grid>
           </form>
           <Grid item xs={3} sx={{ mt: 3 }}>
             <Button
               variant="outlined"
               sx={{
                 // backgroundColor: "#00B2A9",
-                color:"#ffffff",
+                color: "#ffffff",
                 width: "240px",
                 fontWeight: 600,
                 fontSize: "16px",
                 mt: 3,
                 textTransform: "capitalize",
                 border: 3,
-                borderColor:"#00B2A9",
+                borderColor: "#00B2A9",
                 "&:hover": {
                   backgroundColor: "#00AFFF",
                   border: 3,

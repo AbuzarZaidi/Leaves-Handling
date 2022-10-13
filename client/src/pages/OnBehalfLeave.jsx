@@ -3,18 +3,15 @@ import { createNewLeaveRequest, getManagers } from "../functions/employees";
 import { getEmployees} from "../functions/admins";
 import { useSelector, useDispatch } from "react-redux";
 import { setStartDateHandler, setEndDateHandler } from "../store/applyForLeave";
-import Modal from "@mui/material/Modal";
+import AppliedModal from "../UI/Modals/AppliedModal";
 import {
   Box,
   Typography,
   TextField,
-  Button,
+  Button,InputLabel, MenuItem,FormControl,Select 
 } from "../utlis/materialUIComponents";
 
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+
 import { styled } from "@mui/material/styles";
 import DateRange from "../components/applyRequest/DateRange";
 const Text = styled(Typography)(({ theme }) => ({
@@ -27,22 +24,11 @@ const Icon = styled(Typography)(({ theme }) => ({
     fontSize: "20px",
   },
 }));
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 350,
-  height: 250,
-  bgcolor: "background.paper",
-  // border: '2px solid #000',
-  boxShadow: 24,
-  // p: 1,
-};
+
 
 const OnBehalfLeave = () => {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.authData.id);
+  // const id = useSelector((state) => state.authData.id);
   const startDate = useSelector((state) => state.leave.startDate);
   const endDate = useSelector((state) => state.leave.endDate);
   const [reasonValue, setReasonValue] = useState("");
@@ -90,64 +76,7 @@ const OnBehalfLeave = () => {
   };
   return (
     <>
-      <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: "45px" }}>
-              <img src="icons/applied.png" width="60px" alt="icon" />
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 0.5 }}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "26px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                Applied
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 0.5 }}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                Please wait for response
-              </Typography>
-            </Box>
-            <Box>
-              <Box
-                sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 3 }}
-              >
-                <Button
-                  onClick={handleClose}
-                  variant="contained"
-                  sx={{
-                    textTransform: "capitalize",
-                    backgroundColor: "#1F2533",
-                    px: 3,
-                    borderRadius: "10px",
-                    "&:hover": {
-                      backgroundColor: "#1F2533",
-                      color: "#ffffff",
-                    },
-                  }}
-                >
-                  Ok
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Modal>
-      </div>
+      <AppliedModal open={open} handleClose={handleClose}/>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Icon
           variant="h4"

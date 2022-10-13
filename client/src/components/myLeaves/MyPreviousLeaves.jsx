@@ -1,18 +1,20 @@
 import * as React from "react";
-import Paper from "@mui/material/Paper";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-
-import TableRow from "@mui/material/TableRow";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+  ExpandMoreIcon,
+} from "../../utlis/materialUIComponents";
 
 import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
+
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 const columns = [
   { id: "count", label: "#", minWidth: 80 },
   { id: "name", label: "Name", minWidth: 170 },

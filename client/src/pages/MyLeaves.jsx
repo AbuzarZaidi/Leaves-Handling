@@ -1,11 +1,8 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import MyPreviousLeaves from "../components/myLeaves/MyPreviousLeaves";
-import {getPreviousLeaves} from '../functions/employees'
-import { useSelector} from "react-redux";
-import {
-  Box,
-  Typography,
-} from "../utlis/materialUIComponents";
+import { getPreviousLeaves } from "../functions/employees";
+import { useSelector } from "react-redux";
+import { Box, Typography } from "../utlis/materialUIComponents";
 import { styled } from "@mui/material/styles";
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
@@ -19,23 +16,21 @@ const Icon = styled(Typography)(({ theme }) => ({
   },
 }));
 const MyLeaves = () => {
-  const id= useSelector((state) => state.authData.id);
-  const userName= useSelector((state) => state.authData.userName);
-  const [myLeaves,setMyLeaves]=useState([]);
+  const id = useSelector((state) => state.authData.id);
+  const userName = useSelector((state) => state.authData.userName);
+  const [myLeaves, setMyLeaves] = useState([]);
   useEffect(() => {
-    const data=async()=>{
+    const data = async () => {
       try {
         const result = await getPreviousLeaves(id);
-        setMyLeaves(result)
-    
+        setMyLeaves(result);
       } catch (error) {
-       console.log(error) 
+        console.log(error);
       }
-      
-    }
-    data()
-  }, [id])
-  
+    };
+    data();
+  }, [id]);
+
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
@@ -69,7 +64,7 @@ const MyLeaves = () => {
       <Box
         sx={{ width: "95%", ml: 3, display: "flex", justifyContent: "center" }}
       >
-        <MyPreviousLeaves myPreviousLeaves={myLeaves} userName={userName}/>
+        <MyPreviousLeaves myPreviousLeaves={myLeaves} userName={userName} />
       </Box>
     </>
   );

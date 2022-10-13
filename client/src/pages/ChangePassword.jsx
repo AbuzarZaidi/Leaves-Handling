@@ -1,25 +1,21 @@
 import React,{useState} from 'react'
+import SuccessFull from "../UI/Modals/SuccessFull";
 import {
     Box,
     Typography,
     TextField,
     Button,
+    LockResetIcon
   } from "../utlis/materialUIComponents";
   import { useSelector} from "react-redux";
   import {changePassword} from '../functions/employees'
-  import LockResetIcon from '@mui/icons-material/LockReset';
+  
   import { styled } from "@mui/material/styles";
   const Text = styled(Typography)(({ theme }) => ({
     [theme.breakpoints.down("md")]: {
       fontSize: "20px",
     },
   }));
-
-//   const Icon = styled(Typography)(({ theme }) => ({
-//       [theme.breakpoints.down("md")]: {
-//         fontSize: "20px",
-//       },
-//     }));
     const IconText = styled(LockResetIcon)(({ theme }) => ({
         [theme.breakpoints.down("md")]: {
           fontSize: "25px",
@@ -27,6 +23,9 @@ import {
       }));
 const ChangePassword = () => {
   const id= useSelector((state) => state.authData.id);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 const [password,setPassword]=useState("");
 const [confirmPassword,setConfirmPassword]=useState("");
 const [previousPassword,setPreviousPassword]=useState("");
@@ -38,18 +37,9 @@ console.log(response)
   }
   return (
     <>
+    <SuccessFull open={open} handleClose={handleClose}/>
             <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-        {/* <Icon
-          variant="h4"
-          gutterBottom
-          sx={{
-            fontFamily: "Montserrat",
-            fontWeight: 600,
-            fontSize: "32px",
-          }}
-        >
-          <img src="/icons/myLeaves.png" alt="" />
-        </Icon> */}
+    
         <IconText sx={{ fontWeight: 400, fontSize: "40px" }}/>
           <Text
             variant="h4"
@@ -117,7 +107,7 @@ console.log(response)
         {/* button */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Button
-            onClick={passwordChangeHandler}
+            onClick={()=>{passwordChangeHandler();handleOpen();}}
           variant="outlined"
           sx={{
             color: "#1F2533",
