@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { getEmployees} from "../functions/admins";
+import { getEmployees,employeesLeaves} from "../functions/admins";
 import {
   Box,
   Typography,
@@ -24,9 +24,11 @@ const Icon = styled(Typography)(({ theme }) => ({
     },
   }));
 const EmployeesLeaves = () => {
-  const [age, setAge] = React.useState('');
+  const [year, setYear] = React.useState('');
   const [employees, setEmployees] = React.useState([]);
+  const [employee, setEmployee] = React.useState('');
   const [month, setMonth] = React.useState('');
+  const [result,setResult]=React.useState('');
   // const [age, setAge] = React.useState()
 useEffect(() => {
   const fetchData=async()=>{
@@ -37,12 +39,17 @@ useEffect(() => {
   
 }, [])
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleYearChange = (event) => {
+    setYear(event.target.value);
   };
   const handleMonthChange = (event) => {
     setMonth(event.target.value);
   };
+  const searchHandler=async()=>{
+    const response =await employeesLeaves(employee,{month,year})
+    console.log(response)
+    setResult(response)
+  }
     
   return (
     <>
@@ -80,12 +87,12 @@ useEffect(() => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={employee}
           label="Age"
-          onChange={handleChange}
+          onChange={(e)=>{setEmployee(e.target.value)}}
         >
           {employees.map((val)=>{
-            return <MenuItem value={val._id}>{val.name}</MenuItem>
+            return <MenuItem value={val._id} key={val.name}>{val.name}</MenuItem>
           })}
          
 
@@ -124,25 +131,30 @@ useEffect(() => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={year}
           label="Age"
-          onChange={handleChange}
+          onChange={handleYearChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={2015}>2015</MenuItem>
+          <MenuItem value={2016}>2016</MenuItem>
+          <MenuItem value={2017}>2017</MenuItem>
+          <MenuItem value={2018}>2018</MenuItem>
+          <MenuItem value={2019}>2019</MenuItem>
+          <MenuItem value={2020}>2020</MenuItem>
+          <MenuItem value={2021}>2021</MenuItem>
+          <MenuItem value={2022}>2022</MenuItem>
         </Select>
       </FormControl>
     </Box>
     <Box >
-        <Button variant="contained" sx={{color:"#ffffff",backgroundColor:"#00AAFF",width:"140px",height:"38px"}}>Apply</Button>
+        <Button onClick={searchHandler} variant="contained" sx={{color:"#ffffff",backgroundColor:"#00AAFF",width:"140px",height:"38px"}}>Apply</Button>
         </Box>
 </Box>
         </Box>
         <Box
         sx={{ display: "flex", justifyContent: "center",mt:2 }}
       >
-     <EmployeePreviousLeaves/>
+     <EmployeePreviousLeaves data={result}/>
      </Box>
         
     </>

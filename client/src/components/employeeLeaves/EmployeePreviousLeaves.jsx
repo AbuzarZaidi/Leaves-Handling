@@ -63,7 +63,7 @@ const columns = [
     },
   });
 
-const EmployeePreviousLeaves = () => {
+const EmployeePreviousLeaves = ({data}) => {
     return (
         <Paper sx={{ width: "85%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -81,15 +81,15 @@ const EmployeePreviousLeaves = () => {
                   ))}
                 </TableRow>
               </TableHead>
-              {/* <TableBody>
-                {myPreviousLeaves.map((val, ind) => { 
+              <TableBody>
+                {data.leaveRequests&&data.leaveRequests.map((val, ind) => { 
                   return (
                     <TableRow>
                       <TableCell id="count" label="#" sx={{ minWidth: 80 }}>
                          {ind + 1} 
                       </TableCell>
                       <TableCell id="name" label="Name" sx={{ minWidth: 170 }}>
-                         {userName} 
+                         {data.name} 
                       </TableCell>
                       <TableCell
                         id="reason"
@@ -121,6 +121,20 @@ const EmployeePreviousLeaves = () => {
                         {val.toDate}
                       </TableCell>
                       <TableCell
+                        id="Total"
+                        label="Total Days"
+                        sx={{ minWidth: 80, textAlign: "left" }}
+                      >
+                        {val.totalDays}
+                      </TableCell>
+                      <TableCell
+                        id="Unpaid"
+                        label="unpaid"
+                        sx={{ minWidth: 80, textAlign: "left" }}
+                      >
+                        {val.totalDays}
+                      </TableCell>
+                      <TableCell
                         id="status"
                         label="Status"
                         sx={{
@@ -143,7 +157,7 @@ const EmployeePreviousLeaves = () => {
                     </TableRow>
                     ); 
                  })} 
-              </TableBody> */}
+              </TableBody>
             </Table>
           </TableContainer>
         </Paper>
