@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route} from "react-router-dom";
+import React,{useEffect} from "react";
+import {useNavigate, Routes, Route} from "react-router-dom";
 import { useSelector} from "react-redux";
 import ApplyForLeave from "./pages/ApplyForLeave";
 import EmployeesLeaves from './pages/EmployeesLeaves';
@@ -11,13 +11,20 @@ import CreateNewEmployee from "./pages/CreateNewEmployee";
 import ChangePassword from "./pages/ChangePassword";
 import UserList from "./pages/UserList";
 function App() {
+  let navigate = useNavigate();
   const isLogin= useSelector((state) => state.authData.isLogin);
+  useEffect(() => {
+    if(!isLogin){
+      navigate("/");
+    }
+    
+  }, [])
   
   return (
     <>
           <Routes>
            <Route path="/" element={<LoginPage />} />
-         {isLogin&& <Route path="/myleaves" element={<PageStructure><MyLeaves /></PageStructure>} />}
+         {isLogin&&<Route path="/myleaves" element={<PageStructure><MyLeaves /></PageStructure>} />}
          
          {isLogin&& <Route path="/applyforleaves" element={<PageStructure><ApplyForLeave /></PageStructure>} />}
           <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />
@@ -26,6 +33,7 @@ function App() {
          
           <Route path="/changepassword" element={<PageStructure><ChangePassword /></PageStructure>} />
           <Route path="/userlist" element={<PageStructure><UserList /></PageStructure>} />
+          <Route path="*" element={<LoginPage />} />
           </Routes>
     </>
   );

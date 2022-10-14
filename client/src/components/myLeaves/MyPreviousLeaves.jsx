@@ -9,6 +9,8 @@ import {
   TableRow,
   Button,
   ExpandMoreIcon,
+  Typography,
+  Box,
 } from "../../utlis/materialUIComponents";
 
 import { styled } from "@mui/material/styles";
@@ -52,89 +54,102 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
   },
 });
 
-const MyPreviousLeaves = ({ myPreviousLeaves, userName }) => {
-
-
+const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage }) => {
   return (
-    <Paper sx={{ width: "80%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth, fontWeight: 600 }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {myPreviousLeaves.length>=0?myPreviousLeaves.map((val, ind) => {
-              return (
-                <TableRow>
-                  <TableCell id="count" label="#" sx={{ minWidth: 80 }}>
-                    {ind + 1}
-                  </TableCell>
-                  <TableCell id="name" label="Name" sx={{ minWidth: 170 }}>
-                    {userName}
-                  </TableCell>
+    <>
+      <Paper sx={{ width: "80%", overflow: "hidden" }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
                   <TableCell
-                    id="reason"
-                    label="From"
-                    sx={{ minWidth: 80, textAlign: "left" }}
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth, fontWeight: 600 }}
                   >
-                    <div>
-                      <CustomWidthTooltip title={val.reason}>
-                        <Button sx={{ color: "black" }}>
-                          Detail <ExpandMoreIcon />
-                        </Button>
-                      </CustomWidthTooltip>
-                    </div>
+                    {column.label}
                   </TableCell>
-                  <TableCell
-                    id="fromDate"
-                    label="#"
-                    sx={{ minWidth: 80, textAlign: "left" }}
-                  >
-                    {val.fromDate}
-                  </TableCell>
-                  <TableCell
-                    id="toDate"
-                    label="To"
-                    sx={{ minWidth: 80, textAlign: "left" }}
-                  >
-                    {val.toDate}
-                  </TableCell>
-                  <TableCell
-                    id="status"
-                    label="Status"
-                    sx={{
-                      textTransform: "capitalize",
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      minWidth: 100,
-                      textAlign: "left",
-                      color:
-                        val.status === "approved"
-                          ? "green"
-                          : val.status === "pending"
-                          ? "orange"
-                          : "red",
-                    }}
-                  >
-                    {val.status}
-                  </TableCell>
-                </TableRow>
-              );
-            }):"No Data Found"}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {myPreviousLeaves.length > 0 ? (
+                myPreviousLeaves.map((val, ind) => {
+                  return (
+                    <TableRow key={ind}>
+                      <TableCell id="count" label="#" sx={{ minWidth: 80 }}>
+                        {ind + 1}
+                      </TableCell>
+                      <TableCell id="name" label="Name" sx={{ minWidth: 170 }}>
+                        {userName}
+                      </TableCell>
+                      <TableCell
+                        id="reason"
+                        label="From"
+                        sx={{ minWidth: 80, textAlign: "left" }}
+                      >
+                        <div>
+                          <CustomWidthTooltip title={val.reason}>
+                            <Button sx={{ color: "black" }}>
+                              Detail <ExpandMoreIcon />
+                            </Button>
+                          </CustomWidthTooltip>
+                        </div>
+                      </TableCell>
+                      <TableCell
+                        id="fromDate"
+                        label="#"
+                        sx={{ minWidth: 80, textAlign: "left" }}
+                      >
+                        {val.fromDate}
+                      </TableCell>
+                      <TableCell
+                        id="toDate"
+                        label="To"
+                        sx={{ minWidth: 80, textAlign: "left" }}
+                      >
+                        {val.toDate}
+                      </TableCell>
+                      <TableCell
+                        id="status"
+                        label="Status"
+                        sx={{
+                          textTransform: "capitalize",
+                          fontSize: "16px",
+                          fontWeight: 600,
+                          minWidth: 100,
+                          textAlign: "left",
+                          color:
+                            val.status === "approved"
+                              ? "green"
+                              : val.status === "pending"
+                              ? "orange"
+                              : "red",
+                        }}
+                      >
+                        {val.status}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow></TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {myPreviousLeaves.length <= 0 ? (
+          <Box
+            sx={{ display: "flex", justifyContent: "center", fontWeight: 600 }}
+          >
+            <Typography> {errorMessage.message}</Typography>
+          </Box>
+        ) : (
+          ""
+        )}
+      </Paper>
+    </>
   );
 };
 

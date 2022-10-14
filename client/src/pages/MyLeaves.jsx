@@ -19,13 +19,26 @@ const MyLeaves = () => {
   const id = useSelector((state) => state.authData.id);
   const userName = useSelector((state) => state.authData.userName);
   const [myLeaves, setMyLeaves] = useState([]);
+  const [resErrorMessage,setResErrorMessage]=useState("");
   useEffect(() => {
     const data = async () => {
       try {
-        const result = await getPreviousLeaves(id);
-        setMyLeaves(result);
+        const res = await getPreviousLeaves(id);
+        console.log(res)
+        if(res){
+          if(res.ok){
+            setMyLeaves(res.data);
+          }
+         
+        }
+        else{
+          throw Error("No Data Found")
+        }
+        
       } catch (error) {
+        console.log('error');
         console.log(error);
+        setResErrorMessage(error)
       }
     };
     data();
@@ -64,7 +77,7 @@ const MyLeaves = () => {
       <Box
         sx={{ width: "95%", ml: 3, display: "flex", justifyContent: "center" }}
       >
-        <MyPreviousLeaves myPreviousLeaves={myLeaves} userName={userName} />
+        <MyPreviousLeaves myPreviousLeaves={myLeaves} userName={userName} errorMessage={resErrorMessage}/>
       </Box>
     </>
   );

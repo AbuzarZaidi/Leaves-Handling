@@ -31,7 +31,7 @@ app.use((error,req,res,next)=>{
   //   message:error.message
   // }})
   res.status(error.code || 500);
-  res.json({ message: error.message || 'An unknown error occurred!' });
+  res.json({ok:false, message: error.message || 'An unknown error occurred!' });
 })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
