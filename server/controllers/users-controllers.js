@@ -4,7 +4,6 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 //create leave request
 const leaveRequest = async (req, res, next) => {
-
   // {
 
   //   success : true,
@@ -12,31 +11,32 @@ const leaveRequest = async (req, res, next) => {
   //   message: ""
 
   // }
-let userId=req.params.uid;
-  let {reason, fromDate, toDate, manager } = req.body
-console.log(userId)
-console.log(fromDate)
-console.log(toDate)
-console.log(manager)
-  if(IsRequestValid({userId,reason, fromDate, toDate, manager }))
-    return next(new HttpError("Invalid inputs passed, please check your data.", 200));
+  let userId = req.params.uid;
+  let { reason, fromDate, toDate, manager } = req.body;
+  console.log(userId);
+  console.log(fromDate);
+  console.log(toDate);
+  console.log(manager);
+  if (IsRequestValid({ userId, reason, fromDate, toDate, manager }))
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 200)
+    );
   else {
-    
     try {
+      let daysInMsec =
+        new Date(toDate).getTime() - new Date(fromDate).getTime();
 
-      let daysInMsec = new Date(toDate).getTime() - new Date(fromDate).getTime();
-      
       const request = {
         status: "pending",
         reason: reason,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate.slice(0,10),
+        toDate: toDate.slice(0,10),
         totalDays: Math.ceil(daysInMsec / (1000 * 3600 * 24)) + 1,
-        manager:manager,
+        manager: manager,
       };
-    const  user = await User.findById(userId);
-    user.leaveRequests.push(request);
-    user.save();
+      const user = await User.findById(userId);
+      user.leaveRequests.push(request);
+      user.save();
     } catch (err) {
       const error = new HttpError(
         "Creating leave failed, please try again.",
@@ -52,17 +52,18 @@ console.log(manager)
 //get user previous leaves request
 const previousLeavesRequest = async (req, res, next) => {
   const userId = req.params.uid;
-  
-  let result;
   try {
-    result = await User.findById({ 
-      _id:userId
-     }, "leaveRequests");
+    let result = await User.findById(
+      {
+        _id: userId,
+      },
+      "leaveRequests"
+    );
+    
+    res.status(200).json({ ok: true, data: result.leaveRequests });
   } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
-    return next(error);
+    return next(new HttpError("Something went wrong.", 500));
   }
-  res.status(200).json({ok:true,data:result.leaveRequests});
 };
 
 //login
@@ -109,30 +110,32 @@ const login = async (req, res, next) => {
     userId: existingUser.id,
     email: existingUser.email,
     name: existingUser.name,
-    position:existingUser.position,
+    position: existingUser.position,
   });
 };
 
 //change password
 const passwordChange = async (req, res, next) => {
   const userId = req.params.uid;
-  const { previousPassword,password, confirmPassword } = req.body;
+  const { previousPassword, password, confirmPassword } = req.body;
   if (!password || !confirmPassword || password !== confirmPassword) {
     const error = new HttpError("Invalid credentials", 403);
     return next(error);
   }
   try {
-    const existingUser=await User.findById({_id:userId});
-    isValidPassword = await bcrypt.compare(previousPassword, existingUser.password);
-    if(isValidPassword){
-      let   hashedPassword = await bcrypt.hash(password, 12);
+    const existingUser = await User.findById({ _id: userId });
+    isValidPassword = await bcrypt.compare(
+      previousPassword,
+      existingUser.password
+    );
+    if (isValidPassword) {
+      let hashedPassword = await bcrypt.hash(password, 12);
       await User.findOneAndUpdate(
         { _id: userId },
         { password: hashedPassword }
       );
       res.status(200).json("password changed successfully");
     }
-  
   } catch (err) {
     const error = new HttpError(
       // "Could not create user, please try again.",
@@ -140,26 +143,28 @@ const passwordChange = async (req, res, next) => {
       500
     );
     return next(error);
-  }};
+  }
+};
 //get manager
-const getManagersName=async(req,res,next)=>{
-try {
-  const data=await User.find({type:'manager'},'name');
+const getManagersName = async (req, res, next) => {
+  try {
+    const data = await User.find({ type: "manager" }, "name");
 
- res.json(data)
-} catch (err) {
-  const error = new HttpError("Something went wrong.", 500);
+    res.json(data);
+  } catch (err) {
+    const error = new HttpError("Something went wrong.", 500);
     return next(error);
-}
-}
+  }
+};
 
 const IsRequestValid = (data) => {
-
-  return validator.isEmpty(data.reason) ||
-         validator.isEmpty(data.fromDate) ||
-         validator.isEmpty(data.toDate)||
-         validator.isEmpty(data.manager)
-}
+  return (
+    validator.isEmpty(data.reason) ||
+    validator.isEmpty(data.fromDate) ||
+    validator.isEmpty(data.toDate) ||
+    validator.isEmpty(data.manager)
+  );
+};
 
 exports.leaveRequest = leaveRequest;
 exports.previousLeavesRequest = previousLeavesRequest;

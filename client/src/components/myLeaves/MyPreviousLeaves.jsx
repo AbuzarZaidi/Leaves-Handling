@@ -19,7 +19,7 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 const columns = [
   { id: "count", label: "#", minWidth: 80 },
-  { id: "name", label: "Name", minWidth: 170 },
+  { id: "name", label: "Name", minWidth: 150 },
   { id: "reason", label: "Reason", minWidth: 80, align: "left" },
   {
     id: "fromDate",
@@ -143,11 +143,11 @@ const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage }) => {
           <Box
             sx={{ display: "flex", justifyContent: "center", fontWeight: 600 }}
           >
-            <Typography> {errorMessage.message}</Typography>
+            <Typography> {errorMessage.message===undefined?"No data found":errorMessage.message}</Typography>
           </Box>
-        ) : (
-          ""
-        )}
+          ) : (
+           ""
+         )} 
       </Paper>
     </>
   );
