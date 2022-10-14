@@ -53,17 +53,7 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
 });
 
 const MyPreviousLeaves = ({ myPreviousLeaves, userName }) => {
-  // const [page, setPage] = React.useState(0);
-  // const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(+event.target.value);
-  //   setPage(0);
-  // };
 
   return (
     <Paper sx={{ width: "80%", overflow: "hidden" }}>
@@ -83,7 +73,7 @@ const MyPreviousLeaves = ({ myPreviousLeaves, userName }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {myPreviousLeaves.map((val, ind) => {
+            {myPreviousLeaves.length>=0?myPreviousLeaves.map((val, ind) => {
               return (
                 <TableRow>
                   <TableCell id="count" label="#" sx={{ minWidth: 80 }}>
@@ -140,7 +130,7 @@ const MyPreviousLeaves = ({ myPreviousLeaves, userName }) => {
                   </TableCell>
                 </TableRow>
               );
-            })}
+            }):"No Data Found"}
           </TableBody>
         </Table>
       </TableContainer>

@@ -28,6 +28,7 @@ const Icon = styled(Typography)(({ theme }) => ({
 
 const OnBehalfLeave = () => {
   const dispatch = useDispatch();
+  const [isError, setError] = useState(false);
   // const id = useSelector((state) => state.authData.id);
   const startDate = useSelector((state) => state.leave.startDate);
   const endDate = useSelector((state) => state.leave.endDate);
@@ -61,6 +62,17 @@ const OnBehalfLeave = () => {
     setManager(event.target.value);
   };
   const applyForLeaveHandler = async () => {
+    if (employee==="") {
+      setError("employee");
+      
+    } else if (manager === "") {
+      setError("manager");
+    }else if(reasonValue === ""){
+      setError("reason");
+    }
+    else{
+
+    
     const request = {
       reason: reasonValue,
       fromDate: startDate,
@@ -72,7 +84,7 @@ const OnBehalfLeave = () => {
       handleOpen();
     }
 
-    console.log(data);
+    console.log(data);}
   };
   return (
     <>
@@ -113,7 +125,7 @@ const OnBehalfLeave = () => {
           fontFamily: "Montserrat",
         }}
       >
-        <FormControl sx={{ width: "90%" }}>
+        <FormControl sx={{ width: "90%" }} error={isError === "employee" ? true : false}>
           <InputLabel id="demo-simple-select-label">
             Select your Employee
           </InputLabel>
@@ -148,7 +160,7 @@ const OnBehalfLeave = () => {
           fontFamily: "Montserrat",
         }}
       >
-        <FormControl sx={{ width: "90%" }}>
+        <FormControl sx={{ width: "90%" }} error={isError === "manager" ? true : false}>
           <InputLabel id="demo-simple-select-label">
             Select your manager
           </InputLabel>
@@ -180,6 +192,7 @@ const OnBehalfLeave = () => {
           multiline
           sx={{ width: "90%" }}
           rows={3}
+          error={isError === "reason" ? true : false}
           onChange={(e) => setReasonValue(e.target.value)}
         />
       </Box>

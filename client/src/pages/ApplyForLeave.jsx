@@ -36,8 +36,8 @@ const ApplyForLeave = () => {
   const [managers, setManagers] = useState([]);
   const [manager, setManager] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [error,setError]=useState(false)
-  const [errorMessage,setErrorMessage]=useState('')
+  const [isError, setError] = useState(false);
+  // const [errorMessage,setErrorMessage]=useState('')
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -47,7 +47,7 @@ const ApplyForLeave = () => {
       try {
         const result = await getManagers();
         setManagers(result);
-        console.log(result);
+        // console.log(result);
       } catch (error) {
         console.log(error);
       }
@@ -59,22 +59,29 @@ const ApplyForLeave = () => {
     setManager(event.target.value);
   };
   const applyForLeaveHandler = async () => {
-    const request = {
-      reason: reasonValue,
-      fromDate: startDate,
-      toDate: endDate,
-      manager: manager,
-    };
-    const data = await createNewLeaveRequest(request, id);
-    if (reasonValue && startDate && endDate && manager) {
-      handleOpen();
-    }
+    if (manager === "") {
+      setError("manager");
+    } else if (reasonValue === "") {
+      setError("reason");
+      
+    } else {
+      const request = {
+        reason: reasonValue,
+        fromDate: startDate,
+        toDate: endDate,
+        manager: manager,
+      };
+      const data = await createNewLeaveRequest(request, id);
+      if (reasonValue && startDate && endDate && manager) {
+        handleOpen();
+      }
 
-    console.log(data);
+      console.log(data);
+    }
   };
   return (
     <>
-    <AppliedModal open={open} handleClose={handleClose}/>
+      <AppliedModal open={open} handleClose={handleClose} />
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <IconText sx={{ fontWeight: 400, fontSize: "40px" }} />
         <Text
@@ -104,15 +111,23 @@ const ApplyForLeave = () => {
           fontFamily: "Montserrat",
         }}
       >
-        <FormControl sx={{ width: "90%" }}>
+        <FormControl
+          error={isError === "manager" ? true : false}
+          sx={{ width: "90%" }}
+        >
           <InputLabel id="demo-simple-select-label">
             Select your manager
           </InputLabel>
+
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={manager}
-            label="Select your manager"
+            label={
+              isError === "manager"
+                ? "Select your Manager*"
+                : "Select your manager"
+            }
             onChange={handleChange}
           >
             {managers.length > 0
@@ -134,6 +149,7 @@ const ApplyForLeave = () => {
           id="outlined-multiline-static"
           label=" Tell your reason"
           multiline
+          error={isError === "reason" ? true : false}
           sx={{ width: "90%" }}
           rows={3}
           onChange={(e) => setReasonValue(e.target.value)}

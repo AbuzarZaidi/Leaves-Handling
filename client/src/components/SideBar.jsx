@@ -271,7 +271,7 @@ const Sidebar = () => {
               Employee Leaves
             </Box>
           </Link>
-          <Link to="/createnewemployee" style={{ textDecoration: "none" }}>
+           <Link to="/createnewemployee" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/createnewemployee")}
               sx={{
@@ -360,7 +360,7 @@ const Sidebar = () => {
               />
               Change password
             </Box>
-          </Link>
+          </Link> 
         </Box>
 
         <Box sx={{ mt: "130%" }}>

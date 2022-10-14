@@ -24,13 +24,21 @@ import {
 const ChangePassword = () => {
   const id= useSelector((state) => state.authData.id);
   const [open, setOpen] = React.useState(false);
+  const [isError, setError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 const [password,setPassword]=useState("");
 const [confirmPassword,setConfirmPassword]=useState("");
 const [previousPassword,setPreviousPassword]=useState("");
   const passwordChangeHandler=async()=>{
-if(password===confirmPassword){
+    if (previousPassword==="") {
+      setError("previous");
+      
+    } else if (password === "") {
+      setError("password");
+    }else if(confirmPassword === ""){
+      setError("confirm");
+    }else if(password===confirmPassword){
 const response=await changePassword({previousPassword,password,confirmPassword},id);
 console.log(response)
 }
@@ -57,11 +65,10 @@ console.log(response)
         </Box>
 
         <Box sx={{ mt: 3 }}>
-        {/* <Typography gutterBottom sx={{fontFamily:"Montserrat",fontWeight:500,fontSize:"18px",display:"flex",justifyContent:"center"}}>
-       Email
-      </Typography> */}
+      
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
+          error={isError === "previous" ? true : false}
             id="outlined-basic"
             label="Current Password"
             variant="outlined"
@@ -73,9 +80,7 @@ console.log(response)
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
-        {/* <Typography gutterBottom sx={{fontFamily:"Montserrat",fontWeight:500,fontSize:"18px",display:"flex",justifyContent:"center"}}>
-       Email
-      </Typography> */}
+    
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
             id="outlined-basic"
@@ -84,16 +89,15 @@ console.log(response)
             size="small"
             sx={{ width: "30%" }}
             value={password}
+            error={isError === "password" ? true : false}
             onChange={(e)=>setPassword(e.target.value)}
           />
         </Box>
       </Box>
       <Box sx={{ mt: 3 }}>
-        {/* <Typography gutterBottom sx={{fontFamily:"Montserrat",fontWeight:500,fontSize:"18px",display:"flex",justifyContent:"center"}}>
-       Email
-      </Typography> */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
+           error={isError === "confirm" ? true : false}
             id="outlined-basic"
             label="Confirm Password"
             variant="outlined"
@@ -104,7 +108,7 @@ console.log(response)
           />
         </Box>
       </Box>
-        {/* button */}
+        
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Button
             onClick={()=>{passwordChangeHandler();handleOpen();}}
