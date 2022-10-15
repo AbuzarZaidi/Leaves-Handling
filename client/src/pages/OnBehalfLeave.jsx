@@ -47,7 +47,10 @@ const OnBehalfLeave = () => {
       try {
         const result = await getManagers();
         const employeesData=await getEmployees();
-        setManagers(result);
+        if(result.success){
+          setManagers(result.data);
+        }
+        
         setEmployees(employeesData);
         console.log('employeesData');
         console.log(employeesData);

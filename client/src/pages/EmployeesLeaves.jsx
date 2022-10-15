@@ -28,8 +28,11 @@ const EmployeesLeaves = () => {
   // const [age, setAge] = React.useState()
 useEffect(() => {
   const fetchData=async()=>{
-    const employeesData=await getEmployees();
-    setEmployees(employeesData)
+    const response=await getEmployees();
+    if(response.success){
+      setEmployees(response.data)
+    }
+    
   }
   fetchData()
   

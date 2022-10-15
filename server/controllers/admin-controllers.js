@@ -1,5 +1,4 @@
 const User = require("../models/users");
-const mongoose=require('mongoose')
 const bcrypt = require("bcryptjs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
@@ -43,70 +42,53 @@ const getApprovalRequest = async (req, res, next) => {
 
 //list of users
 const usersList = async (req, res, next) => {
-  let result;
   try {
-    result = await User.find({}).select('name email probation type');
-  
+    const response = await User.find({}).select("name email probation type");
+    res.status(200).json({ success: true, data: response });
   } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
-    return next(error);
+    return next(new HttpError("Something went wrong.", 500));
   }
-  res.status(200).json(result);
 };
 //delete user from userlist
 const deleteUser = async (req, res, next) => {
   const userId = req.params.uid;
   try {
-   await User.findByIdAndRemove({ _id: userId });
+    await User.findByIdAndRemove({ _id: userId });
+    res
+      .status(200)
+      .json({ success: true, message: "User Delete Successfully" });
   } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
-    return next(error);
+    return next(new HttpError("Something went wrong.", 500));
   }
-  res.status(200).json({status:200,message:"User Delete Successfully"});
 };
 
 //create user
 const createUser = async (req, res, next) => {
-  const { name, email, password, type,probation } = req.body;
-  console.log(name, email, password);
-  if (!name || !email || !password || !type) {
-    const error = new HttpError("Please fill the complete form!", 422);
-    return next(error);
-  }
-  let userExist;
+  const { name, email, password, type, probation } = req.body;
+
   try {
-    userExist = await User.findOne({ email: email });
-  } catch (err) {
-    const error = new HttpError("Please Try Again", 422);
-    return next(error);
-  }
-  if (userExist) {
-    const error = new HttpError("Email Already Exist!", 422);
-    return next(error);
-  } else if (!validator.isEmail(email) || password.length < 6) {
-    const error = new HttpError("Invalid username or password", 422);
-    return next(error);
-  } else {
-    let hashedPassword;
-    try {
-      hashedPassword = await bcrypt.hash(password, 12);
-    } catch (err) {
-      const error = new HttpError(
-        "Could not create user, please try again.",
-        500
-      );
-      return next(error);
+    if (!name || !email || !password || !type) {
+      return next(new HttpError("Please fill the complete form!", 200));
     }
-    const user = new User({
-      name,
-      email,
-      password: hashedPassword,
-      type,
-      probation
-    });
-    console.log(user);
-    await user.save();
-    return res.status(201).json({ message: "User Created Successfully" });
+    let userExist = await User.findOne({ email: email });
+    if (userExist) {
+      return next(new HttpError("Email Already Exist!", 200));
+    } else if (!validator.isEmail(email) || password.length < 6) {
+      return next(new HttpError("Invalid username or password", 200));
+    } else {
+      let hashedPassword = await bcrypt.hash(password, 12);
+      const user = new User({
+        name,
+        email,
+        password: hashedPassword,
+        type,
+        probation,
+      });
+      await user.save();
+      res.status(200).json({ message: "User Created Successfully" });
+    }
+  } catch (err) {
+    return next(new HttpError("Could not create user, please try again.", 500));
   }
 };
 
@@ -114,78 +96,64 @@ const createUser = async (req, res, next) => {
 const editUser = async (req, res, next) => {
   const userId = req.params.uid;
   const { name, email, probation, type } = req.body;
-console.log(name)
-console.log(email)
-console.log(probation)
-console.log(type)
-  if (!name || !email  || !type) {
-    const error = new HttpError("Please fill the complete form!", 422);
-    return next(error);
-  } else if (!validator.isEmail(email) ) {
-    const error = new HttpError("Invalid email!", 422);
-    return next(error);
-  }
- 
-  const user = {
-    name: name,
-    email: email,
-    probation: probation,
-    type: type,
-  };
   try {
+    if (!name || !email || !type) {
+      
+      return next(new HttpError("Please fill the complete form!", 200));
+    } else if (!validator.isEmail(email)) {
+      
+      return next(new HttpError("Invalid email!", 200));
+    }
+    const user = {
+      name: name,
+      email: email,
+      probation: probation,
+      type: type,
+    };
     const result = await User.findOneAndUpdate({ _id: userId }, user);
-
-    console.log(result);
     return res.status(201).json({ message: "User updated Successfully" });
   } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
-    return next(error);
+    return next(new HttpError("Something went wrong.", 500));
   }
-};
+  }
+
 //employeesLeaves
-const employeesLeaves=async(req,res,next)=>{
-  const id=req.params.uid
-  const {month,year}=req.body
+const employeesLeaves = async (req, res, next) => {
+  const id = req.params.uid;
+  const { month, year } = req.body;
   // console.log(year)
   // console.log(month)
- await User.find({ _id:id,},'name probation leaveRequests').then(obj=>{
-const dateData=  obj[0].leaveRequests.filter((val)=>{
- 
-  if(year==new Date(val.fromDate).getFullYear()&&month==new Date(val.fromDate).getMonth()+1){
-    // console.log(new Date(val.fromDate).getFullYear())
-    // console.log(new Date(val.fromDate).getMonth()+1)
-    return val;
-  }
-})
-const response={
-  id:obj[0]._id,
-probation:obj[0].probation,
-  name:obj[0].name,
-  leaveRequests:dateData
-}
- res.json(response)
-})
+  await User.find({ _id: id }, "name probation leaveRequests").then((obj) => {
+    const dateData = obj[0].leaveRequests.filter((val) => {
+      if (
+        year == new Date(val.fromDate).getFullYear() &&
+        month == new Date(val.fromDate).getMonth() + 1
+      ) {
+        // console.log(new Date(val.fromDate).getFullYear())
+        // console.log(new Date(val.fromDate).getMonth()+1)
+        return val;
+      }
+    });
+    const response = {
+      id: obj[0]._id,
+      probation: obj[0].probation,
+      name: obj[0].name,
+      leaveRequests: dateData,
+    };
+    res.json(response);
+  });
+};
 
-  
-}
-
-
-
-//onbehalf leave request
-const onBehalfLeaveRequest=async(req,res,next)=>{
-//can use simple create leave route
-}
 //get employees
-const getEmployeesName=async(req,res,next)=>{
+const getEmployeesName = async (req, res, next) => {
   try {
-    const data=await User.find({type:'employee'},'name');
-  console.log(data)
-   res.json(data)
+    const response = await User.find({ type: "employee" }, "name");
+
+    res.status(200).json({ success: true, data: response });
   } catch (err) {
-    const error = new HttpError("Something went wrong.", 500);
-      return next(error);
+    return next(new HttpError("Something went wrong.", 500));
   }
-  }
+};
 
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.getApprovalRequest = getApprovalRequest;
@@ -193,6 +161,5 @@ exports.usersList = usersList;
 exports.createUser = createUser;
 exports.deleteUser = deleteUser;
 exports.editUser = editUser;
-exports.onBehalfLeaveRequest = onBehalfLeaveRequest;
 exports.employeesLeaves = employeesLeaves;
 exports.getEmployeesName = getEmployeesName;

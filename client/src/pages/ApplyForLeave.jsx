@@ -37,7 +37,6 @@ const ApplyForLeave = () => {
   const [manager, setManager] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [isError, setError] = useState(false);
-  // const [errorMessage,setErrorMessage]=useState('')
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -46,8 +45,10 @@ const ApplyForLeave = () => {
       dispatch(setEndDateHandler(new Date().toISOString()));
       try {
         const result = await getManagers();
-        setManagers(result);
-        // console.log(result);
+        console.log(result);
+        if (result.success) {
+          setManagers(result.data);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -63,7 +64,6 @@ const ApplyForLeave = () => {
       setError("manager");
     } else if (reasonValue === "") {
       setError("reason");
-      
     } else {
       const request = {
         reason: reasonValue,
@@ -71,12 +71,11 @@ const ApplyForLeave = () => {
         toDate: endDate,
         manager: manager,
       };
-      const data = await createNewLeaveRequest(request, id);
-      if (reasonValue && startDate && endDate && manager) {
+      const response = await createNewLeaveRequest(request, id);
+      if (response.success) {
         handleOpen();
       }
-
-      console.log(data);
+      console.log(response);
     }
   };
   return (
@@ -114,6 +113,9 @@ const ApplyForLeave = () => {
         <FormControl
           error={isError === "manager" ? true : false}
           sx={{ width: "90%" }}
+          onFocus={() => {
+            isError && setError(false);
+          }}
         >
           <InputLabel id="demo-simple-select-label">
             Select your manager
@@ -149,6 +151,9 @@ const ApplyForLeave = () => {
           id="outlined-multiline-static"
           label=" Tell your reason"
           multiline
+          onFocus={() => {
+            isError && setError(false);
+          }}
           error={isError === "reason" ? true : false}
           sx={{ width: "90%" }}
           rows={3}
@@ -162,15 +167,15 @@ const ApplyForLeave = () => {
           sx={{
             color: "#1F2533",
             fontFamily: "Montserrat",
-            width: "240px",
+            width: "200px",
             fontWeight: 600,
             fontSize: "14px",
-            border: 3,
-            borderColor: "#007F78",
+            border: 2,
+            borderColor: "#1F2533",
             "&:hover": {
               backgroundColor: "#1F2533",
               color: "#ffffff",
-              border: 3,
+              border: 2,
               borderColor: "#1F2533",
             },
           }}

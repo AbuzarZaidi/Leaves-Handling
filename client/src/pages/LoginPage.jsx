@@ -32,15 +32,15 @@ const LoginPage = () => {
 
       const result = await login(user);
 
-      if (result.response) {
-        setError(true);
-        setErrorMessage(result.response.data.message);
-      } else {
+      if (result.success) {
         dispatch(setLoginHandler());
         dispatch(setIdHandler(result.userId));
         dispatch(setNameHandler(result.name));
         dispatch(setPositionHandler(result.position));
         navigate("/applyforleaves");
+      } else {
+        setError(true);
+        setErrorMessage(result.message);
       }
     } else {
       setError(true);

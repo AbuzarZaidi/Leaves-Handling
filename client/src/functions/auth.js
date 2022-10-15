@@ -1,9 +1,9 @@
 import * as api from "../api/auth";
 export const login = async (user) => {
     try {
-      const {data}   = await api.login(user);
-      return data;
+      const response   = await api.login(user);
+      return response.data;
     } catch (error) {
-      return error;
+      return (error.response.data);
     }
   };

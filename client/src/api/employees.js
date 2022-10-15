@@ -4,4 +4,4 @@ const url = "http://localhost:5000/user";
 export const myLeaves = (userId) => axios.get(`${url}/previosRequest/${userId}`);
 export const applyForLeave = (leave,userId) => axios.post(`${url}/leaveRequest/${userId}`,leave);
 export const getManagers=()=>axios.get(`${url}/getMangersName`)
-export const changePassword=(data,id)=>axios.get(`${url}/passwordChange/${id}`,data)
+export const changePassword=(data,id)=>axios.patch(`${url}/passwordChange/${id}`,data)

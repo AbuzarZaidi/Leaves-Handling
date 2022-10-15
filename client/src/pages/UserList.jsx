@@ -8,8 +8,7 @@ import {
 import {
   Box,
   Typography,
-  // TextField,
-  // Button,
+
 } from "../utlis/materialUIComponents";
 import SingleUser from "../components/userslist/SingleUser";
 import { styled } from "@mui/material/styles";
@@ -27,14 +26,21 @@ const Icon = styled(Typography)(({ theme }) => ({
 const UserList = () => {
   const [employees, setEmployees] = useState([]);
   const [edit, setEdit] = useState(false);
+  const [error, setError] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await allEmployees();
-
-        setEmployees(result);
+        if (result.success) {
+          if (result.data.length > 0) {
+            setEmployees(result.data);
+          }
+        } else {
+          setError("No Data found");
+        }
       } catch (error) {
         console.log(error);
+        setError("No Data Found");
       }
     };
     fetchData();
@@ -42,9 +48,7 @@ const UserList = () => {
   }, [setEmployees, setEdit, edit]);
   const deleteUserHandler = async (id) => {
     const response = await deleteEmployee(id);
-    console.log("response");
-    console.log(response);
-    if (response.status === 200) {
+    if (response.success) {
       const updatedList = employees.filter((user) => user._id !== id);
       setEmployees(updatedList);
     }
@@ -110,17 +114,23 @@ const UserList = () => {
           </Box>
         </Box>
       </Box>
-      {employees.map((val, ind) => {
-        return (
-          <SingleUser
-            key={ind}
-            employeeData={val}
-            id={val._id}
-            userDeleteHandler={deleteUserHandler}
-            userEditHandler={editHandler}
-          />
-        );
-      })}
+      {employees.length > 0 ? (
+        employees.map((val, ind) => {
+          return (
+            <SingleUser
+              key={ind}
+              employeeData={val}
+              id={val._id}
+              userDeleteHandler={deleteUserHandler}
+              userEditHandler={editHandler}
+            />
+          );
+        })
+      ) : (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography>{error}</Typography>
+        </Box>
+      )}
     </>
   );
 };

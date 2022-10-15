@@ -26,10 +26,11 @@ const MyLeaves = () => {
         const res = await getPreviousLeaves(id);
 
         if (res) {
-          if (res.ok) {
+          if (res.success) {
             setMyLeaves(res.data);
           }
         } else {
+          // console.log(res.message)
           throw Error("No Data Found");
         }
       } catch (error) {

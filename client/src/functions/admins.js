@@ -1,49 +1,49 @@
 import * as api from "../api/admins";
 export const allEmployees = async () => {
     try {
-      const { data } = await api.allEmployees();
-      return data;
+      const result= await api.allEmployees();
+      return result.data;
     } catch (error) {
-      console.log(error);
+      return (error.response.data);
     }
   };
   export const deleteEmployee = async (id) => {
     try {
-      const { data } = await api.deleteEmployee(id);
-      return data;
+      const result  = await api.deleteEmployee(id);
+      return result.data;
     } catch (error) {
-      console.log(error);
+      return (error.response.data);
     }
   };
   export const createEmployee = async (user) => {
     try {
-      const { data } = await api.createEmployee(user);
-      return data;
+      const result = await api.createEmployee(user);
+      return result.data;
     } catch (error) {
-      console.log(error);
+      return (error.response.data);
     }
   };
   export const editEmployee = async (id,user) => {
     try {
-      const { data } = await api.editEmployee(id,user);
-      return data;
+      const result  = await api.editEmployee(id,user);
+      return result.data;
     } catch (error) {
-      console.log(error);
+      return (error.response.data);
     }
   };
   export const employeesLeaves = async (id,user) => {
     try {
-      const { data } = await api.employeesLeaves(id,user);
-      return data;
+      const result  = await api.employeesLeaves(id,user);
+      return result.data;
     } catch (error) {
-      console.log(error);
+      return (error.response.data);
     }
   };
   export const getEmployees= async () => {
     try {
-      const { data } = await api.getEmployees();
-      return data;
+      const  result = await api.getEmployees();
+      return result.data;
     } catch (error) {
-      console.log(error);
+      return (error.response.data);
     }
   };

@@ -59,6 +59,7 @@ const DeleteModal = ({employeeData,open,handleClose,userDeleteHandler}) => {
                 textTransform: "capitalize",
                 mr: 1,
                 borderColor: "#1F2533",
+                border:2,
                 px: 3,
                 borderRadius: "10px",
               }}
