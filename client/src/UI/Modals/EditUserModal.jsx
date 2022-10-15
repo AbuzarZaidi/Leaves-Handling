@@ -103,12 +103,13 @@ const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) 
                 label="Probation"
                 format="MM/dd/yyyy"
                 name="probation"
+                minDate={dayjs()}
                 value={value}
                 onChange={(newValue) => {
                   setValue(newValue);
                   setProbationTime(newValue);
                 }}
-                minDate={dayjs("2017-01-01")}
+                
                 renderInput={(params) => <TextField {...params} />}
               />
             </Stack>
@@ -124,12 +125,13 @@ const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) 
                 label="Probation"
                 format="MM/dd/yyyy"
                 name="probation"
+                minDate={dayjs()}
                 value={value}
                 onChange={(newValue) => {
                   setValue(newValue);
                   setProbationTime(newValue);
                 }}
-                minDate={dayjs("2017-01-01")}
+              
                 renderInput={(params) => (
                   <TextField {...params} size="small" />
                 )}

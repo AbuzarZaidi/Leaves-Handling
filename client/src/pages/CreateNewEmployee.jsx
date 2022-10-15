@@ -327,8 +327,8 @@ const CreateNewEmployee = () => {
               width: "180px",
               fontWeight: 600,
               fontSize: "14px",
-              border: 3,
-              borderColor: "#007F78",
+              border: 2,
+              borderColor: "#1F2533",
               "&:hover": {
                 backgroundColor: "#1F2533",
                 color: "#ffffff",

@@ -8,6 +8,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const userName= useSelector((state) => state.authData.userName);
+  const type= useSelector((state) => state.authData.type);
  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -68,7 +69,7 @@ const Navbar = () => {
        {userName}
       </Typography>
       <Typography variant="caption"  sx={{m:0,p:0,mt:-1,fontSize: 12}}>
-        Employee
+        {type}
       </Typography>
           </Box>
           <Box

@@ -12,7 +12,7 @@ import {
   setLoginHandler,
   setIdHandler,
   setNameHandler,
-  setPositionHandler,
+  setTypeHandler,
 } from "../store/auth";
 const { login } = require("../functions/auth");
 
@@ -36,7 +36,7 @@ const LoginPage = () => {
         dispatch(setLoginHandler());
         dispatch(setIdHandler(result.data.userId));
         dispatch(setNameHandler(result.data.name));
-        dispatch(setPositionHandler(result.data.position));
+        dispatch(setTypeHandler(result.data.type));
         navigate("/applyforleaves");
       } else {
         setError(true);

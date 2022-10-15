@@ -40,6 +40,7 @@ const DateRange = () => {
           <MobileDatePicker
             label="Select your start date"
             value={startDate}
+            minDate={dayjs()}
             onChange={(newValue) => {
               setStartDate(newValue);
               dispatch(setStartDate(newValue));
@@ -58,6 +59,7 @@ const DateRange = () => {
           <MobileDatePicker
             label="Select your end date"
             value={endDate}
+            minDate={dayjs()}
             onChange={(newValue) => {
               setEndDate(newValue);
               dispatch(setEndDateHandler(newValue));
@@ -76,7 +78,7 @@ const DateRange = () => {
           <DesktopDatePicker
             label="Select your start date"
             value={startDate}
-            // minDate={dayjs('2017-01-01')}
+             minDate={dayjs()}
             onChange={(newValue) => {
               startDateHandler(newValue);
               dispatch(setStartDateHandler(newValue));
@@ -96,7 +98,7 @@ const DateRange = () => {
           <DesktopDatePicker
             label="Select your end date"
             value={endDate}
-            // minDate={dayjs('2017-01-01')}
+            minDate={dayjs()}
             onChange={(newValue) => {
               setEndDate(newValue);
               dispatch(setEndDateHandler(newValue));

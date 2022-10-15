@@ -76,7 +76,7 @@ const login = async (req, res, next) => {
       userId: existingUser.id,
       email: existingUser.email,
       name: existingUser.name,
-      position: existingUser.position,
+      type: existingUser.type,
     }});
   } catch (err) {
     return next(
