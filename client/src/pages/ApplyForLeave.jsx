@@ -69,7 +69,7 @@ const ApplyForLeave = () => {
         reason: reasonValue,
         fromDate: startDate,
         toDate: endDate,
-        manager: manager,
+        manager: manager
       };
       const response = await createNewLeaveRequest(request, id);
       if (response.success) {

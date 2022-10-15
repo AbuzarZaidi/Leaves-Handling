@@ -35,6 +35,7 @@ const CreateNewEmployee = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [isError, setError] = useState(false);
   const [addUser, setAddUser] = useState({
     name: "",
     email: "",
@@ -52,7 +53,22 @@ const CreateNewEmployee = () => {
     }));
   };
   const createUserHandler = async () => {
-    if (addUser.confirm === addUser.password) {
+    if(addUser.name===""){
+      setError("name")
+    }
+    else if(addUser.email==="email"){
+      setError("email")
+    }
+    else if(addUser.password===""){
+      setError("password")
+    }else if(addUser.confirm===""){
+      setError("confirm")
+    }else if(addUser.type===""){
+      setError("type")
+    }
+    if (addUser.confirm !== addUser.password) {
+ 
+    } else {
       const user = {
         name: addUser.name,
         email: addUser.email,
@@ -61,10 +77,10 @@ const CreateNewEmployee = () => {
         probation: probationTime,
       };
       const response = await createEmployee(user);
-
-      console.log(response);
-    } else {
-      console.log("Invalid entry");
+      if(response.success){
+        handleOpen();
+      }
+     
     }
   };
   return (
@@ -109,6 +125,7 @@ const CreateNewEmployee = () => {
               variant="outlined"
               size="small"
               sx={{ width: "30%" }}
+              error={isError === "name" ? true : false}
             />
           </Box>
         </Box>
@@ -124,6 +141,7 @@ const CreateNewEmployee = () => {
               variant="outlined"
               size="small"
               sx={{ width: "30%" }}
+              error={isError === "email" ? true : false}
             />
           </Box>
         </Box>
@@ -141,6 +159,7 @@ const CreateNewEmployee = () => {
               size="small"
               sx={{ width: "30%" }}
               autoComplete="on"
+              error={isError === "password" ? true : false}
             />
           </Box>
         </Box>
@@ -158,6 +177,7 @@ const CreateNewEmployee = () => {
               size="small"
               sx={{ width: "30%" }}
               autoComplete="on"
+              error={isError === "confirm" ? true : false}
             />
           </Box>
         </Box>
@@ -210,7 +230,7 @@ const CreateNewEmployee = () => {
         </Box>
         {/* choose position */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-          <FormControl name="type" value={addUser.type} onChange={handleChange}>
+          <FormControl name="type" value={addUser.type} onChange={handleChange} error={isError === "type" ? true : false}>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -299,7 +319,7 @@ const CreateNewEmployee = () => {
         {/* button */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
           <Button
-            onClick={()=>{createUserHandler();handleOpen();}}
+            onClick={()=>{createUserHandler();}}
             variant="outlined"
             sx={{
               color: "#1F2533",
