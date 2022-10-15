@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -34,9 +34,9 @@ const LoginPage = () => {
 
       if (result.success) {
         dispatch(setLoginHandler());
-        dispatch(setIdHandler(result.userId));
-        dispatch(setNameHandler(result.name));
-        dispatch(setPositionHandler(result.position));
+        dispatch(setIdHandler(result.data.userId));
+        dispatch(setNameHandler(result.data.name));
+        dispatch(setPositionHandler(result.data.position));
         navigate("/applyforleaves");
       } else {
         setError(true);

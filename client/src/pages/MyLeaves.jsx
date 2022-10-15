@@ -24,7 +24,8 @@ const MyLeaves = () => {
     const data = async () => {
       try {
         const res = await getPreviousLeaves(id);
-
+console.log('id')
+console.log(id)
         if (res) {
           if (res.success) {
             setMyLeaves(res.data);
