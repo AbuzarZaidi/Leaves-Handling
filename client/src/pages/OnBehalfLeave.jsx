@@ -81,12 +81,11 @@ const OnBehalfLeave = () => {
       toDate: endDate,
       manager: manager,
     };
-    const data = await createNewLeaveRequest(request, employee);
-    if (reasonValue && startDate && endDate && manager) {
+    const result = await createNewLeaveRequest(request, employee);
+    if (result.success) {
       handleOpen();
     }
-
-    console.log(data);}
+}
   };
   return (
     <>
