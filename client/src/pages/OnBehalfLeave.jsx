@@ -50,10 +50,9 @@ const OnBehalfLeave = () => {
         if(result.success){
           setManagers(result.data);
         }
-        
-        setEmployees(employeesData);
-        console.log('employeesData');
-        console.log(employeesData);
+        if(employeesData.success){
+          setEmployees(employeesData);
+        }
       } catch (error) {
         console.log(error);
       }
