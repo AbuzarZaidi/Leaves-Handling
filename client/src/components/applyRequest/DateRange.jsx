@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React,{useState,useEffect} from "react";
 import dayjs from "dayjs";
 import {
   TextField,
@@ -6,7 +6,8 @@ import {
   Typography,
   Box,
 } from "../../utlis/materialUIComponents";
-
+import { setReset } from "../../store/applyForLeave";
+import { useSelector } from "react-redux";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useDispatch } from "react-redux";
@@ -18,9 +19,12 @@ import {
   setEndDateHandler,
 } from "../../store/applyForLeave";
 const DateRange = () => {
-  const [startDate, setStartDate] = React.useState(dayjs());
+  const startingDate = useSelector((state) => state.leave.startDate);
+  const endingDate = useSelector((state) => state.leave.endDate);
+  const reset= useSelector((state) => state.leave.reset);
+  const [startDate, setStartDate] = useState(startingDate);
   const dispatch = useDispatch();
-  const [endDate, setEndDate] = React.useState(dayjs());
+  const [endDate, setEndDate] = useState(endingDate);
   const startDateHandler = (newValue) => {
     setStartDate(newValue);
   };
@@ -28,6 +32,14 @@ const DateRange = () => {
   //   console.log(newValue);
   //   console.log("m");
   // };
+  useEffect(() => {
+ if(reset===true){
+  setStartDate(dayjs())
+  setEndDate(dayjs())
+  dispatch(setReset(false))
+ }
+  }, [reset])
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack spacing={3}>
@@ -59,7 +71,7 @@ const DateRange = () => {
           <MobileDatePicker
             label="Select your end date"
             value={endDate}
-            minDate={dayjs()}
+            minDate={startDate}
             onChange={(newValue) => {
               setEndDate(newValue);
               dispatch(setEndDateHandler(newValue));
@@ -98,7 +110,7 @@ const DateRange = () => {
           <DesktopDatePicker
             label="Select your end date"
             value={endDate}
-            minDate={dayjs()}
+            minDate={startDate}
             onChange={(newValue) => {
               setEndDate(newValue);
               dispatch(setEndDateHandler(newValue));

@@ -6,41 +6,41 @@ import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 const columns = [
-    { id: "count", label: "#", minWidth: 20 },
-    { id: "name", label: "Name", minWidth: 150, align: "left" },
-    { id: "reason", label: "Reason", minWidth: 40, align: "left" },
+    { id: "count", label: "#", minWidth: 20, align: "left" },
+    { id: "name", label: "Name", minWidth: 120, align: "left" },
+    { id: "reason", label: "Reason", minWidth: 20, align: "left" },
     {
       id: "fromDate",
       label: "From",
-      minWidth: 80,
+      minWidth: 40,
       align: "left",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
       id: "toDate",
       label: "To",
-      minWidth: 80,
+      minWidth: 40,
       align: "left",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
       id: "days",
       label: "Days",
-      minWidth: 50,
+      minWidth: 20,
       align: "left",
       format: (value) => value.toFixed(2),
     },
     {
         id: "unpaid",
         label: "Unpaid Leaves",
-        minWidth: 50,
+        minWidth: 20,
         align: "left",
         format: (value) => value.toFixed(2),
       },
       {
         id: "approved",
         label: "Approves",
-        minWidth: 100,
+        minWidth: 50,
         align: "left",
         format: (value) => value.toFixed(2),
       },
@@ -57,7 +57,7 @@ const columns = [
 
 const EmployeePreviousLeaves = ({data}) => {
     return (
-        <Paper sx={{ width: "85%", overflow: "hidden" }}>
+        <Paper sx={{ width: "95%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -144,7 +144,7 @@ const EmployeePreviousLeaves = ({data}) => {
                         }}
                       >
                         {val.status}
-                        status
+                        
                       </TableCell>
                     </TableRow>
                     ); 

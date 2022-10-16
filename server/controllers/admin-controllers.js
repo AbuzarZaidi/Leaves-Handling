@@ -85,7 +85,7 @@ const createUser = async (req, res, next) => {
         probation,
       });
       await user.save();
-      res.status(200).json({ message: "User Created Successfully" });
+      res.status(200).json({success:true, message: "User Created Successfully" });
     }
   } catch (err) {
     return next(new HttpError("Could not create user, please try again.", 500));
@@ -121,16 +121,25 @@ const editUser = async (req, res, next) => {
 const employeesLeaves = async (req, res, next) => {
   const id = req.params.uid;
   const { month, year } = req.body;
-  // console.log(year)
-  // console.log(month)
+  console.log("user{")
+  console.log(year)
+  console.log(month)
+  console.log("}")
   await User.find({ _id: id }, "name probation leaveRequests").then((obj) => {
     const dateData = obj[0].leaveRequests.filter((val) => {
-      if (
-        year == new Date(val.fromDate).getFullYear() &&
-        month == new Date(val.fromDate).getMonth() + 1
-      ) {
-        // console.log(new Date(val.fromDate).getFullYear())
-        // console.log(new Date(val.fromDate).getMonth()+1)
+      // console.log(new Date(val.fromDate).getFullYear())
+      // console.log(new Date(val.fromDate).getMonth()+1)
+      console.log(new Date(val.fromDate).getDate())
+      if (year == new Date(val.fromDate).getFullYear() &&month == new Date(val.fromDate).getMonth() + 1&&year == new Date(val.toDate).getFullYear()&&month == new Date(val.toDate).getMonth() + 1) {
+     
+        return val;
+      }
+      else if(year == new Date(val.fromDate).getFullYear() &&month == new Date(val.fromDate).getMonth() + 1&&month != new Date(val.toDate).getMonth() + 1){
+val.totalDays=val.totalDays-new Date(val.toDate).getDate();
+
+      }
+      else if(year == new Date(val.toDate).getFullYear()&&month == new Date(val.toDate).getMonth() + 1&&month != new Date(val.fromDate).getMonth() + 1){
+        val.totalDays=new Date(val.toDate).getDate();
         return val;
       }
     });

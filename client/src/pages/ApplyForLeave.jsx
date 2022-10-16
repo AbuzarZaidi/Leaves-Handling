@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AppliedModal from "../UI/Modals/AppliedModal";
 import { createNewLeaveRequest, getManagers } from "../functions/employees";
 import { useSelector, useDispatch } from "react-redux";
-import { setStartDateHandler, setEndDateHandler } from "../store/applyForLeave";
+import { setStartDateHandler, setEndDateHandler,setReset } from "../store/applyForLeave";
 import {
   Box,
   Typography,
@@ -74,6 +74,9 @@ const ApplyForLeave = () => {
       const response = await createNewLeaveRequest(request, id);
       if (response.success) {
         handleOpen();
+        setManager("");
+        setReasonValue("");
+         dispatch(setReset(true))
       }
       console.log(response);
     }
@@ -154,6 +157,7 @@ const ApplyForLeave = () => {
           onFocus={() => {
             isError && setError(false);
           }}
+          value={reasonValue}
           error={isError === "reason" ? true : false}
           sx={{ width: "90%" }}
           rows={3}

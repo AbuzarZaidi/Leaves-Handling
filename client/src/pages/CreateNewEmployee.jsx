@@ -79,6 +79,14 @@ const CreateNewEmployee = () => {
       const response = await createEmployee(user);
       if(response.success){
         handleOpen();
+        setAddUser({
+          name: "",
+          email: "",
+          password: "",
+          confirm: "",
+          type: "",
+        })
+        setProbationTime(dayjs())
       }
      
     }

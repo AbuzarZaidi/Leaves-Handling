@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialCounterState = { startDate:"",endDate:""};
+import dayjs from "dayjs";
+const initialCounterState = { startDate:dayjs(),endDate:dayjs(),reset:false};
 const leaveSlice = createSlice({
     name: "applyForLeave",
     initialState: initialCounterState,
@@ -11,10 +11,13 @@ const leaveSlice = createSlice({
           setEndDateHandler(state, action) {
             state.endDate=action.payload;
           },
+          setReset(state,action){
+            state.reset=action.payload;
+          }
     }
 
 })
 export const {
-   setStartDateHandler,setEndDateHandler
+   setStartDateHandler,setEndDateHandler,setReset
   } = leaveSlice.actions;
 export default leaveSlice.reducer;

@@ -57,6 +57,9 @@ const ChangePassword = () => {
         if (response.success) {
           console.log(response.message)
           handleOpen();
+          setPassword("")
+          setConfirmPassword("")
+          setPreviousPassword("")
         } else {
           setErrorMessage(response.message)
           setError(true)

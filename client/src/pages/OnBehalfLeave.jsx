@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createNewLeaveRequest, getManagers } from "../functions/employees";
 import { getEmployees} from "../functions/admins";
 import { useSelector, useDispatch } from "react-redux";
-import { setStartDateHandler, setEndDateHandler } from "../store/applyForLeave";
+import { setStartDateHandler, setEndDateHandler,setReset } from "../store/applyForLeave";
 import AppliedModal from "../UI/Modals/AppliedModal";
 import {
   Box,
@@ -51,7 +51,7 @@ const OnBehalfLeave = () => {
           setManagers(result.data);
         }
         if(employeesData.success){
-          setEmployees(employeesData);
+          setEmployees(employeesData.data);
         }
       } catch (error) {
         console.log(error);
@@ -59,6 +59,7 @@ const OnBehalfLeave = () => {
     };
     data();
   }, [dispatch]);
+
 
   const handleChange = (event) => {
     setManager(event.target.value);
@@ -71,6 +72,7 @@ const OnBehalfLeave = () => {
       setError("manager");
     }else if(reasonValue === ""){
       setError("reason");
+
     }
     else{
 
@@ -84,6 +86,10 @@ const OnBehalfLeave = () => {
     const result = await createNewLeaveRequest(request, employee);
     if (result.success) {
       handleOpen();
+      dispatch(setReset(true))
+      setManager("")
+      setEmployee("")
+      setReasonValue("")
     }
 }
   };
@@ -193,6 +199,7 @@ const OnBehalfLeave = () => {
           multiline
           sx={{ width: "90%" }}
           rows={3}
+          value={reasonValue}
           error={isError === "reason" ? true : false}
           onChange={(e) => setReasonValue(e.target.value)}
         />
