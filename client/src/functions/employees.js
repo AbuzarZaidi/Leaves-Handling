@@ -16,9 +16,9 @@ export const getPreviousLeaves = async (userId) => {
       return (error.response.data);
     }
   };
-  export const getManagers = async () => {
+  export const getManagers = async (id) => {
     try {
-      const  result  = await api.getManagers();
+      const  result  = await api.getManagers(id);
       return result.data;
     } catch (error) {
       return (error.response.data);

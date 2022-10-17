@@ -2,8 +2,9 @@ const User = require("../models/users");
 const bcrypt = require("bcryptjs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
+
 const updateLeavesRequest = async (req, res, next) => {
-  const userId = req.params.uid;
+  const userId = req.body.id;
   const updatedStatus = req.body.updatedStatus;
   if (updatedStatus === "accepted" || updatedStatus === "rejected") {
     let user = "";
@@ -42,6 +43,7 @@ const getApprovalRequest = async (req, res, next) => {
 
 //list of users
 const usersList = async (req, res, next) => {
+
   try {
     const response = await User.find({}).select("name email probation type");
     res.status(200).json({ success: true, data: response });
@@ -51,7 +53,7 @@ const usersList = async (req, res, next) => {
 };
 //delete user from userlist
 const deleteUser = async (req, res, next) => {
-  const userId = req.params.uid;
+  const userId = req.body.id;
   try {
     await User.findByIdAndRemove({ _id: userId });
     res
@@ -64,7 +66,7 @@ const deleteUser = async (req, res, next) => {
 
 //create user
 const createUser = async (req, res, next) => {
-  const { name, email, password, type, probation } = req.body;
+  const { name, email, password, type, probation } = req.body.data;
 
   try {
     if (!name || !email || !password || !type) {
@@ -94,8 +96,8 @@ const createUser = async (req, res, next) => {
 
 //edit user
 const editUser = async (req, res, next) => {
-  const userId = req.params.uid;
-  const { name, email, probation, type } = req.body;
+  const userId = req.body.id;
+  const { name, email, probation, type } = req.body.data;
   try {
     if (!name || !email || !type) {
       
@@ -119,8 +121,8 @@ const editUser = async (req, res, next) => {
 
 //employeesLeaves
 const employeesLeaves = async (req, res, next) => {
-  const id = req.params.uid;
-  const { month, year } = req.body;
+  const id = req.body.id;
+  const { month, year } = req.body.data;
   console.log("user{")
   console.log(year)
   console.log(month)

@@ -6,10 +6,12 @@ import { useNavigate, Link } from "react-router-dom";
 
 import {  Typography, Box } from "../utlis/materialUIComponents";
 import { setlogoutHandler, setLocationHandler } from "../store/auth";
-
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Sidebar = () => {
   const loc = useSelector((state) => state.authData.location);
+  const type = useSelector((state) => state.authData.type);
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -19,72 +21,21 @@ const Sidebar = () => {
     dispatch(setlogoutHandler());
     navigate("/");
   };
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openUserMenu = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleUserClose = () => {
+    setAnchorEl(null);
+  };
   const checkLocationHandler = (val) => {
     dispatch(setLocationHandler(val));
   };
   return (
     <>
     <LogoutModal open={open} handleClose={handleClose} logoutHandler={logoutHandler}/>
-      {/* <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: "45px" }}>
-              <img src="icons/modal_logout.png" width="60px" alt="icon" />
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 1.5 }}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "18px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                Are you sure
-              </Typography>
-            </Box>
-            <Box>
-              <Box
-                sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 3 }}
-              >
-                <Button
-                  onClick={handleClose}
-                  variant="outlined"
-                  sx={{
-                    textTransform: "capitalize",
-                    mr: 1,
-                    borderColor: "#1F2533",
-                    px: 3,
-                    borderRadius: "10px",
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={logoutHandler}
-                  variant="contained"
-                  sx={{
-                    textTransform: "capitalize",
-                    backgroundColor: "#1F2533",
-                    px: 3,
-                    borderRadius: "10px",
-                    "&:hover": {
-                      backgroundColor: "#1F2533",
-                      color: "#ffffff",
-                    },
-                  }}
-                >
-                  Log out
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Modal>
-      </div> */}
+      
       <Box sx={{ mt: 4, mx: "auto" }}>
         <Box sx={{ ml: 5 }}>
           <img src="/icons/logo.png" alt="" />
@@ -154,14 +105,14 @@ const Sidebar = () => {
             Tech
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{mt:type==="employee"?"70%":"40%"}}>
           <Link to="/applyforleaves" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/applyforleaves")}
               sx={{
-                mt: "70%",
+                mt: "10%",
                 // color: "#00E5D9",
-                color: loc === "/applyforleaves" ? "#00E5D9" : "#ffffff",
+                color: loc === "/applyforleaves" ? "#00AAFF" : "#ffffff",
                 fontFamily: "Montserrat",
                 fontSize: "14px",
                 display: "flex",
@@ -187,7 +138,7 @@ const Sidebar = () => {
               sx={{
                 mt: "20%",
 
-                color: loc === "/myleaves" ? "#00E5D9" : "#ffffff",
+                color: loc === "/myleaves" ? "#00AAFF" : "#ffffff",
                 fontFamily: "Montserrat",
                 fontSize: "14px",
                 display: "flex",
@@ -211,43 +162,14 @@ const Sidebar = () => {
               My Leave
             </Box>
           </Link>
-          <Link to="/userlist" style={{ textDecoration: "none" }}>
-            <Box
-              onClick={() => checkLocationHandler("/userlist")}
-              sx={{
-                mt: "20%",
-
-                color: loc === "/userlist" ? "#00E5D9" : "#ffffff",
-                fontFamily: "Montserrat",
-                fontSize: "14px",
-                display: "flex",
-
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={
-                  loc === "/userlist"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
-                }
-                style={{
-                  marginRight: "5px",
-                  marginLeft: "8px",
-                  color: "#00E5D9",
-                }}
-                alt="icon"
-              />
-              userlist
-            </Box>
-          </Link>
+          {type!=="employee"? <>
           <Link to="/employeesleaves" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/employeesleaves")}
               sx={{
                 mt: "20%",
 
-                color: loc === "/employeesleaves" ? "#00E5D9" : "#ffffff",
+                color: loc === "/employeesleaves" ? "#00AAFF" : "#ffffff",
                 fontFamily: "Montserrat",
                 fontSize: "14px",
                 display: "flex",
@@ -271,13 +193,78 @@ const Sidebar = () => {
               Employee Leaves
             </Box>
           </Link>
-           <Link to="/createnewemployee" style={{ textDecoration: "none" }}>
-            <Box
-              onClick={() => checkLocationHandler("/createnewemployee")}
+          <Box
               sx={{
                 mt: "20%",
 
-                color: loc === "/createnewemployee" ? "#00E5D9" : "#ffffff",
+                color: loc === "/userlist" ? "#00AAFF" : "#ffffff",
+                fontFamily: "Montserrat",
+                fontSize: "14px",
+                display: "flex",
+cursor:"pointer",
+                alignItems: "center",
+              }}
+              onClick={handleClick}
+              aria-expanded={openUserMenu ? 'true' : undefined}
+              aria-controls={openUserMenu ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+            >
+Users
+
+</Box>
+<Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={openUserMenu}
+        onClose={handleUserClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        PaperProps={{
+          sx: {
+            backgroundColor: "#0A1833",
+        
+          },
+        }}
+     
+      >
+        <MenuItem onClick={handleUserClose}> <Link to="/userlist" style={{ textDecoration: "none" }}>
+            <Box
+              onClick={() => checkLocationHandler("/userlist")}
+              sx={{
+                mt: "20%",
+
+                color: loc === "/userlist" ? "#00AAFF" : "#ffffff",
+                fontFamily: "Montserrat",
+                fontSize: "14px",
+                display: "flex",
+
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={
+                  loc === "/userlist"
+                    ? "icons/myLeavesMenuIcon.png"
+                    : "icons/myLeaveMenuActive.png"
+                }
+                style={{
+                  marginRight: "5px",
+                  marginLeft: "8px",
+                  color: "#00E5D9",
+                }}
+                alt="icon"
+              />
+              userlist
+            </Box>
+          </Link></MenuItem>
+        <MenuItem onClick={handleUserClose}><Link to="/createnewemployee" style={{ textDecoration: "none" }}>
+            <Box
+              onClick={() => checkLocationHandler("/createnewemployee")}
+              sx={{
+                mt: "5%",
+
+                color: loc === "/createnewemployee" ? "#00AAFF" : "#ffffff",
                 fontFamily: "Montserrat",
                 fontSize: "14px",
                 display: "flex",
@@ -300,14 +287,14 @@ const Sidebar = () => {
               />
               new employee
             </Box>
-          </Link>
-          <Link to="/onbehalfleave" style={{ textDecoration: "none" }}>
+          </Link> </MenuItem>
+        <MenuItem onClick={handleUserClose}><Link to="/onbehalfleave" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/onbehalfleave")}
               sx={{
-                mt: "20%",
+                mt: "5%",
 
-                color: loc === "/onbehalfleave" ? "#00E5D9" : "#ffffff",
+                color: loc === "/onbehalfleave" ? "#00AAFF" : "#ffffff",
                 fontFamily: "Montserrat",
                 fontSize: "14px",
                 display: "flex",
@@ -330,14 +317,16 @@ const Sidebar = () => {
               />
               OnBehalf Leave
             </Box>
-          </Link>
+          </Link> </MenuItem>
+      </Menu>
+          
           <Link to="/changepassword" style={{ textDecoration: "none" }}>
             <Box
-              onClick={() => checkLocationHandler("/onbehalfleave")}
+              onClick={() => checkLocationHandler("/changepassword")}
               sx={{
                 mt: "20%",
 
-                color: loc === "/changepassword" ? "#00E5D9" : "#ffffff",
+                color: loc === "/changepassword" ? "#00AAFF" : "#ffffff",
                 fontFamily: "Montserrat",
                 fontSize: "14px",
                 display: "flex",
@@ -360,19 +349,22 @@ const Sidebar = () => {
               />
               Change password
             </Box>
-          </Link> 
+          </Link> </>:""}
         </Box>
 
         <Box sx={{ mt: "130%" }}>
           <Box
             sx={{
-              mt: "20%",
+              position: "fixed",
+              bottom: "0",
+              mb: 3,
               color: "#ffffff",
               fontFamily: "Montserrat",
               fontSize: "14px",
               display: "flex",
+              justifyContent:"center",
               cursor: "pointer",
-              alignItems: "center",
+              // alignItems: "center",
             }}
             onClick={handleOpen}
           >
@@ -381,7 +373,8 @@ const Sidebar = () => {
               style={{ marginRight: "5px", marginLeft: "8px" }}
               alt="logouticon"
             />
-            Logout
+            <Typography sx={{ml:1,fontFamily: "Montserrat",}}> Log out</Typography>
+           
           </Box>
         </Box>
       </Box>

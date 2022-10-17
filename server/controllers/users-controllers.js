@@ -2,10 +2,11 @@ const User = require("../models/users");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const nodemailer=require('nodemailer')
 //create leave request
 const leaveRequest = async (req, res, next) => {
-  let userId = req.params.uid;
-  let { reason, fromDate, toDate, manager } = req.body;
+  let userId = req.body.id;
+  let { reason, fromDate, toDate, manager } = req.body.data;
   try {
     if (IsRequestValid({ userId, reason, fromDate, toDate, manager })) {
       return next(
@@ -25,10 +26,33 @@ const leaveRequest = async (req, res, next) => {
       };
       const user = await User.findById(userId);
       user.leaveRequests.push(request);
-      user.save();
-      res
-        .status(200)
-        .json({ success: true, message: "Leave Request Created!" });
+    
+        const transporter=nodemailer.createTransport({
+          service:"gmail",
+          auth:{
+            user:"abuzarzaidi947@gmail.com",
+          pass:"kvttwtwhhcfldrmd",}
+        })
+        console.log(user.email)
+        const mailOptions = {
+          from: `${user.email}`,
+          to: "abuzarzaidi947@gmail.com",
+          subject: `2022: Leave Request & compensation ${user.name}`,
+          html: `<div style="width:90%;border:1px solid green;"><h1>Congratulation</h1> <h1> testYou successfully sent Email </h2> <h3>${user.email}</h3> </div>`
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log("Error" + error)
+        } else {
+            console.log("Email sent:" + info.response);
+            res.status(201).json({status:201,info})
+        }
+    })
+    user.save();
+     
+    res
+      .status(200)
+      .json({ success: true, message: "Leave Request Created!" });
     }
   } catch (error) {
     return next(new HttpError("Something went wrong.", 500));
@@ -37,7 +61,8 @@ const leaveRequest = async (req, res, next) => {
 
 //get user previous leaves request
 const previousLeavesRequest = async (req, res, next) => {
-  const userId = req.params.uid;
+  const userId = req.body.id;
+  console.log("here")
   try {
     let result = await User.findById(
       {
@@ -87,8 +112,8 @@ const login = async (req, res, next) => {
 
 //change password
 const passwordChange = async (req, res, next) => {
-  const userId = req.params.uid;
-  const { previousPassword, password, confirmPassword } = req.body;
+  const userId = req.body.id;
+  const { previousPassword, password, confirmPassword } = req.body.data;
 
   try {
     if (!password || !confirmPassword || password !== confirmPassword) {

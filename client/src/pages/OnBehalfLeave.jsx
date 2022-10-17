@@ -29,7 +29,7 @@ const Icon = styled(Typography)(({ theme }) => ({
 const OnBehalfLeave = () => {
   const dispatch = useDispatch();
   const [isError, setError] = useState(false);
-  // const id = useSelector((state) => state.authData.id);
+  const id = useSelector((state) => state.authData.id);
   const startDate = useSelector((state) => state.leave.startDate);
   const endDate = useSelector((state) => state.leave.endDate);
   const [reasonValue, setReasonValue] = useState("");
@@ -45,8 +45,8 @@ const OnBehalfLeave = () => {
       dispatch(setStartDateHandler(new Date().toISOString()));
       dispatch(setEndDateHandler(new Date().toISOString()));
       try {
-        const result = await getManagers();
-        const employeesData=await getEmployees();
+        const result = await getManagers(id);
+        const employeesData=await getEmployees(id);
         if(result.success){
           setManagers(result.data);
         }

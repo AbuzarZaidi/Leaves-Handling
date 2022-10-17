@@ -13,27 +13,29 @@ import UserList from "./pages/UserList";
 function App() {
   let navigate = useNavigate();
   const isLogin= useSelector((state) => state.authData.isLogin);
+  const type= useSelector((state) => state.authData.type);
   useEffect(() => {
     if(!isLogin){
       navigate("/");
     }
     
-  }, [])
+  }, [isLogin])
   
   return (
     <>
           <Routes>
            <Route path="/" element={<LoginPage />} />
          {isLogin&&<Route path="/myleaves" element={<PageStructure><MyLeaves /></PageStructure>} />}
-         
          {isLogin&& <Route path="/applyforleaves" element={<PageStructure><ApplyForLeave /></PageStructure>} />}
-          <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />
-           <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />
-           <Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />
-         
-          <Route path="/changepassword" element={<PageStructure><ChangePassword /></PageStructure>} />
-          <Route path="/userlist" element={<PageStructure><UserList /></PageStructure>} />
-          <Route path="*" element={<LoginPage />} />
+         {isLogin&&  <Route path="/changepassword" element={<PageStructure><ChangePassword /></PageStructure>} />}
+
+         {isLogin&& <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />}
+          {isLogin&& <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />}
+          {isLogin&&(type=="hr"||type=="manager")? <Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />:""}
+          {isLogin&& <Route path="/userlist" element={<PageStructure><UserList /></PageStructure>} />}
+          
+          
+            <Route path="*" element={<LoginPage />} />
           </Routes>
     </>
   );

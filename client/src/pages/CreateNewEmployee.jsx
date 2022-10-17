@@ -21,6 +21,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { useSelector } from "react-redux";
 const Icon = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     fontSize: "20px",
@@ -32,6 +33,7 @@ const Text = styled(Typography)(({ theme }) => ({
   },
 }));
 const CreateNewEmployee = () => {
+  const id = useSelector((state) => state.authData.id);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -76,7 +78,7 @@ const CreateNewEmployee = () => {
         type: addUser.type,
         probation: probationTime,
       };
-      const response = await createEmployee(user);
+      const response = await createEmployee(id,user);
       if(response.success){
         handleOpen();
         setAddUser({

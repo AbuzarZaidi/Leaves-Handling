@@ -1,7 +1,7 @@
 import * as api from "../api/admins";
-export const allEmployees = async () => {
+export const allEmployees = async (id) => {
     try {
-      const result= await api.allEmployees();
+      const result= await api.allEmployees(id);
       return result.data;
     } catch (error) {
       return (error.response.data);
@@ -15,9 +15,9 @@ export const allEmployees = async () => {
       return (error.response.data);
     }
   };
-  export const createEmployee = async (user) => {
+  export const createEmployee = async (id,user) => {
     try {
-      const result = await api.createEmployee(user);
+      const result = await api.createEmployee(id,user);
       return result.data;
     } catch (error) {
       return (error.response.data);
@@ -39,9 +39,9 @@ export const allEmployees = async () => {
       return (error.response.data);
     }
   };
-  export const getEmployees= async () => {
+  export const getEmployees= async (id) => {
     try {
-      const  result = await api.getEmployees();
+      const  result = await api.getEmployees(id);
       return result.data;
     } catch (error) {
       return (error.response.data);

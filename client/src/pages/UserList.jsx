@@ -4,7 +4,7 @@ import {
   deleteEmployee,
   editEmployee,
 } from "../functions/admins";
-
+import { useSelector} from "react-redux";
 import {
   Box,
   Typography,
@@ -24,13 +24,17 @@ const Icon = styled(Typography)(({ theme }) => ({
 }));
 
 const UserList = () => {
+  const id = useSelector((state) => state.authData.id);
+  
   const [employees, setEmployees] = useState([]);
   const [edit, setEdit] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await allEmployees();
+      
+        const result = await allEmployees(id);
+        console.log(result)
         if (result.success) {
           if (result.data.length > 0) {
             setEmployees(result.data);

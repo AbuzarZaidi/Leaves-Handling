@@ -44,7 +44,7 @@ const ApplyForLeave = () => {
       dispatch(setStartDateHandler(new Date().toISOString()));
       dispatch(setEndDateHandler(new Date().toISOString()));
       try {
-        const result = await getManagers();
+        const result = await getManagers(id);
        
         if (result.success) {
           setManagers(result.data);
