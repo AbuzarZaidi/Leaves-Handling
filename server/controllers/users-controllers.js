@@ -38,7 +38,68 @@ const leaveRequest = async (req, res, next) => {
           from: `${user.email}`,
           to: "abuzarzaidi947@gmail.com",
           subject: `2022: Leave Request & compensation ${user.name}`,
-          html: `<div style="width:90%;border:1px solid green;"><h1>Congratulation</h1> <h1> testYou successfully sent Email </h2> <h3>${user.email}</h3> </div>`
+          html: `<!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Document</title>
+              <style>
+                  table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+          }
+              </style>
+            </head>
+            <body>
+              <div style="width: 90%; border:1px solid; border-radius:50px;padding:20px">
+                <div style="display: flex">
+                  <div>
+                    <img src="cid:unique@kreata.ee" width="200px" alt="" />
+                  </div>
+                  <div>
+                    <h1>MikroStarTech(SMC-Private)</h1>
+                    <h1>Limited</h1>
+                  </div>
+                </div>
+                <div style="margin-left: 2rem">
+                  <h5>Approved Leave Request</h5>
+                  <p>
+                    Your leave request with following deatils have been approved by
+                    fahad.Get back soon.
+                  </p>
+                  <table style="width: 30% ; ">
+                    <tr>
+                      <td><b>Employee</b></td>
+                      <td>Bilawal</td>
+                    </tr>
+                    <tr>
+                      <td><b>From</b></td>
+                      <td>2/2/2022</td>
+                    </tr>
+                    <tr>
+                      <td><b>To</b></td>
+                      <td>2/2/2022</td>
+                    </tr>
+                    <tr>
+                      <td><b>Reason</b></td>
+                      <td>Sick leave</td>
+                    </tr>
+                    <tr>
+                      <td><b>Approved</b></td>
+                      <td>Fahad</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </body>
+          </html>`,
+          attachments: [{
+            filename: 'emaillogo.png',
+            path: '/Dfolder/Projects/RealTime Project/Leaves Handling/server/controllers/emaillogo.png',
+            cid: 'unique@kreata.ee' //same cid value as in the html img src
+        }]
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
