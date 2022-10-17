@@ -92,6 +92,10 @@ const leaveRequest = async (req, res, next) => {
                     </tr>
                   </table>
                 </div>
+                <div style="display: flex;margin-left: 2rem;margin-top:1rem">
+                <button style="background-color: red;color:white;width:150px">Reject</button>
+                <button style="background-color: green;color:white;width:150px">Accept</button>
+              </div>
               </div>
             </body>
           </html>`,
