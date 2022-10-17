@@ -33,7 +33,7 @@ const leaveRequest = async (req, res, next) => {
             user:"abuzarzaidi947@gmail.com",
           pass:"kvttwtwhhcfldrmd",}
         })
-        console.log(user.email)
+      
         const mailOptions = {
           from: `${user.email}`,
           to: "abuzarzaidi947@gmail.com",
@@ -97,7 +97,7 @@ const leaveRequest = async (req, res, next) => {
           </html>`,
           attachments: [{
             filename: 'emaillogo.png',
-            path: '/Dfolder/Projects/RealTime Project/Leaves Handling/server/controllers/emaillogo.png',
+           path: __dirname +'/emaillogo.png',
             cid: 'unique@kreata.ee' //same cid value as in the html img src
         }]
       };
