@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const path=require('path')
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -6,6 +7,7 @@ const nodemailer=require('nodemailer')
 //create leave request
 const leaveRequest = async (req, res, next) => {
   let userId = req.body.id;
+  console.log(path.join(__dirname,'..','views'))
   let { reason, fromDate, toDate, manager } = req.body.data;
   try {
     if (IsRequestValid({ userId, reason, fromDate, toDate, manager })) {
@@ -25,18 +27,20 @@ const leaveRequest = async (req, res, next) => {
         manager: manager,
       };
       const user = await User.findById(userId);
+      const managerData=await User.findById(manager)
       user.leaveRequests.push(request);
-    
+      const url = `http://localhost:5000/user/test/${userId}`;
         const transporter=nodemailer.createTransport({
           service:"gmail",
           auth:{
             user:"abuzarzaidi947@gmail.com",
           pass:"kvttwtwhhcfldrmd",}
         })
+       
       
         const mailOptions = {
           from: `${user.email}`,
-          to: "abuzarzaidi947@gmail.com",
+          to: "036578.syedabuzarzaidi@gmail.com",
           subject: `2022: Leave Request & compensation ${user.name}`,
           html: `<!DOCTYPE html>
           <html lang="en">
@@ -64,37 +68,35 @@ const leaveRequest = async (req, res, next) => {
                   </div>
                 </div>
                 <div style="margin-left: 2rem">
-                  <h5>Approved Leave Request</h5>
+                  <h5>Leave Request By ${user.name}</h5>
+                  <p>Hello ${managerData.name}</p>
+        
                   <p>
-                    Your leave request with following deatils have been approved by
-                    fahad.Get back soon.
+                    Following are the details of leave request submitted by ${user.name}. kindle review it.
                   </p>
                   <table style="width: 30% ; ">
                     <tr>
                       <td><b>Employee</b></td>
-                      <td>Bilawal</td>
+                      <td>${user.name}</td>
                     </tr>
                     <tr>
                       <td><b>From</b></td>
-                      <td>2/2/2022</td>
+                      <td>${fromDate.slice(0, 10)}</td>
                     </tr>
                     <tr>
                       <td><b>To</b></td>
-                      <td>2/2/2022</td>
+                      <td>${toDate.slice(0, 10)}</td>
                     </tr>
                     <tr>
                       <td><b>Reason</b></td>
-                      <td>Sick leave</td>
+                      <td>${reason}</td>
                     </tr>
-                    <tr>
-                      <td><b>Approved</b></td>
-                      <td>Fahad</td>
-                    </tr>
+                
                   </table>
                 </div>
                 <div style="display: flex;margin-left: 2rem;margin-top:1rem">
-                <button style="background-color: red;color:white;width:150px">Reject</button>
-                <button style="background-color: green;color:white;width:150px">Accept</button>
+                <a style="background-color: red;color:white;width:150px;text-decoration:none;text-align:center;">Reject</a>
+                <a href=${url} style="background-color: green;color:white;width:150px;text-decoration:none;text-align:center;">Accept</a>
               </div>
               </div>
             </body>
@@ -123,7 +125,11 @@ const leaveRequest = async (req, res, next) => {
     return next(new HttpError("Something went wrong.", 500));
   }
 };
-
+const test=async(req,res,next)=>{
+  console.log("here")
+console.log(req.params.id)
+res.send(`<h1>Successfull</h1>`)
+}
 //get user previous leaves request
 const previousLeavesRequest = async (req, res, next) => {
   const userId = req.body.id;
@@ -226,3 +232,4 @@ exports.previousLeavesRequest = previousLeavesRequest;
 exports.login = login;
 exports.passwordChange = passwordChange;
 exports.getManagersName = getManagersName;
+exports.test = test;
