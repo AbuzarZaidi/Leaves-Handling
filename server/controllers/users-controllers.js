@@ -1,13 +1,14 @@
 const User = require("../models/users");
-const path=require('path')
+const path = require("path");
+const fs = require("fs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
-const nodemailer=require('nodemailer')
+const nodemailer = require("nodemailer");
+const ejs = require("ejs");
 //create leave request
 const leaveRequest = async (req, res, next) => {
   let userId = req.body.id;
-  console.log(path.join(__dirname,'..','views'))
   let { reason, fromDate, toDate, manager } = req.body.data;
   try {
     if (IsRequestValid({ userId, reason, fromDate, toDate, manager })) {
@@ -27,22 +28,49 @@ const leaveRequest = async (req, res, next) => {
         manager: manager,
       };
       const user = await User.findById(userId);
-      const managerData=await User.findById(manager)
+      const managerData = await User.findById(manager);
       user.leaveRequests.push(request);
-      const url = `http://localhost:5000/user/test/${userId}`;
-        const transporter=nodemailer.createTransport({
-          service:"gmail",
-          auth:{
-            user:"abuzarzaidi947@gmail.com",
-          pass:"kvttwtwhhcfldrmd",}
-        })
-       
-      
-        const mailOptions = {
-          from: `${user.email}`,
-          to: "036578.syedabuzarzaidi@gmail.com",
-          subject: `2022: Leave Request & compensation ${user.name}`,
-          html: `<!DOCTYPE html>
+      const url = `http://localhost:5000/admin/updateStatus/${userId}?updatedStatus=accepted`;
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "abuzarzaidi947@gmail.com",
+          pass: "kvttwtwhhcfldrmd",
+        },
+      });
+      //  ejs.renderFile(path.join(__dirname ,'..','views','employeeMailTemplate.ejs'), {managerData:managerData,user:user,fromDate:fromDate,toDate:toDate,reason:reason ,url:url },{async: true}, (err, data) => {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     var mailOptions = {
+      //       from: `${user.email}`,
+      //       to: "036578.syedabuzarzaidi@gmail.com",
+      //       subject: `2022: Leave Request & compensation ${user.name}`,
+      //       html: data
+      //     };
+      // console.log(user)
+      // const data = await ejs.renderFile(path.join(__dirname ,'..','views','employeeMailTemplate.ejs'), {managerData:managerData,user:user,fromDate:fromDate,toDate:toDate,reason:reason ,url:url });
+      // const data = await ejs.renderFile(path.join(__dirname+'/employeeMailTemplate.ejs'), {managerData:managerData,user:user,fromDate:fromDate,toDate:toDate,reason:reason ,url:url });
+      // console.log(data)
+      // const mainOptions = {
+      //   from: `${user.email}`,
+      //   to: "036578.syedabuzarzaidi@gmail.com",
+      //   subject: `2022: Leave Request & compensation ${user.name}`,
+      //   html: data
+      // };
+      // transporter.sendMail(mainOptions, (err, info) => {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     console.log('Message sent: ' + info.response);
+      //   }
+      // });
+
+      const mailOptions = {
+        from: `${user.email}`,
+        to: `${managerData.email}`,
+        subject: `2022: Leave Request & compensation ${user.name}`,
+        html: `<!DOCTYPE html>
           <html lang="en">
             <head>
               <meta charset="UTF-8" />
@@ -72,7 +100,9 @@ const leaveRequest = async (req, res, next) => {
                   <p>Hello ${managerData.name}</p>
         
                   <p>
-                    Following are the details of leave request submitted by ${user.name}. kindle review it.
+                    Following are the details of leave request submitted by ${
+                      user.name
+                    }. kindle review it.
                   </p>
                   <table style="width: 30% ; ">
                     <tr>
@@ -101,39 +131,41 @@ const leaveRequest = async (req, res, next) => {
               </div>
             </body>
           </html>`,
-          attachments: [{
-            filename: 'emaillogo.png',
-           path: __dirname +'/emaillogo.png',
-            cid: 'unique@kreata.ee' //same cid value as in the html img src
-        }]
+        attachments: [
+          {
+            filename: "emaillogo.png",
+            path: __dirname + "/emaillogo.png",
+            cid: "unique@kreata.ee", //same cid value as in the html img src
+          },
+        ],
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.log("Error" + error)
+          console.log("Error" + error);
         } else {
-            console.log("Email sent:" + info.response);
-            res.status(201).json({status:201,info})
+          console.log("Email sent:" + info.response);
+          res.status(201).json({ status: 201, info });
         }
-    })
-    user.save();
-     
-    res
-      .status(200)
-      .json({ success: true, message: "Leave Request Created!" });
+      });
+      user.save();
+
+      res
+        .status(200)
+        .json({ success: true, message: "Leave Request Created!" });
     }
   } catch (error) {
     return next(new HttpError("Something went wrong.", 500));
   }
 };
-const test=async(req,res,next)=>{
-  console.log("here")
-console.log(req.params.id)
-res.send(`<h1>Successfull</h1>`)
-}
+const test = async (req, res, next) => {
+  console.log("here");
+  console.log(req.params.id);
+  res.send(`<h1>Successfull</h1>`);
+};
 //get user previous leaves request
 const previousLeavesRequest = async (req, res, next) => {
   const userId = req.body.id;
-  console.log("here")
+  console.log("here");
   try {
     let result = await User.findById(
       {
@@ -161,19 +193,22 @@ const login = async (req, res, next) => {
         new HttpError("Invalid credentials, could not log you in.", 200)
       );
     }
-   
-   let isValidPassword = await bcrypt.compare(password, existingUser.password);
+
+    let isValidPassword = await bcrypt.compare(password, existingUser.password);
     if (!isValidPassword) {
       return next(
         new HttpError("Invalid credentials, could not log you in.", 200)
       );
     }
-    res.status(200).json({success:true,data:{
-      userId: existingUser.id,
-      email: existingUser.email,
-      name: existingUser.name,
-      type: existingUser.type,
-    }});
+    res.status(200).json({
+      success: true,
+      data: {
+        userId: existingUser.id,
+        email: existingUser.email,
+        name: existingUser.name,
+        type: existingUser.type,
+      },
+    });
   } catch (err) {
     return next(
       new HttpError("Logging in failed, please try again later.", 500)
@@ -226,6 +261,10 @@ const IsRequestValid = (data) => {
     validator.isEmpty(data.manager)
   );
 };
+
+const ManagerMail=(data)=>{
+  
+}
 
 exports.leaveRequest = leaveRequest;
 exports.previousLeavesRequest = previousLeavesRequest;
