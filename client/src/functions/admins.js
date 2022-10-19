@@ -31,9 +31,9 @@ export const allEmployees = async (id) => {
       return (error.response.data);
     }
   };
-  export const employeesLeaves = async (id,user) => {
+  export const employeesLeaves = async (id,data) => {
     try {
-      const result  = await api.employeesLeaves(id,user);
+      const result  = await api.employeesLeaves(id,data);
       return result.data;
     } catch (error) {
       return (error.response.data);

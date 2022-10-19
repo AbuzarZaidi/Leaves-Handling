@@ -6,7 +6,7 @@ import {
   InputLabel,
   Button,MenuItem,FormControl,Select
 } from "../utlis/materialUIComponents";
-
+import { useSelector} from "react-redux";
 import { styled } from "@mui/material/styles";
 import EmployeePreviousLeaves from '../components/employeeLeaves/EmployeePreviousLeaves';
 const Text = styled(Typography)(({ theme }) => ({
@@ -20,6 +20,7 @@ const Icon = styled(Typography)(({ theme }) => ({
     },
   }));
 const EmployeesLeaves = () => {
+  const id = useSelector((state) => state.authData.id);
   const [year, setYear] = React.useState('');
   const [employees, setEmployees] = React.useState([]);
   const [employee, setEmployee] = React.useState('');
@@ -28,7 +29,7 @@ const EmployeesLeaves = () => {
   // const [age, setAge] = React.useState()
 useEffect(() => {
   const fetchData=async()=>{
-    const response=await getEmployees();
+    const response=await getEmployees(id);
     if(response.success){
       setEmployees(response.data)
     }
@@ -45,9 +46,12 @@ useEffect(() => {
     setMonth(event.target.value);
   };
   const searchHandler=async()=>{
-    const response =await employeesLeaves(employee,{month,year})
+
+    const response =await employeesLeaves(id,{employeeId:employee,month,year})
     console.log(response)
-    setResult(response)
+    if (response.success) {
+    console.log(response.data)
+    setResult(response.data)}
   }
     
   return (

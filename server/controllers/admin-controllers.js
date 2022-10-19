@@ -151,9 +151,9 @@ const editUser = async (req, res, next) => {
 
 //employeesLeaves
 const employeesLeaves = async (req, res, next) => {
-  const id = req.body.id;
-  const { month, year } = req.body.data;
-  await User.find({ _id: id }, "name probation leaveRequests").then((obj) => {
+ 
+  const { employeeId,month, year } = req.body.data;
+  await User.find({ _id: employeeId }, "name probation leaveRequests").then((obj) => {
     const dateData = obj[0].leaveRequests.filter((val) => {
 
       // console.log(new Date(val.fromDate).getDate())
@@ -176,12 +176,13 @@ val.totalDays=val.totalDays-new Date(val.toDate).getDate();
       name: obj[0].name,
       leaveRequests: dateData,
     };
-    res.json(response);
+    res.status(200).json({ success: true, data: response });
   });
 };
 
 //get employees
 const getEmployeesName = async (req, res, next) => {
+
   try {
     const response = await User.find({ type: "employee" }, "name");
 
