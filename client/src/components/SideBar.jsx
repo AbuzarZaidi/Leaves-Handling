@@ -123,10 +123,10 @@ const Sidebar = () => {
               <img
                 src={
                   loc === "/applyforleaves"
-                    ? "icons/applyForLeaveMenuIcon.png"
-                    : "icons/applyForLeaveMenuActive.png"
+                    ? "icons/applyForLeaveMenuActive.png"
+                    : "icons/applyForLeaveMenu.png"
                 }
-                style={{ marginRight: "5px", color: "#ffffff" }}
+                style={{ marginRight: "8px", color: "#ffffff" }}
                 alt="icon"
               />
               Apply for Leave
@@ -149,12 +149,12 @@ const Sidebar = () => {
               <img
                 src={
                   loc === "/myleaves"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
+                    ? "icons/myLeaveMenuActive.png"
+                    : "icons/myLeaveMenu.png"
                 }
                 style={{
-                  marginRight: "5px",
-                  marginLeft: "8px",
+                  marginRight: "1px",
+                  marginLeft: "10px",
                   color: "#00E5D9",
                 }}
                 alt="icon"
@@ -180,8 +180,8 @@ const Sidebar = () => {
               <img
                 src={
                   loc === "/employeesleaves"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
+                    ? "icons/employeeleaveactive.png"
+                    : "icons/employeeleave.png"
                 }
                 style={{
                   marginRight: "5px",
@@ -209,6 +209,19 @@ cursor:"pointer",
               aria-controls={openUserMenu ? 'basic-menu' : undefined}
               aria-haspopup="true"
             >
+              <img
+                src={
+                  loc === "/onbehalfleave"
+                    ? "icons/usermenuactive.png"
+                    : "icons/usermenu.png"
+                }
+                style={{
+                  marginRight: "5px",
+                  marginLeft: "8px",
+                  color: "#00E5D9",
+                }}
+                alt="icon"
+              />
 Users
 
 </Box>
@@ -245,8 +258,8 @@ Users
               <img
                 src={
                   loc === "/userlist"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
+                    ? "icons/userlistmenu.png"
+                    : "icons/userlistmenuactive.png"
                 }
                 style={{
                   marginRight: "5px",
@@ -275,8 +288,8 @@ Users
               <img
                 src={
                   loc === "/createnewemployee"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
+                    ? "icons/addemployeemenu.png"
+                    : "icons/addemployeemenuactive.png"
                 }
                 style={{
                   marginRight: "5px",
@@ -305,8 +318,8 @@ Users
               <img
                 src={
                   loc === "/onbehalfleave"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
+                    ? "icons/onbehalfmenuactive.png"
+                    : "icons/onbehalfmenu.png"
                 }
                 style={{
                   marginRight: "5px",
