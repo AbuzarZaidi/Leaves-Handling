@@ -36,7 +36,7 @@ const SingleUser = ({ employeeData, userDeleteHandler, userEditHandler }) => {
         userDeleteHandler={userDeleteHandler}
       />
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center" }} >
         <Box
           sx={{
             display: "flex",

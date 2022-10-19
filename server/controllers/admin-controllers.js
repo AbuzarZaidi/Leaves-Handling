@@ -2,19 +2,45 @@ const User = require("../models/users");
 const bcrypt = require("bcryptjs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
-
+const nodemailer = require("nodemailer");
 const updateLeavesRequest = async (req, res, next) => {
   const userId = req.params.id;
   const updatedStatus = req.query.updatedStatus;
-  console.log("id")
-  console.log(userId)
-  console.log('updatedStatus')
-  console.log(updatedStatus)
-  // res.send("<h1>Operation Successfull!</h1>")
   try {
    const  user = await User.findById(userId);
   if (updatedStatus === "accepted" || updatedStatus === "rejected") {
-    user.leaveRequests.slice(-1)[0].status = updatedStatus;
+    const useData=user.leaveRequests.slice(-1)[0]
+    useData.status = updatedStatus;
+    const managerData=await User.findById(useData.manager)
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "abuzarzaidi947@gmail.com",
+        pass: "kvttwtwhhcfldrmd",
+      },
+    });
+    const data=employeeMail(updatedStatus,user,managerData,useData.fromDate,useData.toDate,useData.reason)
+    const mailOptions = {
+      from: `${user.email}`,
+      to: `${managerData.email}`,
+      subject: `2022: Leave Request & compensation ${user.name}`,
+      html: data,
+      attachments: [
+        {
+          filename: "emaillogo.png",
+          path: __dirname + "/emaillogo.png",
+          cid: "unique@kreata.ee", //same cid value as in the html img src
+        },
+      ],
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error" + error);
+      } else {
+        console.log("Email sent:" + info.response);
+        res.status(201).json({ status: 201, info });
+      }
+    });
     user.save();
     res.status(201).json("Status Updated!");
   } else {
@@ -127,15 +153,10 @@ const editUser = async (req, res, next) => {
 const employeesLeaves = async (req, res, next) => {
   const id = req.body.id;
   const { month, year } = req.body.data;
-  console.log("user{")
-  console.log(year)
-  console.log(month)
-  console.log("}")
   await User.find({ _id: id }, "name probation leaveRequests").then((obj) => {
     const dateData = obj[0].leaveRequests.filter((val) => {
-      // console.log(new Date(val.fromDate).getFullYear())
-      // console.log(new Date(val.fromDate).getMonth()+1)
-      console.log(new Date(val.fromDate).getDate())
+
+      // console.log(new Date(val.fromDate).getDate())
       if (year == new Date(val.fromDate).getFullYear() &&month == new Date(val.fromDate).getMonth() + 1&&year == new Date(val.toDate).getFullYear()&&month == new Date(val.toDate).getMonth() + 1) {
      
         return val;
@@ -169,9 +190,74 @@ const getEmployeesName = async (req, res, next) => {
     return next(new HttpError("Something went wrong.", 500));
   }
 };
-
+const employeeMail=(status,user,managerData,fromDate,toDate,reason)=>{
+  return (
+    `<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+        </style>
+        <script>
+        const myFunction=()=> {
+       console.log("hello")
+        }
+      </script>
+      </head>
+      <body>
+        <div style="width: 90%; border:1px solid; border-radius:50px;padding:20px">
+          <div style="display: flex">
+            <div>
+              <img src="cid:unique@kreata.ee" width="200px" alt="" />
+            </div>
+            <div>
+              <h1>MikroStarTech(SMC-Private)</h1>
+              <h1>Limited</h1>
+            </div>
+          </div>
+          <div style="margin-left: 2rem">
+            <h5>${status} Leave Request </h5>
+            <p>Hello ${user.name}</p>
+  
+            <p>
+              Your leave request with following detail has been ${status} by ${managerData.name}.
+            </p>
+            <table style="width: 30% ; ">
+              <tr>
+                <td><b>Employee</b></td>
+                <td>${user.name}</td>
+              </tr>
+              <tr>
+                <td><b>From</b></td>
+                <td>${fromDate.slice(0, 10)}</td>
+              </tr>
+              <tr>
+                <td><b>To</b></td>
+                <td>${toDate.slice(0, 10)}</td>
+              </tr>
+              <tr>
+                <td><b>Reason</b></td>
+                <td>${reason}</td>
+              </tr>
+          
+            </table>
+          </div>
+    
+      </body>
+      
+    </html>
+   
+    `
+  )
+}
 exports.updateLeavesRequest = updateLeavesRequest;
-// exports.getApprovalRequest = getApprovalRequest;
 exports.usersList = usersList;
 exports.createUser = createUser;
 exports.deleteUser = deleteUser;

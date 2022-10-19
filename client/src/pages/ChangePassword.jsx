@@ -76,6 +76,7 @@ const ChangePassword = () => {
         <IconText sx={{ fontWeight: 400, fontSize: "40px" }} />
         <Text
           variant="h4"
+
           gutterBottom
           sx={{
             fontFamily: "Montserrat",
@@ -97,6 +98,7 @@ const ChangePassword = () => {
         <Box sx={{ display: "flex", justifyContent: "center" }}>
 
           <TextField
+          type="password"
          onFocus={()=>{isError&&setError(false)}}
             error={isError === "previous" ? true : false}
             id="outlined-basic"
@@ -112,6 +114,7 @@ const ChangePassword = () => {
       <Box sx={{ mt: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
+          type="password"
           onFocus={()=>{isError&&setError(false)}}
             id="outlined-basic"
             label="New Password"
@@ -127,6 +130,7 @@ const ChangePassword = () => {
       <Box sx={{ mt: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <TextField
+          type="password"
           onFocus={()=>{isError&&setError(false)}}
             error={isError === "confirm" ? true : false}
             id="outlined-basic"

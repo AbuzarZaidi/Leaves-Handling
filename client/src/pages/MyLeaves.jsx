@@ -3,6 +3,7 @@ import MyPreviousLeaves from "../components/myLeaves/MyPreviousLeaves";
 import { getPreviousLeaves } from "../functions/employees";
 import { useSelector } from "react-redux";
 import { Box, Typography } from "../utlis/materialUIComponents";
+
 import { styled } from "@mui/material/styles";
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
@@ -20,22 +21,30 @@ const MyLeaves = () => {
   const userName = useSelector((state) => state.authData.userName);
   const [myLeaves, setMyLeaves] = useState([]);
   const [resErrorMessage, setResErrorMessage] = useState("");
+  const [isLoading,setIsLoading]=useState(false);
   useEffect(() => {
     const data = async () => {
+      setIsLoading(true);
       try {
         const res = await getPreviousLeaves(id);
-console.log('id')
-console.log(id)
+
         if (res) {
           if (res.success) {
-            setMyLeaves(res.data);
+           
+            setTimeout(() => {
+              setMyLeaves(res.data);
+              setIsLoading(false)
+            }, 1000);
+           
           }
         } else {
-          // console.log(res.message)
+          setIsLoading(false)
           throw Error("No Data Found");
+          
         }
       } catch (error) {
         setResErrorMessage(error);
+        setIsLoading(false)
       }
     };
     data();
@@ -78,6 +87,7 @@ console.log(id)
           myPreviousLeaves={myLeaves}
           userName={userName}
           errorMessage={resErrorMessage}
+          isLoading={isLoading}
         />
       </Box>
     </>

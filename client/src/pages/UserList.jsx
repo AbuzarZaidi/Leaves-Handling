@@ -8,7 +8,7 @@ import { useSelector} from "react-redux";
 import {
   Box,
   Typography,
-
+  TableContainer,
 } from "../utlis/materialUIComponents";
 import SingleUser from "../components/userslist/SingleUser";
 import { styled } from "@mui/material/styles";
@@ -97,8 +97,11 @@ const UserList = () => {
           List of users
         </Text>
       </Box>
+      
+      
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Box
+        stickyHeader aria-label="sticky table"
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -118,6 +121,7 @@ const UserList = () => {
           </Box>
         </Box>
       </Box>
+      <TableContainer sx={{ maxHeight: 410 }}>
       {employees.length > 0 ? (
         employees.map((val, ind) => {
           return (
@@ -135,6 +139,7 @@ const UserList = () => {
           <Typography>{error}</Typography>
         </Box>
       )}
+    </TableContainer>
     </>
   );
 };

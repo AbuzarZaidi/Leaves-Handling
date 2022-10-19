@@ -12,7 +12,7 @@ import {
   Typography,
   Box,
 } from "../../utlis/materialUIComponents";
-
+import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from "@mui/material/styles";
 
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -54,7 +54,7 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
   },
 });
 
-const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage }) => {
+const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage,isLoading }) => {
   return (
     <>
       <Paper sx={{ width: "80%", overflow: "hidden" }}>
@@ -139,16 +139,21 @@ const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {myPreviousLeaves.length <= 0 ? (
+        {!isLoading&&myPreviousLeaves.length <= 0 ? (
           <Box
             sx={{ display: "flex", justifyContent: "center", fontWeight: 600 }}
           >
+            
             <Typography> {errorMessage.message===undefined?"No data found":errorMessage.message}</Typography>
           </Box>
           ) : (
            ""
          )} 
+         {isLoading&& <Box
+            sx={{ display: "flex", justifyContent: "center", fontWeight: 600 }}
+          ><CircularProgress/></Box>}
       </Paper>
+      
     </>
   );
 };
