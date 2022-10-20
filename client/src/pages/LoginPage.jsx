@@ -129,7 +129,7 @@ const LoginPage = () => {
             <Typography
               sx={{
                 fontFamily: "Serpentine",
-                fontWeight: 700,
+                fontWeight: 500,
                 fontSize: "35px",
                 color: "#ffffff",
                 mt: "-20px",
@@ -144,8 +144,8 @@ const LoginPage = () => {
               gutterBottom
               sx={{
                 fontFamily: "Montserrat",
-                fontWeight: 600,
-                fontSize: "29px",
+                fontWeight: 700,
+                fontSize: "35px",
                 color: "#ffffff",
               }}
             >
@@ -167,13 +167,14 @@ const LoginPage = () => {
                 </Typography>
               </Box>
             )}
-            <Grid item xs={3} sx={{ mt: 2 }}>
+            <Grid item xs={3} sx={{ mt: 3 }}>
               <TextField
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 id="email"
                 // label="Email"
                 placeholder="Email"
+                size="small"
                 variant="outlined"
                 sx={{
                   backgroundColor: "#ffffff",
@@ -186,7 +187,7 @@ const LoginPage = () => {
                 autoComplete="true"
               />
             </Grid>
-            <Grid item xs={3} sx={{ mt: 2 }}>
+            <Grid item xs={3} sx={{ mt: 3 }}>
               <TextField
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
@@ -196,9 +197,11 @@ const LoginPage = () => {
                 placeholder="Password"
                 type="password"
                 variant="outlined"
+                size="small"
                 sx={{
                   backgroundColor: "#ffffff",
                   width: "450px",
+                  
                   borderRadius: 1,
                 }}
                 onFocus={() => setError(false)}
