@@ -20,10 +20,10 @@ const AppliedModal = ({open,handleClose}) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: "45px" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: "28px" }}>
           <img src="icons/applied.png" width="60px" alt="icon" />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 0.5 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
           <Typography
             sx={{
               fontWeight: 600,
@@ -34,31 +34,32 @@ const AppliedModal = ({open,handleClose}) => {
             Applied
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 0.5 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
           <Typography
             sx={{
-              fontWeight: 600,
+              fontWeight: 500,
               fontSize: "14px",
               fontFamily: "Montserrat",
             }}
           >
-            Please wait for response
+            Please wait for approval!
           </Typography>
         </Box>
         <Box>
           <Box
-            sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 3 }}
+            sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 3 }}
           >
             <Button
               onClick={handleClose}
               variant="contained"
               sx={{
                 textTransform: "capitalize",
-                backgroundColor: "#1F2533",
-                px: 3,
+                backgroundColor: "#0A1833",
+                px: 4,
+                fontFamily:"Montserrat",
                 borderRadius: "10px",
                 "&:hover": {
-                  backgroundColor: "#1F2533",
+                  backgroundColor: "#0A1833",
                   color: "#ffffff",
                 },
               }}

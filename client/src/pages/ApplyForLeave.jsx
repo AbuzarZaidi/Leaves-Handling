@@ -175,12 +175,12 @@ const ApplyForLeave = () => {
             fontWeight: 600,
             fontSize: "14px",
             border: 2,
-            borderColor: "#1F2533",
+            borderColor: "#0A1833",
             "&:hover": {
-              backgroundColor: "#1F2533",
+              backgroundColor: "#0A1833",
               color: "#ffffff",
               border: 2,
-              borderColor: "#1F2533",
+              borderColor: "#0A1833",
             },
           }}
         >

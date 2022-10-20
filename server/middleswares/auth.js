@@ -16,7 +16,7 @@ try {
 
 }
 const isAdmin=(req,res,next)=>{
-    console.log(req.body.id)
+   
     try {
         User.findById({_id:req.body.id},(err,data)=>{
             if (err) {

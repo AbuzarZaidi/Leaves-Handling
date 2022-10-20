@@ -150,7 +150,17 @@ useEffect(() => {
       </FormControl>
     </Box>
     <Box >
-        <Button onClick={searchHandler} variant="contained" sx={{color:"#ffffff",backgroundColor:"#00AAFF",width:"140px",height:"38px"}}>Apply</Button>
+        {/* <Button onClick={searchHandler} variant="outlined" sx={{color:"#ffffff",backgroundColor:"#00AAFF",width:"140px",height:"38px","&:hover": {
+                backgroundColor: "#0A1833",
+                color: "#ffffff",
+                
+              },}}></Button> */}
+              <Button variant="outlined" onClick={searchHandler} sx={{ fontWeight: 600,
+              fontSize: "14px", borderColor: "#0A1833", border: 2,width:"140px",height:"38px", color: "#1F2533","&:hover": {
+                backgroundColor: "#0A1833",
+                color: "#ffffff",
+                borderColor: "#0A1833",
+              },}}>Apply</Button>
         </Box>
 </Box>
         </Box>

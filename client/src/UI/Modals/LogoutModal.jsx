@@ -45,9 +45,14 @@ const LogoutModal = ({open,handleClose,logoutHandler}) => {
               sx={{
                 textTransform: "capitalize",
                 mr: 1,
-                borderColor: "#1F2533",
+                color:"#0A1833",
+                borderColor: "#0A1833",
                 px: 3,
                 borderRadius: "10px",
+                "&:hover": {
+                  color:"#0A1833",
+                  borderColor: "#0A1833",
+                },
               }}
             >
               Cancel
@@ -61,7 +66,7 @@ const LogoutModal = ({open,handleClose,logoutHandler}) => {
                 px: 3,
                 borderRadius: "10px",
                 "&:hover": {
-                  backgroundColor: "#1F2533",
+                  backgroundColor: "#0A1833",
                   color: "#ffffff",
                 },
               }}

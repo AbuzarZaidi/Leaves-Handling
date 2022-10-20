@@ -48,7 +48,7 @@ const SuccessFull = ({open,handleClose}) => {
                 px: 3,
                 borderRadius: "10px",
                 "&:hover": {
-                  backgroundColor: "#1F2533",
+                  backgroundColor: "#0A1833",
                   color: "#ffffff",
                 },
               }}
