@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors');
+const path = require('path');
 const bodyParser=require('body-parser')
 const HttpError = require('./models/http-error');
 const usersRoutes=require('./routes/usersRoutes')
@@ -11,9 +12,13 @@ const app = express()
 
 app.use(cors());
 const port=process.env.PORT||5000;
+app.use(express.static(path.join('public')))
 app.use(bodyParser.json())
 app.use('/user',usersRoutes)
 app.use('/admin',adminRoutes)
+app.use((req, res,next) => {
+  res.sendFile(path.resolve(__dirname,'public','index.html'))
+})
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

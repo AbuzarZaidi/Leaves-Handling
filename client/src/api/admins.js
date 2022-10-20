@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:5000/admin";
+const url = process.env.REACT_APP_ADMIN_URL
 export const allEmployees = (id) => axios.post(`${url}/usersList`,{id:id})
 export const createEmployee = (id,user) => axios.post(`${url}/createUser`,{id:id,data:user});
 export const deleteEmployee = (id) => axios.delete(`${url}/deleteUser`,{id:id});

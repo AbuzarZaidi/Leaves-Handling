@@ -350,8 +350,8 @@ Users
               <img
                 src={
                   loc === "/changepassword"
-                    ? "icons/myLeavesMenuIcon.png"
-                    : "icons/myLeaveMenuActive.png"
+                    ? "icons/reset-password-active.png"
+                    : "icons/reset-password-icon.png"
                 }
                 style={{
                   marginRight: "5px",

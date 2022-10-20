@@ -22,7 +22,7 @@ const isAdmin=(req,res,next)=>{
             if (err) {
                 return next(new HttpError("Authentication Failed.", 200));
             } else  {
-                if(data.type=="manager"||data.type=="hr"){
+                if(data.type=="manager"||data.type=="hr"||data.type=="admin"){
                     next();
                 }
                 else{

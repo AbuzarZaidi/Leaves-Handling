@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Serpentine-Light';
+    src: local('Serpentine-Light'), url(fonts/Serpentine-Light.otf) format('otf');
+    font-family: 'SerpentineEF-BoldItalic';
+    src: local('SerpentineEF-BoldItalic'), url(fonts/SerpentineEF-BoldItalic.otf) format('otf');
+  
+}
