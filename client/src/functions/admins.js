@@ -7,9 +7,10 @@ export const allEmployees = async (id) => {
       return (error.response.data);
     }
   };
-  export const deleteEmployee = async (id) => {
+  export const deleteEmployee = async (id,uid) => {
     try {
-      const result  = await api.deleteEmployee(id);
+      const result  = await api.deleteEmployee(id,uid);
+      
       return result.data;
     } catch (error) {
       return (error.response.data);
@@ -23,12 +24,12 @@ export const allEmployees = async (id) => {
       return (error.response.data);
     }
   };
-  export const editEmployee = async (id,user) => {
+  export const editEmployee = async (id,uid,user) => {
     try {
-      const result  = await api.editEmployee(id,user);
+      const result  = await api.editEmployee(id,uid,user);
       return result.data;
     } catch (error) {
-      return (error.response.data);
+      return (error.response.data)
     }
   };
   export const employeesLeaves = async (id,data) => {

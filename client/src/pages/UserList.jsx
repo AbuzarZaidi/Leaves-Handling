@@ -34,7 +34,7 @@ const UserList = () => {
       try {
       
         const result = await allEmployees(id);
-        console.log(result)
+        
         if (result.success) {
           if (result.data.length > 0) {
             setEmployees(result.data);
@@ -50,21 +50,23 @@ const UserList = () => {
     fetchData();
     setEdit(false);
   }, [setEmployees, setEdit, edit]);
-  const deleteUserHandler = async (id) => {
-    const response = await deleteEmployee(id);
+  const deleteUserHandler = async (uid) => {
+    
+    const response = await deleteEmployee(id,uid);
+    console.log(response)
     if (response.success) {
-      const updatedList = employees.filter((user) => user._id !== id);
+      const updatedList = employees.filter((user) => user._id !== uid);
       setEmployees(updatedList);
     }
   };
-  const editHandler = async (id, editData, probationTime) => {
+  const editHandler = async (uid, editData, probationTime) => {
     const user = {
       name: editData.name,
       email: editData.email,
       probation: probationTime,
       type: editData.type,
     };
-    const response = await editEmployee(id, user);
+    const response = await editEmployee(id,uid, user);
     console.log(response);
     setEdit(true);
   };

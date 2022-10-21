@@ -7,8 +7,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 // import MyLeaves from "./pages/MyLeaves";
 // import LoginPage from "./pages/LoginPage";
 // import PageStructure from "./components/PageStructure";
-// import OnBehalfLeave from "./pages/OnBehalfLeave";
-// import CreateNewEmployee from "./pages/CreateNewEmployee";
+import OnBehalfLeave from "./pages/OnBehalfLeave";
+import CreateNewEmployee from "./pages/CreateNewEmployee";
 // import ChangePassword from "./pages/ChangePassword";
 // import UserList from "./pages/UserList";
 const ApplyForLeave=React.lazy(()=>import('./pages/ApplyForLeave'))
@@ -16,8 +16,8 @@ const EmployeesLeaves=React.lazy(()=>import('./pages/EmployeesLeaves'))
 const MyLeaves=React.lazy(()=>import('./pages/MyLeaves'))
 const LoginPage=React.lazy(()=>import('./pages/LoginPage'))
 const PageStructure=React.lazy(()=>import('./components/PageStructure'))
-const OnBehalfLeave=React.lazy(()=>import('./pages/OnBehalfLeave'))
-const CreateNewEmployee=React.lazy(()=>import('./pages/CreateNewEmployee'))
+// const OnBehalfLeave=React.lazy(()=>import('./pages/OnBehalfLeave'))
+// const CreateNewEmployee=React.lazy(()=>import('./pages/CreateNewEmployee'))
 const ChangePassword=React.lazy(()=>import('./pages/ChangePassword'))
 const UserList=React.lazy(()=>import('./pages/UserList'))
 function App() {
@@ -42,7 +42,7 @@ function App() {
 
          {isLogin&& <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />}
           {isLogin&& <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />}
-          {isLogin&&(type=="hr"||type=="manager")? <Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />:""}
+          {isLogin&&<Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />}
           {isLogin&& <Route path="/userlist" element={<PageStructure><UserList /></PageStructure>} />}
           
           

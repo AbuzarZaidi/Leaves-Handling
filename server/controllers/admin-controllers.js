@@ -84,6 +84,8 @@ const usersList = async (req, res, next) => {
 //delete user from userlist
 const deleteUser = async (req, res, next) => {
   const userId = req.body.id;
+  const user2Id = req.body.uid;
+  
   try {
     await User.findByIdAndRemove({ _id: userId });
     res
@@ -114,7 +116,7 @@ const createUser = async (req, res, next) => {
         email,
         password: hashedPassword,
         type,
-        probation,
+        probation:probation.slice(0,9),
       });
       await user.save();
       res.status(200).json({success:true, message: "User Created Successfully" });
@@ -126,7 +128,9 @@ const createUser = async (req, res, next) => {
 
 //edit user
 const editUser = async (req, res, next) => {
-  const userId = req.body.id;
+  const userId = req.body.uid;
+  console.log(userId)
+  console.log(req.body.data)
   const { name, email, probation, type } = req.body.data;
   try {
     if (!name || !email || !type) {
@@ -139,7 +143,7 @@ const editUser = async (req, res, next) => {
     const user = {
       name: name,
       email: email,
-      probation: probation,
+      probation: probation.slice(0,9),
       type: type,
     };
     const result = await User.findOneAndUpdate({ _id: userId }, user);
@@ -170,11 +174,40 @@ val.totalDays=val.totalDays-new Date(val.toDate).getDate();
         return val;
       }
     });
+    let unpaidLeave;
+   const newdata= dateData.map(val=>{
+    // console.log(obj[0].probation)
+    // console.log(val.toDate)
+console.log(new Date (val.toDate)<=new Date(obj[0].probation))
+    if(new Date (val.toDate)<=new Date(obj[0].probation)){
+      unpaidLeave=val.totalDays
+    }
+else if(new Date (val.fromDate)<=new Date(obj[0].probation)&&new Date (val.toDate)>=new Date(obj[0].probation)){
+  unpaidLeave=new Date (val.toDate).getDate()-new Date(obj[0].probation).getDate()
+  // console.log(new Date(obj[0].probation).getDate())
+  // console.log(new Date (val.toDate).getDate())
+  // console.log(new Date (val.fromDate).getDate())
+}
+else{
+  unpaidLeave=0;
+}
+    
+      return{
+        status:val.status,
+        reason:val.reason,
+        fromDate:val.fromDate,        
+        toDate:val.toDate,   
+        totalDays:val.totalDays,
+        manager:val.manager,
+        unpaid:unpaidLeave,
+      }
+    })
+    // console.log(newdata)
     const response = {
       id: obj[0]._id,
       probation: obj[0].probation,
       name: obj[0].name,
-      leaveRequests: dateData,
+      leaveRequests: newdata,
     };
     res.status(200).json({ success: true, data: response });
   });

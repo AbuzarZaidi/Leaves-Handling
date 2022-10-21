@@ -124,7 +124,7 @@ const EmployeePreviousLeaves = ({data}) => {
                         label="unpaid"
                         sx={{ minWidth: 80, textAlign: "left" }}
                       >
-                        {val.totalDays}
+                        {val.unpaid}
                       </TableCell>
                       <TableCell
                         id="status"
