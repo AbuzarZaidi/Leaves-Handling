@@ -38,6 +38,7 @@ const CreateNewEmployee = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [isError, setError] = useState(false);
+  const [errorMessage,setErrorMessage]=useState("");
   const [addUser, setAddUser] = useState({
     name: "",
     email: "",
@@ -90,6 +91,10 @@ const CreateNewEmployee = () => {
         })
         setProbationTime(dayjs())
       }
+      else{
+        setError("server")
+        setErrorMessage(response.message)
+      }
      
     }
   };
@@ -121,13 +126,16 @@ const CreateNewEmployee = () => {
         >
           Create New User
         </Text>
-      </Box>
+      </Box >
+      {isError==="server"?<Box sx={{display:"flex",justifyContent:"center"}}><Typography sx={{color:"red"}}>{errorMessage}</Typography></Box>:""}
+      
       <form>
         {/* name */}
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <TextField
               id="name"
+              onClick={()=>setError(false)}
               label="Name"
               name="name"
               value={addUser.name}
@@ -143,6 +151,7 @@ const CreateNewEmployee = () => {
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <TextField
+             onClick={()=>setError(false)}
               id="email"
               label="Email"
               name="email"
@@ -159,6 +168,7 @@ const CreateNewEmployee = () => {
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <TextField
+            onClick={()=>setError(false)}
               id="password"
               label="Password"
               name="password"
@@ -177,6 +187,7 @@ const CreateNewEmployee = () => {
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <TextField
+             onClick={()=>setError(false)}
               id="confirm"
               label="Confirm Password"
               name="confirm"
@@ -202,6 +213,7 @@ const CreateNewEmployee = () => {
               }}
             >
               <MobileDatePicker
+               onClick={()=>setError(false)}
                 label="Probation"
                 format="MM/dd/yyyy"
                 name="probation"
@@ -223,6 +235,7 @@ const CreateNewEmployee = () => {
               }}
             >
               <DesktopDatePicker
+               onClick={()=>setError(false)}
                 label="Probation"
                 format="MM/dd/yyyy"
                 name="probation"

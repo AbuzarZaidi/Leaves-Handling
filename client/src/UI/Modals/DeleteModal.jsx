@@ -58,16 +58,20 @@ const DeleteModal = ({employeeData,open,handleClose,userDeleteHandler}) => {
               sx={{
                 textTransform: "capitalize",
                 mr: 1,
-                borderColor: "#1F2533",
-                border:2,
+                color:"#0A1833",
+                borderColor: "#0A1833",
                 px: 3,
                 borderRadius: "10px",
+                "&:hover": {
+                  color:"#0A1833",
+                  borderColor: "#0A1833",
+                },
               }}
             >
               Cancel
             </Button>
             <Button
-              onClick={() => userDeleteHandler(employeeData._id)}
+              onClick={() => {userDeleteHandler(employeeData._id);handleClose();}}
               variant="contained"
               sx={{
                 textTransform: "capitalize",

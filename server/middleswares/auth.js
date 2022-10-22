@@ -18,10 +18,14 @@ try {
 const isAdmin=(req,res,next)=>{
    
     try {
+        const data=User.findById({_id:req.body.id});
+       
         User.findById({_id:req.body.id},(err,data)=>{
             if (err) {
                 return next(new HttpError("Authentication Failed.", 200));
             } else  {
+                console.log("type in auth")
+                console.log(data.type)
                 if(data.type=="manager"||data.type=="hr"||data.type=="admin"){
                     next();
                 }

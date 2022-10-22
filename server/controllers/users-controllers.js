@@ -97,21 +97,20 @@ const previousLeavesRequest = async (req, res, next) => {
 //login
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-
+  console.log({email,password})
   let existingUser;
-
   try {
-    existingUser = await User.findOne({ email: email });
+     existingUser = await User.findOne({ email: email });
     if (!existingUser) {
       return next(
         new HttpError("Invalid credentials, could not log you in.", 200)
       );
     }
-
+console.log(existingUser)
     let isValidPassword = await bcrypt.compare(password, existingUser.password);
     if (!isValidPassword) {
       return next(
-        new HttpError("Invalid credentials, could not log you in.", 200)
+        new HttpError("Invalid password, could not log you in.", 200)
       );
     }
     res.status(200).json({

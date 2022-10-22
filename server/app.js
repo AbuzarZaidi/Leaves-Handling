@@ -13,6 +13,7 @@ const app = express()
 app.use(cors());
 const port=process.env.PORT||5000;
 // app.use(express.static(path.join('public')))
+app.use(express.static(path.join('views')))
 app.use(bodyParser.json())
 app.use('/user',usersRoutes)
 app.use('/admin',adminRoutes)

@@ -86,12 +86,12 @@ useEffect(() => {
 <Box sx={{display:"flex"}}>
 <Box sx={{ minWidth: 250 ,mr:2.5}}>
       <FormControl fullWidth  size="small">
-        <InputLabel id="demo-simple-select-label">Employee Name</InputLabel>
+        <InputLabel id="demo-simple-select-label">Employee</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={employee}
-          label="Age"
+          label="Employee"
           onChange={(e)=>{setEmployee(e.target.value)}}
         >
           {employees.map((val)=>{
@@ -109,7 +109,7 @@ useEffect(() => {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={month}
-          label="Age"
+          label="Month"
           onChange={handleMonthChange}
         >
           <MenuItem value={1}>Jan</MenuItem>
@@ -135,7 +135,7 @@ useEffect(() => {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={year}
-          label="Age"
+          label="Year"
           onChange={handleYearChange}
         >
           <MenuItem value={2015}>2015</MenuItem>

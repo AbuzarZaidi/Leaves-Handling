@@ -233,7 +233,10 @@ const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) 
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "#0A1833" }}
+            sx={{ backgroundColor: "#0A1833","&:hover": {
+              backgroundColor: "#0A1833",
+              color: "#ffffff",
+            }, }}
             // onClick={editHandler}
             onClick={() => {
               userEditHandler(employeeData._id, editData, probationTime);

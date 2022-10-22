@@ -50,7 +50,10 @@ const columns = [
   ))({
     [`& .${tooltipClasses.tooltip}`]: {
       maxWidth: 300,
-      backgroundColor: "#0A1833",
+      backgroundColor: "#ffffff",
+    color:"#000000",
+    fontWeight:500,
+    fontSize:"14px",
       padding: "20px",
     },
   });
