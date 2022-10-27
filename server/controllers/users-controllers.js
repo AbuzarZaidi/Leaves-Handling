@@ -1,6 +1,6 @@
 const User = require("../models/users");
 const path = require("path");
-const fs = require("fs");
+const rootDir=require('../util/path')
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -32,6 +32,8 @@ const leaveRequest = async (req, res, next) => {
       user.leaveRequests.push(request);
       const acceptUrl = `http://localhost:5000/admin/updateStatus/${userId}?updatedStatus=accepted`;
       const rejectUrl = `http://localhost:5000/admin/updateStatus/${userId}?updatedStatus=rejected`;
+      // const acceptUrl = `https://leavesmanagement.herokuapp.com/admin/updateStatus/${userId}?updatedStatus=accepted`;
+      // const rejectUrl = `https://leavesmanagement.herokuapp.com/admin/updateStatus/${userId}?updatedStatus=rejected`;
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -39,16 +41,19 @@ const leaveRequest = async (req, res, next) => {
           pass: "kvttwtwhhcfldrmd",
         },
       });
-const response=ManagerMail(user,managerData,fromDate,toDate,reason,acceptUrl,rejectUrl);
-      const mailOptions = {
-        from: `${user.email}`,
+      ejs.renderFile(rootDir+'/views'+ '/manager.ejs',{user,managerData,fromDate,toDate,reason,acceptUrl,rejectUrl} , (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+             const mailOptions = {
+        from: `taha@mikrostartech.com`,
         to: `${managerData.email}`,
         subject: `2022: Leave Request & compensation ${user.name}`,
-        html: response,
+        html: data,
         attachments: [
           {
             filename: "emaillogo.png",
-            path: __dirname + "/emaillogo.png",
+            path: path.join(rootDir,"images","emaillogo.png"),
             cid: "unique@kreata.ee", //same cid value as in the html img src
           },
         ],
@@ -61,6 +66,8 @@ const response=ManagerMail(user,managerData,fromDate,toDate,reason,acceptUrl,rej
           res.status(201).json({ status: 201, info });
         }
       });
+        }
+      });
       user.save();
 
       res
@@ -71,15 +78,9 @@ const response=ManagerMail(user,managerData,fromDate,toDate,reason,acceptUrl,rej
     return next(new HttpError("Something went wrong.", 500));
   }
 };
-const test = async (req, res, next) => {
-  // console.log("here");
-  // console.log(req.params.id);
-  res.send(`<h1>Successfull</h1>`);
-};
 //get user previous leaves request
 const previousLeavesRequest = async (req, res, next) => {
   const userId = req.body.id;
-
   try {
     let result = await User.findById(
       {
@@ -97,20 +98,15 @@ const previousLeavesRequest = async (req, res, next) => {
 //login
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log({email,password})
+  
   let existingUser;
   try {
      existingUser = await User.findOne({ email: email });
-    if (!existingUser) {
+     console.log(existingUser)
+     let isValidPassword = await bcrypt.compare(password, existingUser.password);
+    if (!existingUser||!isValidPassword) {
       return next(
         new HttpError("Invalid credentials, could not log you in.", 200)
-      );
-    }
-console.log(existingUser)
-    let isValidPassword = await bcrypt.compare(password, existingUser.password);
-    if (!isValidPassword) {
-      return next(
-        new HttpError("Invalid password, could not log you in.", 200)
       );
     }
     res.status(200).json({
@@ -175,86 +171,11 @@ const IsRequestValid = (data) => {
   );
 };
 
-const ManagerMail=(user,managerData,fromDate,toDate,reason,acceptUrl,rejectUrl)=>{
-  return (
-    `<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <style>
-            table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-        </style>
-        <script>
-        const myFunction=()=> {
-       console.log("hello")
-        }
-      </script>
-      </head>
-      <body>
-        <div style="width: 90%; border:1px solid; border-radius:50px;padding:20px">
-          <div style="display: flex">
-            <div>
-              <img src="cid:unique@kreata.ee" width="200px" alt="" />
-            </div>
-            <div>
-              <h1>MikroStarTech(SMC-Private)</h1>
-              <h1>Limited</h1>
-            </div>
-          </div>
-          <div style="margin-left: 2rem">
-            <h5>Leave Request By ${user.name}</h5>
-            <p>Hello ${managerData.name}</p>
-  
-            <p>
-              Following are the details of leave request submitted by ${
-                user.name
-              }. kindle review it.
-            </p>
-            <table style="width: 30% ; ">
-              <tr>
-                <td><b>Employee</b></td>
-                <td>${user.name}</td>
-              </tr>
-              <tr>
-                <td><b>From</b></td>
-                <td>${fromDate.slice(0, 10)}</td>
-              </tr>
-              <tr>
-                <td><b>To</b></td>
-                <td>${toDate.slice(0, 10)}</td>
-              </tr>
-              <tr>
-                <td><b>Reason</b></td>
-                <td>${reason}</td>
-              </tr>
-          
-            </table>
-          </div>
-          <div style="display: flex;margin-left: 2rem;margin-top:1rem" > 
-          
-          <a href=${rejectUrl} style="background-color: red;color:white;width:150px;text-decoration:none;text-align:center;">Reject</a>
-          <a href=${acceptUrl}  style="background-color: green;color:white;width:150px;text-decoration:none;text-align:center;">Accept</a>
-         
-        </div>
-        </div>
-        
-      </body>
-      
-    </html>
-   
-    `
-  )
-}
+
 
 exports.leaveRequest = leaveRequest;
 exports.previousLeavesRequest = previousLeavesRequest;
 exports.login = login;
 exports.passwordChange = passwordChange;
 exports.getManagersName = getManagersName;
-exports.test = test;
+

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 import {
   Box,
   Typography,
@@ -7,6 +8,7 @@ import {
   Button,
   Grid,
 } from "../utlis/materialUIComponents";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch } from "react-redux";
 import {
   setLoginHandler,
@@ -15,14 +17,24 @@ import {
   setTypeHandler,
 } from "../store/auth";
 const { login } = require("../functions/auth");
-
+const InputField = styled(TextField)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+     width: "100%",
+  },
+}));
 const LoginPage = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [isLoading,setIsLoading]=useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500);
+      }, [])
   const loginHandler = async () => {
     if (email && password) {
       const user = {
@@ -49,6 +61,12 @@ const LoginPage = () => {
   };
   return (
     <>
+     {isLoading?<Box sx={{display:"flex",
+  justifyContent:"center",
+  alignItems:"center",
+  minHeight:"100vh"}}>
+    <CircularProgress size="6rem"/>
+    </Box>:
       <Box
         sx={{
           backgroundImage: `url(/icons/LoginBackground.png)`,
@@ -167,8 +185,8 @@ const LoginPage = () => {
                 </Typography>
               </Box>
             )}
-            <Grid item xs={3} sx={{ mt: 3 }}>
-              <TextField
+            <Grid item xs={12} sx={{ mt: 3 }}>
+              <InputField 
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 id="email"
@@ -187,8 +205,8 @@ const LoginPage = () => {
                 autoComplete="true"
               />
             </Grid>
-            <Grid item xs={3} sx={{ mt: 3 }}>
-              <TextField
+            <Grid item xs={12} sx={{ mt: 3 }}>
+              <InputField 
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 id="outlined-required"
@@ -209,7 +227,7 @@ const LoginPage = () => {
               />
             </Grid>
           </form>
-          <Grid item xs={3} sx={{ mt: 3 }}>
+          <Grid item xs={12} sx={{ mt: 3 }}>
             <Button
               variant="outlined"
               sx={{
@@ -234,7 +252,7 @@ const LoginPage = () => {
             </Button>
           </Grid>
         </Grid>
-      </Box>
+      </Box>}
     </>
   );
 };

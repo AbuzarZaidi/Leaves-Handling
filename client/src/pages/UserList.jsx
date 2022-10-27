@@ -49,7 +49,7 @@ const UserList = () => {
     };
     fetchData();
     setEdit(false);
-  }, [setEmployees, setEdit, edit]);
+  }, [setEmployees, setEdit, edit,id]);
   const deleteUserHandler = async (uid) => {
     
     const response = await deleteEmployee(id,uid);
@@ -129,6 +129,7 @@ const UserList = () => {
           return (
             <SingleUser
               key={ind}
+              index={ind}
               employeeData={val}
               id={val._id}
               userDeleteHandler={deleteUserHandler}

@@ -82,7 +82,7 @@ const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage,isLoading }
                   return (
                     <TableRow key={ind}>
                       <TableCell id="count" label="#" sx={{ minWidth: 80 }}>
-                        {ind + 1}
+                        {ind+1 }
                       </TableCell>
                       <TableCell id="name" label="Name" sx={{ minWidth: 170 }}>
                         {userName}

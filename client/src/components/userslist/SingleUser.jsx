@@ -5,7 +5,7 @@ import { Box, Typography } from "../../utlis/materialUIComponents";
 import DeleteModal from "../../UI/Modals/DeleteModal";
 import EditUserModal from "../../UI/Modals/EditUserModal";
 
-const SingleUser = ({ employeeData, userDeleteHandler, userEditHandler }) => {
+const SingleUser = ({ index,employeeData, userDeleteHandler, userEditHandler }) => {
   const [editOpen, setEditOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -48,7 +48,7 @@ const SingleUser = ({ employeeData, userDeleteHandler, userEditHandler }) => {
           }}
         >
           <Box sx={{ display: "flex", ml: 2 }}>
-            <Typography>1</Typography>
+            <Typography>{index+1}</Typography>
             <Typography sx={{ ml: 4, width: "270px" }}>
               {employeeData.name}
             </Typography>

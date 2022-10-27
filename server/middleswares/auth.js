@@ -24,8 +24,7 @@ const isAdmin=(req,res,next)=>{
             if (err) {
                 return next(new HttpError("Authentication Failed.", 200));
             } else  {
-                console.log("type in auth")
-                console.log(data.type)
+               
                 if(data.type=="manager"||data.type=="hr"||data.type=="admin"){
                     next();
                 }

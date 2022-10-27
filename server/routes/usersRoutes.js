@@ -8,5 +8,5 @@ router.post("/previosRequest", isLogin,usersController.previousLeavesRequest);
 router.post("/getMangersName",isLogin, usersController.getManagersName);
 router.post("/login", usersController.login);
 router.patch("/passwordChange",  isLogin,usersController.passwordChange);
-router.get("/test/:id",usersController.test);
+
 module.exports = router;

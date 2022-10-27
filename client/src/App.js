@@ -1,7 +1,7 @@
-import React,{useEffect,Suspense} from "react";
+import React,{useEffect,useState} from "react";
 import {useNavigate, Routes, Route} from "react-router-dom";
 import { useSelector} from "react-redux";
-// import CircularProgress from "@mui/material/CircularProgress";
+
 import ApplyForLeave from "./pages/ApplyForLeave";
 import EmployeesLeaves from './pages/EmployeesLeaves';
 import MyLeaves from "./pages/MyLeaves";
@@ -11,19 +11,22 @@ import OnBehalfLeave from "./pages/OnBehalfLeave";
 import CreateNewEmployee from "./pages/CreateNewEmployee";
 import ChangePassword from "./pages/ChangePassword";
 import UserList from "./pages/UserList";
+import {
+  Box,
+
+} from "./utlis/materialUIComponents";
 // const ApplyForLeave=React.lazy(()=>import('./pages/ApplyForLeave'))
 // const EmployeesLeaves=React.lazy(()=>import('./pages/EmployeesLeaves'))
 // const MyLeaves=React.lazy(()=>import('./pages/MyLeaves'))
 // const LoginPage=React.lazy(()=>import('./pages/LoginPage'))
-// const PageStructure=React.lazy(()=>import('./components/PageStructure'))
-// const OnBehalfLeave=React.lazy(()=>import('./pages/OnBehalfLeave'))
-// const CreateNewEmployee=React.lazy(()=>import('./pages/CreateNewEmployee'))
-// const ChangePassword=React.lazy(()=>import('./pages/ChangePassword'))
-// const UserList=React.lazy(()=>import('./pages/UserList'))
+
 function App() {
   let navigate = useNavigate();
   const isLogin= useSelector((state) => state.authData.isLogin);
+  
   // const type= useSelector((state) => state.authData.type);
+
+  
   useEffect(() => {
     if(!isLogin){
       navigate("/");
@@ -33,6 +36,8 @@ function App() {
   
   return (
     <>
+  
+   
     {/* <Suspense fallback={<div style={{display:"flex",justifyContent:"center"}}><CircularProgress/></div>}> */}
           <Routes>
            <Route path="/" element={<LoginPage />} />

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+        </style>
+        
+      </head>
+      <body>
+        <div style="width: 90%; border:1px solid; border-radius:50px;padding:20px">
+          <div style="display: flex">
+            <div>
+              <img src="cid:unique@kreata.ee" width="200px" alt="" />
+            </div>
+            <div>
+              <h1>MikroStarTech(SMC-Private)</h1>
+              <h1>Limited</h1>
+            </div>
+          </div>
+          <div style="margin-left: 2rem">
+            <h5><%=status%> Leave Request </h5>
+            <p>Hello <%=user.name%></p>
+  
+            <p>
+              Your leave request with following detail has been <%=status%> by <%=
+    managerData.name
+  %>.
+            </p>
+            <table style="width: 30% ; ">
+              <tr>
+                <td><b>Employee</b></td>
+                <td><%=user.name%></td>
+              </tr>
+              <tr>
+                <td><b>From</b></td>
+                <td><%=fromDate.slice(0, 10)%></td>
+              </tr>
+              <tr>
+                <td><b>To</b></td>
+                <td><%=toDate.slice(0, 10)%></td>
+              </tr>
+              <tr>
+                <td><b>Reason</b></td>
+                <td><%=reason%></td>
+              </tr>
+          
+            </table>
+          </div>
+    
+      </body>
+      
+    </html>
+   

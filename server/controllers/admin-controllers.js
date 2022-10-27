@@ -1,9 +1,11 @@
 const User = require("../models/users");
+const rootDir=require('../util/path')
 const path=require('path')
 const bcrypt = require("bcryptjs");
 const HttpError = require("../models/http-error");
 const validator = require("validator");
 const nodemailer = require("nodemailer");
+const ejs = require("ejs");
 const updateLeavesRequest = async (req, res, next) => {
   const userId = req.params.id;
   const updatedStatus = req.query.updatedStatus;
@@ -20,65 +22,52 @@ const updateLeavesRequest = async (req, res, next) => {
           pass: "kvttwtwhhcfldrmd",
         },
       });
-      const data = employeeMail(
-        updatedStatus,
+      
+      ejs.renderFile(rootDir+'/views'+ '/employee.ejs',{status:updatedStatus,
         user,
         managerData,
-        useData.fromDate,
-        useData.toDate,
-        useData.reason
-      );
-      const mailOptions = {
-        from: `${user.email}`,
-        to: `${managerData.email}`,
-        subject: `2022: Leave Request & compensation ${user.name}`,
-        html: data,
-        attachments: [
-          {
-            filename: "emaillogo.png",
-            path: __dirname + "/emaillogo.png",
-            cid: "unique@kreata.ee", //same cid value as in the html img src
-          },
-        ],
-      };
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log("Error" + error);
+        fromDate:useData.fromDate,
+        toDate: useData.toDate,
+        reason:useData.reason} , (err, data) => {
+        if (err) {
+          console.log(err);
         } else {
-          console.log("Email sent:" + info.response);
-          res.status(201).json({ status: 201, info });
+          const mailOptions = {
+            from: `${managerData.email}`,
+            to: `${user.email}`,
+            subject: `2022: Leave Request & compensation ${user.name}`,
+            html: data,
+            attachments: [
+              {
+                filename: "emaillogo.png",
+                path: path.join(rootDir,"images","emaillogo.png"),
+                cid: "unique@kreata.ee", //same cid value as in the html img src
+              },
+            ],
+          };
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log("Error" + error);
+            } else {
+              console.log("Email sent:" + info.response);
+              res.status(201).json({ status: 201, info });
+            }
+          });
         }
       });
       user.save();
-      console.log(path.join(__dirname,'..','views','Response.html'))
-      res.status(201).sendFile(path.join(__dirname,'..','views','Response.html'));
+      // res.status(201).sendFile(path.join(__dirname,'..','views','Response.html'));
+      res.status(201).sendFile(path.join(rootDir,'views','Response.html'));
     } else {
-      return next(new HttpError("Unknown Status", 409));
+      return next(new HttpError("Unknown Status", 200));
     }
   } catch (err) {
-    const error = new HttpError("Could not find user for provided id.", 404);
+    const error = new HttpError("Something went wrong.", 500);
     return next(error);
   }
 };
 
-// const getApprovalRequest = async (req, res, next) => {
-//   let result;
-//   let updatedResult = [];
-//   try {
-//     result = await User.find({}, "leaveRequests");
-//   } catch (err) {
-//     const error = new HttpError("Something went wrong.", 500);
-//     return next(error);
-//   }
-//   result.map((val) => {
-//     if (val.leaveRequests.slice(-1)[0]) {
-//       if (val.leaveRequests.slice(-1)[0].status == "pending") {
-//         updatedResult.push(val);
-//       }
-//     }
-//   });
-//   res.status(200).json(updatedResult);
-// };
+
 
 //list of users
 const usersList = async (req, res, next) => {
@@ -92,8 +81,6 @@ const usersList = async (req, res, next) => {
 //delete user from userlist
 const deleteUser = async (req, res, next) => {
   const userId = req.body.uid;
-
-
   try {
     await User.findByIdAndRemove({ _id: userId });
     res
@@ -124,7 +111,7 @@ const createUser = async (req, res, next) => {
         email,
         password: hashedPassword,
         type,
-        probation: probation.slice(0, 9),
+        probation: probation.slice(0, 10),
       });
       await user.save();
       res
@@ -151,7 +138,7 @@ const editUser = async (req, res, next) => {
     const user = {
       name: name,
       email: email,
-      probation: probation.slice(0, 9),
+      probation: probation.slice(0, 10),
       type: type,
     };
     const result = await User.findOneAndUpdate({ _id: userId }, user);
@@ -166,33 +153,41 @@ const employeesLeaves = async (req, res, next) => {
   const { employeeId, month, year } = req.body.data;
   await User.find({ _id: employeeId }, "name probation leaveRequests").then(
     (obj) => {
+     
       const dateData = obj[0].leaveRequests.filter((val) => {
+        let startDate=new Date(val.fromDate);
+        let endDate=new Date(val.toDate);
         if (
-          year == new Date(val.fromDate).getFullYear() &&
-          month == new Date(val.fromDate).getMonth() + 1 &&
-          year == new Date(val.toDate).getFullYear() &&
-          month == new Date(val.toDate).getMonth() + 1
+          year == startDate.getFullYear() &&
+          month == startDate.getMonth() + 1 &&
+          year == endDate.getFullYear() &&
+          month == endDate.getMonth() + 1
         ) {
           return val;
         } else if (
-          year == new Date(val.fromDate).getFullYear() &&
-          month == new Date(val.fromDate).getMonth() + 1 &&
-          month != new Date(val.toDate).getMonth() + 1
+          year == startDate.getFullYear() &&
+          month == startDate.getMonth() + 1 &&
+          month != endDate.getMonth() + 1
         ) {
-          val.totalDays = val.totalDays - new Date(val.toDate).getDate();
+          val.totalDays = val.totalDays - endDate.getDate();
+          return val;
         } else if (
-          year == new Date(val.toDate).getFullYear() &&
-          month == new Date(val.toDate).getMonth() + 1 &&
-          month != new Date(val.fromDate).getMonth() + 1
+          year == endDate.getFullYear() &&
+          month == endDate.getMonth() + 1 &&
+          month != startDate.getMonth() + 1
         ) {
-          val.totalDays = new Date(val.toDate).getDate();
+          val.totalDays = endDate.getDate();
           return val;
         }
       });
       let unpaidLeave;
       const newdata = dateData.map((val) => {
+        console.log(obj[0].probation)
+        console.log(new Date(obj[0].probation).getDate())
+      
         if (new Date(val.toDate) <= new Date(obj[0].probation)) {
           unpaidLeave = val.totalDays;
+         
         } else if (
           new Date(val.fromDate) <= new Date(obj[0].probation) &&
           new Date(val.toDate) >= new Date(obj[0].probation)
@@ -200,8 +195,10 @@ const employeesLeaves = async (req, res, next) => {
           unpaidLeave =
             new Date(val.toDate).getDate() -
             new Date(obj[0].probation).getDate();
+            
         } else {
           unpaidLeave = 0;
+          
         }
 
         return {
@@ -214,7 +211,7 @@ const employeesLeaves = async (req, res, next) => {
           unpaid: unpaidLeave,
         };
       });
-      // console.log(newdata)
+      
       const response = {
         id: obj[0]._id,
         probation: obj[0].probation,
@@ -229,80 +226,14 @@ const employeesLeaves = async (req, res, next) => {
 //get employees
 const getEmployeesName = async (req, res, next) => {
   try {
-    const response = await User.find({ type: "employee" }, "name");
+    const response = await User.find({}, "name");
 
     res.status(200).json({ success: true, data: response });
   } catch (err) {
     return next(new HttpError("Something went wrong.", 500));
   }
 };
-const employeeMail = (status, user, managerData, fromDate, toDate, reason) => {
-  return `<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <style>
-            table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-        </style>
-        <script>
-        const myFunction=()=> {
-       console.log("hello")
-        }
-      </script>
-      </head>
-      <body>
-        <div style="width: 90%; border:1px solid; border-radius:50px;padding:20px">
-          <div style="display: flex">
-            <div>
-              <img src="cid:unique@kreata.ee" width="200px" alt="" />
-            </div>
-            <div>
-              <h1>MikroStarTech(SMC-Private)</h1>
-              <h1>Limited</h1>
-            </div>
-          </div>
-          <div style="margin-left: 2rem">
-            <h5>${status} Leave Request </h5>
-            <p>Hello ${user.name}</p>
-  
-            <p>
-              Your leave request with following detail has been ${status} by ${
-    managerData.name
-  }.
-            </p>
-            <table style="width: 30% ; ">
-              <tr>
-                <td><b>Employee</b></td>
-                <td>${user.name}</td>
-              </tr>
-              <tr>
-                <td><b>From</b></td>
-                <td>${fromDate.slice(0, 10)}</td>
-              </tr>
-              <tr>
-                <td><b>To</b></td>
-                <td>${toDate.slice(0, 10)}</td>
-              </tr>
-              <tr>
-                <td><b>Reason</b></td>
-                <td>${reason}</td>
-              </tr>
-          
-            </table>
-          </div>
-    
-      </body>
-      
-    </html>
-   
-    `;
-};
+
 exports.updateLeavesRequest = updateLeavesRequest;
 exports.usersList = usersList;
 exports.createUser = createUser;
