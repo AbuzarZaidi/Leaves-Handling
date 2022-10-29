@@ -133,7 +133,7 @@ const OnBehalfLeave = () => {
         }}
       >
         <FormControl sx={{ width: "90%" }} error={isError === "employee" ? true : false}>
-          <InputLabel id="demo-simple-select-label">
+          <InputLabel id="demo-simple-select-label" >
             Select your Employee
           </InputLabel>
           <Select
@@ -142,6 +142,7 @@ const OnBehalfLeave = () => {
             value={employee}
             label="Select your manager"
             onChange={(e)=>setEmployee(e.target.value)}
+            sx={{mb:0.5}}
           >
             {employees.length > 0
               ? employees.map((val) => {

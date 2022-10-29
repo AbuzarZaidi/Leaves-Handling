@@ -20,6 +20,11 @@ const Icon = styled(Typography)(({ theme }) => ({
     fontSize: "20px",
   },
 }));
+const Inputfield = styled(TextField)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    width:"80%"
+  },
+}));
 const ChangePassword = () => {
   const id = useSelector((state) => state.authData.id);
   const [open, setOpen] = React.useState(false);
@@ -106,7 +111,7 @@ const ChangePassword = () => {
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
 
-          <TextField
+          <Inputfield
           type="password"
          onFocus={()=>{isError&&setError(false)}}
             error={isError === "previous" ? true : false}
@@ -122,7 +127,7 @@ const ChangePassword = () => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <TextField
+          <Inputfield
           type="password"
           onFocus={()=>{isError&&setError(false)}}
             id="outlined-basic"
@@ -138,7 +143,7 @@ const ChangePassword = () => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <TextField
+          <Inputfield
           type="password"
           onFocus={()=>{isError&&setError(false)}}
             error={isError === "confirm" ? true : false}

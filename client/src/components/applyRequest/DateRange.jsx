@@ -58,7 +58,7 @@ const DateRange = () => {
               dispatch(setStartDate(newValue));
             }}
             renderInput={(params) => (
-              <TextField {...params} sx={{ width: "90%" }} />
+              <TextField {...params} sx={{ width: "90%",mt:2 }} />
             )}
           />
         </Box>

@@ -1,7 +1,8 @@
 import * as React from "react";
+import {  Link } from "react-router-dom";
 import { useSelector} from "react-redux";
 import {Box,AppBar,Toolbar,IconButton,Typography,Menu,MenuIcon,Container,Avatar,Tooltip,MenuItem,Badge,NotificationsIcon} from '../utlis/materialUIComponents'
-const pages = ["Products", "Pricing", "Blog"];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -107,11 +108,33 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+                 <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/applyforleaves" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center">Apply for Leave</Typography></Link>
+                </MenuItem>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/myleaves" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center">My Leave</Typography></Link>
+                </MenuItem>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/employeesleaves" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center">Employee Leaves</Typography></Link>
+                </MenuItem>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/userlist" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center">UsersList</Typography></Link>
+                </MenuItem>
+
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/createnewemployee" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center">new employee</Typography></Link>
+                </MenuItem>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/onbehalfleave" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center">OnBehalf Leave</Typography></Link>
+                </MenuItem>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Link to="/changepassword" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center"> Change password</Typography></Link>
+                </MenuItem>
             </Menu>
           </Box>
 
