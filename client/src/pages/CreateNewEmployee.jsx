@@ -29,7 +29,12 @@ const Icon = styled(Typography)(({ theme }) => ({
 }));
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
+    fontSize: "28px",
+  },
+}));
+const Inputfield = styled(TextField)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    width:"80%"
   },
 }));
 const CreateNewEmployee = () => {
@@ -133,7 +138,7 @@ const CreateNewEmployee = () => {
         {/* name */}
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <TextField
+            <Inputfield
               id="name"
               onClick={()=>setError(false)}
               label="Name"
@@ -150,7 +155,7 @@ const CreateNewEmployee = () => {
         {/* email */}
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <TextField
+            <Inputfield
              onClick={()=>setError(false)}
               id="email"
               label="Email"
@@ -167,7 +172,7 @@ const CreateNewEmployee = () => {
         {/* password */}
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <TextField
+            <Inputfield
             onClick={()=>setError(false)}
               id="password"
               label="Password"
@@ -186,7 +191,7 @@ const CreateNewEmployee = () => {
         {/* confirm password */}
         <Box sx={{ mt: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <TextField
+            <Inputfield
              onClick={()=>setError(false)}
               id="confirm"
               label="Confirm Password"
@@ -208,7 +213,7 @@ const CreateNewEmployee = () => {
             <Stack
               spacing={3}
               sx={{
-                width: "90%",
+                width: "80%",
                 display: { xs: "flex", md: "none", lg: "none" },
               }}
             >

@@ -7,13 +7,19 @@ import { Box, Typography } from "../utlis/materialUIComponents";
 import { styled } from "@mui/material/styles";
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "25px",
+    fontSize: "28px",
     paddingTop: "8px",
   },
 }));
 const Icon = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     fontSize: "20px",
+  },
+}));
+const LeavesBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    
+    width: "100%",
   },
 }));
 const MyLeaves = () => {
@@ -80,8 +86,8 @@ const MyLeaves = () => {
         </Text>
       </Box>
 
-      <Box
-        sx={{ width: "95%", ml: 3, display: "flex", justifyContent: "center" }}
+      <LeavesBox
+        sx={{ width: "95%", display: "flex", justifyContent: "center" }}
       >
         <MyPreviousLeaves
           myPreviousLeaves={myLeaves}
@@ -89,7 +95,7 @@ const MyLeaves = () => {
           errorMessage={resErrorMessage}
           isLoading={isLoading}
         />
-      </Box>
+      </LeavesBox>
     </>
   );
 };

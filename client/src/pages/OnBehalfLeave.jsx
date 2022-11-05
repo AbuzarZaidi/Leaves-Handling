@@ -16,7 +16,7 @@ import { styled } from "@mui/material/styles";
 import DateRange from "../components/applyRequest/DateRange";
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
+    fontSize: "28px",
   },
 }));
 const Icon = styled(Typography)(({ theme }) => ({

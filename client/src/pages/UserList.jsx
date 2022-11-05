@@ -14,7 +14,7 @@ import SingleUser from "../components/userslist/SingleUser";
 import { styled } from "@mui/material/styles";
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
+    fontSize: "28px",
   },
 }));
 const Icon = styled(Typography)(({ theme }) => ({

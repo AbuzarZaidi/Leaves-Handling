@@ -11,7 +11,7 @@ import { styled } from "@mui/material/styles";
 import EmployeePreviousLeaves from '../components/employeeLeaves/EmployeePreviousLeaves';
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
+    fontSize: "28px",
   },
 }));
 const Icon = styled(Typography)(({ theme }) => ({
@@ -19,6 +19,21 @@ const Icon = styled(Typography)(({ theme }) => ({
       fontSize: "20px",
     },
   }));
+  const Filter = styled(Box)(({ theme }) => ({
+
+    [theme.breakpoints.down("md")]: {
+      flexDirection:"column",
+
+    },
+  }));
+  const Search = styled(Box)(({ theme }) => ({
+    [theme.breakpoints.down("md")]: {
+      display:"flex",
+      justifyContent:"center"
+    },
+  }));
+ 
+
 const EmployeesLeaves = () => {
   const id = useSelector((state) => state.authData.id);
   const [year, setYear] = React.useState('');
@@ -82,9 +97,9 @@ useEffect(() => {
             Employee Leave
           </Text>
         </Box>
-        <Box sx={{display:"flex",justifyContent:"center",width:"84%",ml:"80px",mt:1}}>
-<Box sx={{display:"flex"}}>
-<Box sx={{ minWidth: 250 ,mr:2.5}}>
+        <Box sx={{display:"flex",justifyContent:"center",width:"84%",ml:"8%",mt:1}}>
+<Filter sx={{display:"flex",flexDirection:"row"}}>
+<Box sx={{ minWidth: 250 ,mr:2.5,mt:1}}>
       <FormControl fullWidth  size="small">
         <InputLabel id="demo-simple-select-label">Employee</InputLabel>
         <Select
@@ -102,7 +117,7 @@ useEffect(() => {
         </Select>
       </FormControl>
     </Box>
-    <Box sx={{ minWidth: 250 ,mr:2,}}>
+    <Box sx={{ minWidth: 250 ,mr:2,mt:1}}>
       <FormControl fullWidth  size="small">
         <InputLabel id="demo-simple-select-label">Month</InputLabel>
         <Select
@@ -128,7 +143,7 @@ useEffect(() => {
         </Select>
       </FormControl>
     </Box>
-    <Box sx={{ minWidth: 250 ,mr:2}}>
+    <Box sx={{ minWidth: 250 ,mr:2,mt:1}}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Year</InputLabel>
         <Select
@@ -150,20 +165,16 @@ useEffect(() => {
         </Select>
       </FormControl>
     </Box>
-    <Box >
-        {/* <Button onClick={searchHandler} variant="outlined" sx={{color:"#ffffff",backgroundColor:"#00AAFF",width:"140px",height:"38px","&:hover": {
-                backgroundColor: "#0A1833",
-                color: "#ffffff",
-                
-              },}}></Button> */}
+    <Search sx={{mt:1}}>
+      
               <Button variant="outlined" onClick={searchHandler} sx={{ fontWeight: 600,
               fontSize: "14px", borderColor: "#0A1833", border: 2,width:"140px",height:"38px", color: "#1F2533","&:hover": {
                 backgroundColor: "#0A1833",
                 color: "#ffffff",
                 borderColor: "#0A1833",
-              },}}>Apply</Button>
-        </Box>
-</Box>
+              },}}>Search</Button>
+        </Search>
+</Filter>
         </Box>
         <Box
         sx={{ display: "flex", justifyContent: "center",mt:2 }}

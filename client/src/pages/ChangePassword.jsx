@@ -12,12 +12,13 @@ import { changePassword } from "../functions/employees";
 import { styled } from "@mui/material/styles";
 const Text = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
+    fontSize: "28px",
+    
   },
 }));
 const Icon = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
+    fontSize: "10px",
   },
 }));
 const Inputfield = styled(TextField)(({ theme }) => ({
@@ -78,12 +79,12 @@ const ChangePassword = () => {
       <SuccessFull open={open} handleClose={handleClose} />
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
       <Icon
-          variant="h4"
+          variant="h6"
           gutterBottom
           sx={{
             fontFamily: "Montserrat",
-            fontWeight: 600,
-            fontSize: "32px",
+            fontWeight: 400,
+            fontSize: "8px",
           }}
         >
           <img src="/icons/reset-password.png" alt="" />

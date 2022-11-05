@@ -56,11 +56,16 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
     padding: "20px",
   },
 });
-
+const MyLeavesDiv = styled(Paper)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    width: "90%",
+   
+  },
+}));
 const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage,isLoading }) => {
   return (
     <>
-      <Paper sx={{ width: "80%", overflow: "hidden" }}>
+      <MyLeavesDiv sx={{ width: "80%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -155,7 +160,7 @@ const MyPreviousLeaves = ({ myPreviousLeaves, userName, errorMessage,isLoading }
          {isLoading&& <Box
             sx={{ display: "flex", justifyContent: "center", fontWeight: 600 }}
           ><CircularProgress/></Box>}
-      </Paper>
+      </MyLeavesDiv>
       
     </>
   );
