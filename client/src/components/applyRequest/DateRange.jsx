@@ -52,7 +52,7 @@ const DateRange = () => {
           <MobileDatePicker
             label="Select your start date"
             value={startDate}
-            minDate={dayjs()}
+            // minDate={dayjs()}
             onChange={(newValue) => {
               setStartDate(newValue);
               dispatch(setStartDate(newValue));
@@ -90,7 +90,7 @@ const DateRange = () => {
           <DesktopDatePicker
             label="Select your start date"
             value={startDate}
-             minDate={dayjs()}
+            //  minDate={dayjs()}
             onChange={(newValue) => {
               startDateHandler(newValue);
               dispatch(setStartDateHandler(newValue));

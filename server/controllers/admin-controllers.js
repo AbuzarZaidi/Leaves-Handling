@@ -71,8 +71,9 @@ const updateLeavesRequest = async (req, res, next) => {
 
 //list of users
 const usersList = async (req, res, next) => {
+  
   try {
-    const response = await User.find({}).select("name email probation type");
+    const response = await User.find({_id :{$nin:[req.body.id]}}).select("name email probation type");
     res.status(200).json({ success: true, data: response });
   } catch (err) {
     return next(new HttpError("Something went wrong.", 500));

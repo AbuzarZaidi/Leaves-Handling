@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 const Sidebar = () => {
   const loc = useSelector((state) => state.authData.location);
   const type = useSelector((state) => state.authData.type);
+  console.log(type)
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -241,7 +242,7 @@ Users
         }}
      
       >
-        <MenuItem onClick={handleUserClose}> <Link to="/userlist" style={{ textDecoration: "none" }}>
+      {type==="admin"||type==="hr"?   <MenuItem onClick={handleUserClose}> <Link to="/userlist" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/userlist")}
               sx={{
@@ -270,8 +271,8 @@ Users
               />
               userlist
             </Box>
-          </Link></MenuItem>
-        <MenuItem onClick={handleUserClose}><Link to="/createnewemployee" style={{ textDecoration: "none" }}>
+          </Link></MenuItem>:""}
+          {type==="admin"||type==="hr"?  <MenuItem onClick={handleUserClose}><Link to="/createnewemployee" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/createnewemployee")}
               sx={{
@@ -300,7 +301,7 @@ Users
               />
               new employee
             </Box>
-          </Link> </MenuItem>
+          </Link> </MenuItem>:""}
         <MenuItem onClick={handleUserClose}><Link to="/onbehalfleave" style={{ textDecoration: "none" }}>
             <Box
               onClick={() => checkLocationHandler("/onbehalfleave")}

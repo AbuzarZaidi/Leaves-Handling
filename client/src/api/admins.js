@@ -1,6 +1,6 @@
 import axios from "axios";
-// const url = "http://localhost:5000/admin";
-const url = "https://leavesmanagement.herokuapp.com/admin"
+const url = "http://localhost:5000/admin";
+// const url = "https://leavesmanagement.herokuapp.com/admin"
 export const allEmployees = (id) => axios.post(`${url}/usersList`,{id:id})
 export const createEmployee = (id,user) => axios.post(`${url}/createUser`,{id:id,data:user});
 export const deleteEmployee = (id,uid) => axios.post(`${url}/deleteUser`,{id:id,uid:uid});

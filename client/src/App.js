@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect} from "react";
 import {useNavigate, Routes, Route} from "react-router-dom";
 import { useSelector} from "react-redux";
 
@@ -11,10 +11,8 @@ import OnBehalfLeave from "./pages/OnBehalfLeave";
 import CreateNewEmployee from "./pages/CreateNewEmployee";
 import ChangePassword from "./pages/ChangePassword";
 import UserList from "./pages/UserList";
-import {
-  Box,
 
-} from "./utlis/materialUIComponents";
+
 // const ApplyForLeave=React.lazy(()=>import('./pages/ApplyForLeave'))
 // const EmployeesLeaves=React.lazy(()=>import('./pages/EmployeesLeaves'))
 // const MyLeaves=React.lazy(()=>import('./pages/MyLeaves'))
@@ -23,6 +21,7 @@ import {
 function App() {
   let navigate = useNavigate();
   const isLogin= useSelector((state) => state.authData.isLogin);
+  const type= useSelector((state) => state.authData.type);
   
   // const type= useSelector((state) => state.authData.type);
 
@@ -47,8 +46,8 @@ function App() {
 
          {isLogin&& <Route path="/employeesleaves" element={<PageStructure><EmployeesLeaves /></PageStructure>} />}
           {isLogin&& <Route path="/onbehalfleave" element={<PageStructure><OnBehalfLeave /></PageStructure>} />}
-          {isLogin&&<Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />}
-          {isLogin&& <Route path="/userlist" element={<PageStructure><UserList /></PageStructure>} />}
+          {isLogin&&(type==="hr"||type==="admin")&&<Route path="/createnewemployee" element={<PageStructure><CreateNewEmployee /></PageStructure>} />}
+          {isLogin&&(type==="hr"||type==="admin")&& <Route path="/userlist" element={<PageStructure><UserList /></PageStructure>} />}
           
           
             <Route path="*" element={<LoginPage />} />

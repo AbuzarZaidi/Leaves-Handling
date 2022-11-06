@@ -155,7 +155,7 @@ const passwordChange = async (req, res, next) => {
 //get manager
 const getManagersName = async (req, res, next) => {
   try {
-    const response = await User.find({ type: "manager" }, "name");
+    const response = await User.find({ type: ["manager","admin"] }, "name");
     res.json({ success: true, data: response });
   } catch (err) {
     return next(new HttpError("Something went wrong.", 500));
