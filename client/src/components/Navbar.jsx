@@ -2,7 +2,7 @@ import * as React from "react";
 import {  Link } from "react-router-dom";
 import { useSelector} from "react-redux";
 import {Box,AppBar,Toolbar,IconButton,Typography,Menu,MenuIcon,Container,Avatar,Tooltip,MenuItem,Badge,NotificationsIcon} from '../utlis/materialUIComponents'
-
+import { setlogoutHandler } from "../store/auth";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -134,6 +134,9 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem  onClick={handleCloseNavMenu}>
                   <Link to="/changepassword" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center"> Change password</Typography></Link>
+                </MenuItem>
+                <MenuItem  onClick={()=>{handleCloseNavMenu();setlogoutHandler()}}>
+                  <Link to="/" style={{ textDecoration: "none",color:"#000000" }}><Typography textAlign="center"> Logout</Typography></Link>
                 </MenuItem>
             </Menu>
           </Box>

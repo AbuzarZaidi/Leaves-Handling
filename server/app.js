@@ -13,14 +13,14 @@ app.set('view engine', 'ejs');
 
 app.use(cors());
 const port=process.env.PORT||5000;
-// app.use(express.static(path.join('public')))
+app.use(express.static(path.join('public')))
 app.use(express.static('images'))
 
 app.use('/user',usersRoutes)
 app.use('/admin',adminRoutes)
-// app.use((req, res,next) => {
-//   res.sendFile(path.resolve(__dirname,'public','index.html'))
-// })
+app.use((req, res,next) => {
+  res.sendFile(path.resolve(__dirname,'public','index.html'))
+})
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
