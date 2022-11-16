@@ -42,14 +42,14 @@ const SingleUser = ({ index,employeeData, userDeleteHandler, userEditHandler }) 
             display: "flex",
             justifyContent: "space-between",
             backgroundColor: "#F5F5F5",
-            width: "80%",
+            width: "85%",
             p: 1,
             mt: 2,
           }}
         >
           <Box sx={{ display: "flex", ml: 2 }}>
             <Typography>{index+1}</Typography>
-            <Typography sx={{ ml: 4, width: "270px" }}>
+            <Typography sx={{ ml: 4, width: "100px" }}>
               {employeeData.name}
             </Typography>
           </Box>

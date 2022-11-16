@@ -101,14 +101,14 @@ const UserList = () => {
       </Box>
       
       
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center" }} >
         <Box
         stickyHeader aria-label="sticky table"
           sx={{
             display: "flex",
             justifyContent: "space-between",
             border: 1,
-            width: "80%",
+            width: "85%",
             p: 1,
             borderColor: "#999999",
           }}

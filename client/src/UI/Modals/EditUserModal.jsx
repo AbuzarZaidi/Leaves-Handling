@@ -6,7 +6,7 @@ import {Modal,Typography,Box,Button,Radio,
   FormLabel, TextField, Stack,} from '../../utlis/materialUIComponents'
 import Divider from "@mui/material/Divider";
 import dayjs from "dayjs";
-
+import { styled } from "@mui/material/styles";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
@@ -22,7 +22,13 @@ const editStyle = {
   
     boxShadow: 24,
    
+    
   };
+  const InputField = styled(TextField)(({ theme }) => ({
+    [theme.breakpoints.down("md")]: {
+      width:"90%"
+    },
+  }));
 const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) => {
     const [value, setValue] = React.useState(employeeData.probation);
     const [probationTime, setProbationTime] = React.useState(employeeData.probation);
@@ -59,7 +65,7 @@ const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) 
         </Box>
         <Divider />
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-          <TextField
+          <InputField
             value={editData.name}
             name="name"
             onChange={handleChange}
@@ -67,11 +73,11 @@ const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) 
             id="Name"
             label="Name"
             variant="outlined"
-            size="small"
+            size="medium"
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-          <TextField
+          <InputField
             value={editData.email}
             name="email"
             onChange={handleChange}
@@ -79,7 +85,7 @@ const EditUserModal = ({editOpen,handleEditClose,employeeData,userEditHandler}) 
             id="email"
             label="Email"
             variant="outlined"
-            size="small"
+            size="medium"
           />
         </Box>
         {/* probaton */}
